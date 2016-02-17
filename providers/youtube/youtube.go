@@ -1,20 +1,41 @@
-package model
+// Package facebook implements the OAuth2 protocol for authenticating users through Facebook.
+// This package can be used as a reference implementation of an OAuth2 provider for
+package youtube
 
 import (
 	"net/http"
-	"strconv"
-	"time"
 
-	"github.com/google/google-api-go-client/googleapi/transport"
+	transport "github.com/google/google-api-go-client/googleapi/transport"
 	youtube "google.golang.org/api/youtube/v3"
-	"os"
+
+	"comentarismo-moody/model"
+	"time"
+	"strconv"
+	"log"
 )
 
-// The YouTubeKey is a Google API key with access to YouTube's Data API
-var YouTubeKey = os.Getenv("youtubekey")
 
-// YouTubeVideo is a distilled record of YouTube video metadata
-type YouTubeVideo struct {
+func init(){
+
+}
+// New creates a new Facebook provider, and sets up important connection details.
+// You should always call `facebook.New` to get a new Provider. Never try to create
+// one manually.
+func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
+	if(clientKey == ""){
+		clientKey = "AIzaSyBameiyxxJw0W27lydpPuPRocfvGza9gXM"
+	}
+	p := &Provider{
+		ClientKey:   clientKey,
+		Secret:      secret,
+	}
+	return p
+}
+
+// Provider is the implementation of `Provider` for accessing Facebook.
+type Provider struct {
+	ClientKey   string
+	Secret      string
 	ID            string
 	Title         string
 	VideoViews    uint64
@@ -25,13 +46,44 @@ type YouTubeVideo struct {
 	PublishedAt   string
 }
 
+// Name is the name used to retrieve this provider later.
+func (p *Provider) Name() string {
+	return "youtube"
+}
+
+func (p *Provider) SetID(urlParts []string) error {
+	i := len(urlParts)-1
+	p.ID = urlParts[i]
+	return nil
+}
+
+func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
+	theReport.Type = "YouTubeVideo"
+	theReport.ID = p.ID
+	theReport.Title = p.Title
+	theReport.PublishedAt = p.PublishedAt
+	theReport.TotalComments = p.TotalComments
+	theReport.Metadata = p
+	theReport.TopComments = comments.GetMostLiked(10)
+}
+
+
+
+// Debug is a no-op for the facebook package.
+func (p *Provider) Debug(debug bool) {}
+
+func (this *Provider) GetPageID() model.Provider {
+	return this
+}
+
 // YouTubeGetCommentsV2 pulls the comments for a given YouTube video
-func (ytv YouTubeVideo) GetComments() CommentList {
+func (ytv *Provider) GetComments() model.CommentList {
 	videoID := ytv.ID
-	var comments = []*Comment{}
+	log.Println("videoID: ",videoID)
+	var comments = []*model.Comment{}
 
 	client := &http.Client{
-		Transport: &transport.APIKey{Key: YouTubeKey},
+		Transport: &transport.APIKey{Key: ytv.ClientKey},
 	}
 
 	youtubeService, err := youtube.New(client)
@@ -60,7 +112,7 @@ func (ytv YouTubeVideo) GetComments() CommentList {
 				}
 
 				for _, c := range tempComments {
-					thisComment := &Comment{
+					thisComment := &model.Comment{
 						ID:         c.Id,
 						Published:  c.Snippet.PublishedAt,
 						Title:      "",
@@ -80,15 +132,16 @@ func (ytv YouTubeVideo) GetComments() CommentList {
 		}
 	}
 
-	return CommentList{Comments: comments}
+	return model.CommentList{Comments: comments}
 }
 
 // GetMetadata returns a subset of video information from the YouTube API
-func (ytv *YouTubeVideo) GetMetadata() bool {
+func (ytv *Provider) GetMetadata() bool {
 	videoID := ytv.ID
+	log.Println(videoID)
 
 	client := &http.Client{
-		Transport: &transport.APIKey{Key: YouTubeKey},
+		Transport: &transport.APIKey{Key: ytv.ClientKey},
 	}
 
 	youtubeService, err := youtube.New(client)
@@ -100,6 +153,10 @@ func (ytv *YouTubeVideo) GetMetadata() bool {
 	resp, err := call.Do()
 	if err != nil {
 		panic(err)
+	}
+
+	if(resp == nil){
+		log.Println("karai")
 	}
 
 	if len(resp.Items) > 0 {
@@ -120,3 +177,4 @@ func (ytv *YouTubeVideo) GetMetadata() bool {
 
 	return false
 }
+

@@ -1,14 +1,22 @@
 package model
 
-import "fmt"
+import (
+	"fmt"
+"log"
+)
 
 // Provider needs to be implemented for each 3rd party provider
 // e.g. Comentarismo, Facebook, Twitter, Youtube, etc...
 type Provider interface {
 	Name() string
-	BeginAuth(state string) (Session, error)
-	UnmarshalSession(string) (Session, error)
-	FetchUser(Session) (User, error)
+	SetID([]string) error
+	SetReport(*Report, CommentList)
+	//BeginAuth(state string) (Session, error)
+	//UnmarshalSession(string) (Session, error)
+	//FetchUser(Session) (User, error)
+	GetComments() CommentList
+	GetMetadata() bool
+	GetPageID() Provider
 	Debug(bool)
 }
 
@@ -36,6 +44,7 @@ func GetProvider(name string) (Provider, error) {
 	if provider == nil {
 		return nil, fmt.Errorf("no provider for %s exists", name)
 	}
+	log.Println(provider.Name())
 	return provider, nil
 }
 

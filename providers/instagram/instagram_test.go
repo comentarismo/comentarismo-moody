@@ -1,4 +1,4 @@
-package facebook_test
+package instagram_test
 
 import (
 	"os"

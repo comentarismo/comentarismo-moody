@@ -1,6 +1,6 @@
 // Package facebook implements the OAuth2 protocol for authenticating users through Facebook.
 // This package can be used as a reference implementation of an OAuth2 provider for
-package facebook
+package instagram
 
 import (
 	"encoding/json"
@@ -39,7 +39,7 @@ type Provider struct {
 
 // Name is the name used to retrieve this provider later.
 func (p *Provider) Name() string {
-	return "facebook"
+	return "instagram"
 }
 
 func (p *Provider) SetID(urlParts [] string) error {

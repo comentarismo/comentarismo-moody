@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	//"github.com/kr/pretty"
-	"flag"
 	"github.com/mikeflynn/golang-instagram/instagram"
+	"os"
 )
 
 type InstagramPic struct {
@@ -23,14 +23,15 @@ type InstagramPic struct {
 }
 
 // The YouTubeKey is a Google API key with access to YouTube's Data API
-var InstagramKey = flag.String("igkey", "", "Instagram API key.")
+//var InstagramKey = flag.String("igkey", "", "Instagram API key.")
+var InstagramKey = os.Getenv("igkey")
 
 var instagramApi *instagram.Api
 var instagramPostResponse *instagram.MediaResponse
 
 func (ig *InstagramPic) GetMetadata() bool {
 	if instagramApi == nil {
-		instagramApi = instagram.New(*InstagramKey, "")
+		instagramApi = instagram.New(InstagramKey, "")
 	}
 
 	var resp *instagram.MediaResponse
@@ -64,7 +65,7 @@ func (ig *InstagramPic) GetMetadata() bool {
 
 func (ig InstagramPic) GetComments() CommentList {
 	if instagramApi == nil {
-		instagramApi = instagram.New(*InstagramKey, "")
+		instagramApi = instagram.New(InstagramKey, "")
 	}
 
 	var resp *instagram.CommentsResponse

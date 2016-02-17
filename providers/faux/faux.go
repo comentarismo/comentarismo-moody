@@ -4,61 +4,36 @@ package faux
 
 import (
 	model "comentarismo-moody/model"
-	"encoding/json"
-	"strings"
 )
 
 // Provider is used only for testing.
 type Provider struct {
 }
 
-// Session is used only for testing.
-type Session struct {
-	Name  string
-	Email string
-}
-
 // Name is used only for testing.
-func (p *Provider) Name() string {
+func (p Provider) Name() string {
 	return "faux"
 }
 
-// BeginAuth is used only for testing.
-func (p *Provider) BeginAuth(state string) (model.Session, error) {
-	return &Session{}, nil
+func (p Provider) Debug(debug bool) {}
+
+// Debug is used only for testing.
+func (p Provider) GetComments() model.CommentList {
+	return model.CommentList{}
 }
 
-// FetchUser is used only for testing.
-func (p *Provider) FetchUser(session model.Session) (model.User, error) {
-	sess := session.(*Session)
-	return model.User{
-		Name:  sess.Name,
-		Email: sess.Email,
-	}, nil
+func (p Provider) SetID([]string) error {
+	return nil
 }
 
-// UnmarshalSession is used only for testing.
-func (p *Provider) UnmarshalSession(data string) (model.Session, error) {
-	sess := &Session{}
-	err := json.NewDecoder(strings.NewReader(data)).Decode(sess)
-	return sess, err
+func (p Provider) SetReport(theReport *model.Report, comments model.CommentList) {
+
 }
 
 // Debug is used only for testing.
-func (p *Provider) Debug(debug bool) {}
-
-// Authorize is used only for testing.
-func (p *Session) Authorize(provider model.Provider, params model.Params) (string, error) {
-	return "", nil
+func (p Provider) GetMetadata() bool {
+	return false
 }
-
-// Marshal is used only for testing.
-func (p *Session) Marshal() string {
-	b, _ := json.Marshal(p)
-	return string(b)
-}
-
-// GetAuthURL is used only for testing.
-func (p *Session) GetAuthURL() (string, error) {
-	return "http://example.com/auth/", nil
+func (p Provider) GetPageID() model.Provider {
+	return Provider{}
 }

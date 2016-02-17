@@ -4,15 +4,17 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"flag"
 	"net/http"
 	"net/url"
 	"strconv"
+	"os"
 )
 
 // Vine Config...
-var VineUsername = flag.String("vnuser", "", "Vine Username")
-var VinePassword = flag.String("vnpassword", "", "Vine Password")
+//var VineUsername = flag.String("vnuser", "", "Vine Username")
+//var VinePassword = flag.String("vnpassword", "", "Vine Password")
+var VineUsername = os.Getenv("vnuser")
+var VinePassword = os.Getenv("vnpassword")
 
 type VineSession struct {
 	SessionID string
@@ -22,7 +24,7 @@ var vineSession *VineSession = new(VineSession)
 
 func InitVine() bool {
 	if vineSession.SessionID == "" {
-		vineSession, _ = authVine(*VineUsername, *VinePassword)
+		vineSession, _ = authVine(VineUsername, VinePassword)
 	}
 
 	if vineSession.SessionID != "" {

@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Static navbar -->
+
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -29,16 +29,13 @@
             </div>
           </form>
           <ul class="nav navbar-nav">
-            <!--
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#">Training</a></li>
-            -->
+
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="http://github.com/mikeflynn/quackerjack">Powered by Comentarismo</a></li>
           </ul>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container-fluid -->
+        </div>
+      </div>
     </nav>
 
     <div id="loading">
@@ -65,7 +62,7 @@
           </div>
           <div class="col-xs-4">
             <span id="comments_per_day">0</span>
-            <span class="desc">Comments Per Day</span>
+            <span class="desc">By Day</span>
           </div>
         </div>
       </div>
@@ -77,29 +74,28 @@
       </div>
 
       <div class="row">
-        <div class="col-md-3">
-          <h5>Top Keywords</h5>
-          <table id="keywords" class="table table-striped">
-          </table>
-        </div>
 
         <div class="col-md-5">
-          <h5>Comment Scores</h5>
+          <h5>What people think about this: </h5>
           <canvas id="myChart" width="100%" height="300"></canvas>
         </div>
 
-        <div class="col-md-4">
-          <h5 id="sampling_header">Example Comments</h5>
-          <div id="sampling"></div>
-        </div>
       </div>
     </div>
   </div>
 
   <script src="/static/js/jquery.min.js"></script>
   <script src="/static/js/bootstrap.min.js"></script>
-  <script src="/static/js/Chart.min.js"></script>
-  <script src="/static/js/main.js"></script>
+  <script async src="//www.google-analytics.com/analytics.js"></script>
 
+  <script src="/static/js/build/comentarismo-moody-client-min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      var selector = "#comments-list";
+      var comentarismo = new ComentarismoMoody({
+        selector: selector
+      });
+    });
+  </script>
 </body>
 </html>

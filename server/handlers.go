@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func ReportHandler(w http.ResponseWriter, r *http.Request) {
+func MoodyHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("ReportHandler")
 	postURL := r.URL.Query().Get("vid")
 

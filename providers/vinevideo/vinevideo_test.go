@@ -1,4 +1,4 @@
-package facebook_test
+package vinevideo_test
 
 import (
 	"os"

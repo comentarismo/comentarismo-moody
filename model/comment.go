@@ -22,36 +22,36 @@ type CommentList struct {
 }
 
 // Comment methods
-func (this *Comment) GetSentiment() string {
-	if this.Sentiment == "" {
-		this.Sentiment = GetSentiment(this.Content)
+func (comment *Comment) GetSentiment() string {
+	if comment.Sentiment == "" {
+		comment.Sentiment = GetSentiment(comment.Content)
 	}
 
-	return this.Sentiment
+	return comment.Sentiment
 }
 
 // CommentList methods
 
-func (this *CommentList) IsEmpty() bool {
-	if len(this.Comments) == 0 {
+func (commentList *CommentList) IsEmpty() bool {
+	if len(commentList.Comments) == 0 {
 		return true
 	}
 
 	return false
 }
 
-func (this *CommentList) GetTotal() uint64 {
-	return uint64(len(this.Comments))
+func (commentList *CommentList) GetTotal() uint64 {
+	return uint64(len(commentList.Comments))
 }
 
-func (this *CommentList) GetKeywords() map[string]int {
-	return GetKeywords(this.Comments)
+func (commentList *CommentList) GetKeywords() map[string]int {
+	return GetKeywords(commentList.Comments)
 }
 
-func (this *CommentList) GetSentimentSummary() []SentimentTag {
+func (commentList *CommentList) GetSentimentSummary() []SentimentTag {
 	tags := map[string]int{}
 
-	for _, comment := range this.Comments {
+	for _, comment := range commentList.Comments {
 		tag := comment.GetSentiment()
 		tags[tag]++
 	}
@@ -61,7 +61,7 @@ func (this *CommentList) GetSentimentSummary() []SentimentTag {
 	for tag, count := range tags {
 		st := SentimentTag{
 			Name:    tag,
-			Percent: math.Ceil((float64(count) / float64(len(this.Comments))) * float64(100)),
+			Percent: math.Ceil((float64(count) / float64(len(commentList.Comments))) * float64(100)),
 		}
 
 		summary = append(summary, st)
@@ -70,14 +70,14 @@ func (this *CommentList) GetSentimentSummary() []SentimentTag {
 	return summary
 }
 
-func (this *CommentList) GetRandom(count int) []*Comment {
+func (commentList *CommentList) GetRandom(count int) []*Comment {
 	seed := rand.NewSource(42)
 	rnum := rand.New(seed)
 
 	resp := []*Comment{}
 
 	for i := 0; i < count; i++ {
-		resp = append(resp, this.Comments[rnum.Intn(len(this.Comments))])
+		resp = append(resp, commentList.Comments[rnum.Intn(len(commentList.Comments))])
 	}
 
 	return resp
@@ -89,8 +89,8 @@ func (a ByLikes) Len() int           { return len(a) }
 func (a ByLikes) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByLikes) Less(i, j int) bool { return a[i].Likes > a[j].Likes }
 
-func (this *CommentList) GetMostLiked(count int) []*Comment {
-	bl := ByLikes(this.Comments)
+func (commentList *CommentList) GetMostLiked(count int) []*Comment {
+	bl := ByLikes(commentList.Comments)
 	sort.Sort(bl)
 
 	resp := []*Comment{}
