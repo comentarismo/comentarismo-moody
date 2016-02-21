@@ -34,33 +34,10 @@ func RunReport(postURL string) []byte {
 
 	log.Println("Going to run report for ", domain)
 
-	//switch domain {
-	//case "youtube":
-	//	if model.YouTubeKey == "" {
-	//		model.YouTubeKey = "AIzaSyBameiyxxJw0W27lydpPuPRocfvGza9gXM"
-	//		//return jsonError("API key for YouTube not configured.")
-	//	}
-	//
 	//	thePost = &model.YouTubeVideo{ID: urlParts[len(urlParts)-1]}
-	//case "instagram":
-	//	if model.InstagramKey == "" {
-	//		return jsonError("API key for Instagram not configured.")
-	//	}
-	//
 	//	thePost = &model.InstagramPic{ShortCode: urlParts[len(urlParts)-1]}
-	//case "facebook":
-	//	if facebook.FacebookKey == "" || facebook.FacebookSecret == "" {
-	//		return jsonError("Missing Facebook API credentials.")
-	//	}
-	//
 	//	thePost = &facebook.Provider{PageName: urlParts[len(urlParts)-2], ID: urlParts[len(urlParts)-1]}
-	//case "vine":
-	//	if model.VineUsername == "" || model.VinePassword == "" {
-	//		return jsonError("Missing Vine user credentials.")
-	//	}
-	//
 	//	thePost = &model.VineVideo{ShortCode: urlParts[len(urlParts)-1]}
-	//}
 
 	provider, err := model.GetProvider(domain)
 	if err != nil {
@@ -85,15 +62,13 @@ func RunReport(postURL string) []byte {
 	// Fetch the comments
 	comments := provider.GetComments()
 
-	//log.Println(len(comments.Comments))
-	//
 	//// If we don't get an comments back, wait for the metadata call to return and send an error.
 	if comments.IsEmpty() {
 		return jsonError("No comments found for this post.")
 	}
 
 	provider.SetReport(&theReport, comments)
-	//
+
 	////case *model.InstagramPic:
 	////	theReport.Type = "InstagramPic"
 	////	theReport.ID = p.ID

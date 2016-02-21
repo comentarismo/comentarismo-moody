@@ -15,6 +15,12 @@ import (
 // You should always call `facebook.New` to get a new Provider. Never try to create
 // one manually.
 func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
+	if clientKey == "" {
+		clientKey = "118792195142376"
+	}
+	if secret == "" {
+		secret = "49e8c46b9bec4f484fa045cedac63ea2"
+	}
 	p := &Provider{
 		ClientKey:   clientKey,
 		Secret:      secret,
@@ -24,8 +30,8 @@ func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 
 // Provider is the implementation of `Provider` for accessing Facebook.
 type Provider struct {
-	ClientKey   string
-	Secret      string
+	ClientKey     string
+	Secret        string
 	ID            string // id
 	PageName      string
 	PageID        string
@@ -43,8 +49,8 @@ func (p *Provider) Name() string {
 }
 
 func (p *Provider) SetID(urlParts [] string) error {
-	p.ID = urlParts[len(urlParts)-1]
-	p.PageName = urlParts[len(urlParts)-2]
+	p.ID = urlParts[len(urlParts) - 1]
+	p.PageName = urlParts[len(urlParts) - 2]
 	return nil
 }
 
@@ -62,12 +68,11 @@ func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList
 // Debug is a no-op for the facebook package.
 func (p *Provider) Debug(debug bool) {}
 
-
 func (this *Provider) GetMetadata() bool {
 	this.GetPageID()
 
 	var respTyped postMetaResp
-	resp, _ := fbRequest("/" + this.PageID + "_" + this.ID + "?fields=id,name,caption,description,picture,created_time,type,message,properties,insights,likes.limit(1).summary(true),comments.limit(1).summary(true)", this.ClientKey,this.Secret)
+	resp, _ := fbRequest("/" + this.PageID + "_" + this.ID + "?fields=id,name,caption,description,picture,created_time,type,message,properties,insights,likes.limit(1).summary(true),comments.limit(1).summary(true)", this.ClientKey, this.Secret)
 
 	defer resp.Body.Close()
 
@@ -95,7 +100,7 @@ func (this *Provider) GetComments() model.CommentList {
 
 	for {
 		var respTyped postCommentListResp
-		resp, _ := fbRequest("/" + this.PageID + "_" + this.ID + "/comments?limit=100&order=reverse_chronological&after=" + after, this.ClientKey,this.Secret)
+		resp, _ := fbRequest("/" + this.PageID + "_" + this.ID + "/comments?limit=100&order=reverse_chronological&after=" + after, this.ClientKey, this.Secret)
 
 		defer resp.Body.Close()
 
@@ -131,7 +136,7 @@ func (this *Provider) GetPageID() model.Provider {
 	}
 
 	var respTyped pageNameResp
-	resp, _ := fbRequest("/" + this.PageName, this.ClientKey,this.Secret)
+	resp, _ := fbRequest("/" + this.PageName, this.ClientKey, this.Secret)
 
 	defer resp.Body.Close()
 
@@ -222,27 +227,27 @@ type postMetaResp struct {
 	Message     string          `json:"message"`
 	Properties  []postMetaProps `json:"properties"`
 	Likes       struct {
-			    Data []struct {
+			    Data    []struct {
 				    ID string `json:"id"`
 			    } `json:"data"`
-			    Paging struct {
-					 Cursors struct {
-							 After  string `json:"after"`
-							 Before string `json:"before"`
-						 }
-					 Next string `json:"next"`
-				 } `json:"paging"`
+			    Paging  struct {
+					    Cursors struct {
+							    After  string `json:"after"`
+							    Before string `json:"before"`
+						    }
+					    Next    string `json:"next"`
+				    } `json:"paging"`
 			    Summery likesSummary `json:"summary"`
 		    } `json:"likes"`
-	Comments struct {
-			    Data   []postCommentResp
-			    Paging struct {
-					   Cursors struct {
-							   After  string `json:"after"`
-							   Before string `json:"before"`
-						   }
-					   Next string `json:"next"`
-				   } `json:"paging"`
+	Comments    struct {
+			    Data    []postCommentResp
+			    Paging  struct {
+					    Cursors struct {
+							    After  string `json:"after"`
+							    Before string `json:"before"`
+						    }
+					    Next    string `json:"next"`
+				    } `json:"paging"`
 			    Summary commentSummary `json:"summary"`
 		    }
 }
