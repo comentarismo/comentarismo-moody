@@ -31,7 +31,6 @@ func (comment *Comment) GetSentiment() string {
 }
 
 // CommentList methods
-
 func (commentList *CommentList) IsEmpty() bool {
 	if len(commentList.Comments) == 0 {
 		return true
@@ -46,6 +45,17 @@ func (commentList *CommentList) GetTotal() uint64 {
 
 func (commentList *CommentList) GetKeywords() map[string]int {
 	return GetKeywords(commentList.Comments)
+}
+
+func  (commentList *CommentList) GetSentimentList() map[string][]*Comment{
+	tags := map[string][]*Comment{}
+
+	for _, comment := range commentList.Comments {
+		tag := comment.GetSentiment()
+		newComments := append(tags[tag], comment)
+		tags[tag] = newComments
+	}
+	return tags
 }
 
 func (commentList *CommentList) GetSentimentSummary() []SentimentTag {

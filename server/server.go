@@ -8,10 +8,12 @@ import (
 	"github.com/gorilla/pat"
 	gracehttp "github.com/facebookgo/grace/gracehttp"
 
-	model "comentarismo-moody/model"
-	"strings"
 	"comentarismo-moody/providers/facebook"
 	"comentarismo-moody/providers/youtube"
+	"comentarismo-moody/providers/instagram"
+	"comentarismo-moody/providers/vinevideo"
+
+	"comentarismo-moody/model"
 )
 
 var (
@@ -27,8 +29,6 @@ var Host = os.Getenv("host")
 //Port eg: 3000
 var Port = os.Getenv("PORT")
 
-var Training = os.Getenv("training")
-
 func init() {
 	//var err error
 
@@ -43,14 +43,6 @@ func init() {
 	}
 	if REDIS_PASS == "" {
 	}
-	if Training == "" {
-		Training = "./static/training/afinn-111.csv"
-	}
-
-	trainingFiles := strings.Split(Training, ",")
-	for _, path := range trainingFiles {
-		model.LoadTrainingData(path)
-	}
 }
 
 //NewServer return pointer to new created server object
@@ -62,10 +54,21 @@ func NewServer(Port string) *http.Server {
 	}
 }
 
+func initProviders(){
+	log.Println("Going to register providers")
+	// Provider is the interface for all the various 3rd party Provider types (YouTube, Facebook, etc...)
+	model.UseProviders(
+		facebook.New(FACEBOOK_KEY, FACEBOOK_SECRET, Host + "/auth/facebook/callback"),
+		youtube.New(YOUTUBE_KEY, YOUTUBE_SECRET, Host + "/auth/youtube/callback"),
+		instagram.New(INSTAGRAM_KEY, INSTAGRAM_SECRET, Host + "/auth/instagram/callback"),
+		vinevideo.New(VINEVIDEO_KEY, VINEVIDEO_SECRET, Host + "/auth/vinevideo/callback"),
+	)
+}
 //StartServer start and listen @server
 func StartServer(Port string) {
 	log.Println("Starting server")
 	s := NewServer(Port)
+	initProviders()
 	fmt.Println("Server starting --> " + Port)
 
 	err := gracehttp.Serve(
@@ -81,8 +84,6 @@ func StartServer(Port string) {
 func InitRouting() *pat.Router {
 	r := pat.New()
 
-	InitProviders();
-
 	r.HandleFunc("/moody", MoodyHandler)
 
 	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
@@ -94,11 +95,4 @@ func InitRouting() *pat.Router {
 	log.Println("Listening on :" + Host + "...")
 
 	return r
-}
-
-func InitProviders(){
-	model.UseProviders(
-		facebook.New(os.Getenv("FACEBOOK_KEY"), os.Getenv("FACEBOOK_SECRET"), Host + "/auth/facebook/callback"),
-		youtube.New(os.Getenv("YOUTUBE_KEY"), os.Getenv("YOUTUBE_SECRET"), Host + "/auth/lastfm/callback"),
-	)
 }

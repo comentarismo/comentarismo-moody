@@ -43,24 +43,24 @@ ComentarismoMoody = function (options) {
     var vid = getURLParameter('vid');
     var jsonStr = getURLParameter('json');
 
-    if(vid) {
+    if (vid) {
         $("form input").val(vid);
-        if(vid) {
+        if (vid) {
             $("#loading").fadeIn(500);
-            $.getJSON("/moody?vid="+vid, function(resp) {
-                if(resp.Error){
+            $.getJSON("/moody?vid=" + vid, function (resp) {
+                if (resp.Error) {
                     console.log(resp)
-                }else {
-                    $("#loading").fadeOut(500, function() {
+                } else {
+                    $("#loading").fadeOut(500, function () {
                         window.json = resp;
                         drawReport(resp);
                     });
                 }
             });
         }
-    } else if(jsonStr) {
+    } else if (jsonStr) {
         var jsonObj = JSON.parse(jsonStr);
-        if(jsonObj) {
+        if (jsonObj) {
             drawReport(jsonObj);
             $("nav").hide();
         }
@@ -70,7 +70,7 @@ ComentarismoMoody = function (options) {
 
 
 function getURLParameter(name) {
-    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null
 }
 
 function dv(data, defaultData) {
@@ -78,7 +78,7 @@ function dv(data, defaultData) {
 }
 
 function truncate(str, max) {
-    if(str.length > max) {
+    if (str.length > max) {
         str = str.substring(0, max) + "...";
     }
 
@@ -86,28 +86,28 @@ function truncate(str, max) {
 }
 
 function userLink(username, type) {
-    if(type == 'YouTubeVideo') {
+    if (type == 'YouTubeVideo') {
         return "http://youtube.com/user/" + username;
-    } else if(type == 'InstagramPic') {
+    } else if (type == 'InstagramPic') {
         return "http://instagram.com/" + username;
     }
 
     return "#";
 }
 
-function setText(target, value, json, func, limit){
-    if(func){
+function setText(target, value, json, func, limit) {
+    if (func) {
         $(target).text(func(decodeURIComponent(json.Metadata[value]), limit));
-    } else if(json) {
+    } else if (json) {
         $(target).text(decodeURIComponent(json.Metadata[value]));
     } else {
         $(target).text(value);
     }
 }
 
-function setCss(header,target,json){
+function setCss(header, target, json) {
     $(header).css({
-        "background-image": "url('"+decodeURIComponent(json.Metadata[target])+"')"
+        "background-image": "url('" + decodeURIComponent(json.Metadata[target]) + "')"
     });
 }
 
@@ -116,11 +116,11 @@ function drawReport(json) {
     $("#report").show();
     if (json.Type == 'YouTubeVideo') {
 
-        setText("#video_title","Title",json, truncate, 50);
+        setText("#video_title", "Title", json, truncate, 50);
         setText("#channel_title", "ChannelTitle", json);
-        setText("#network_title","YouTube");
+        setText("#network_title", "YouTube");
         setText("#total_comments", "TotalComments", json);
-        setCss("#header","Thumbnail", json);
+        setCss("#header", "Thumbnail", json);
 
     } else if (json.Type == 'InstagramPic') {
         $("#video_title").text(truncate(decodeURIComponent(json.Metadata.Caption), 50));
@@ -129,7 +129,7 @@ function drawReport(json) {
         $("#total_comments").text(decodeURIComponent(json.Metadata.TotalComments));
         $("#video_views").text(decodeURIComponent(json.Metadata.TotalLikes));
         $("#header").css({
-            "background-image": "url('"+decodeURIComponent(json.Metadata.Thumbnail)+"')"
+            "background-image": "url('" + decodeURIComponent(json.Metadata.Thumbnail) + "')"
         });
     } else if (json.Type == 'FacebookPost') {
         $("#video_title").text(truncate(decodeURIComponent(json.Metadata.Caption), 50));
@@ -138,7 +138,7 @@ function drawReport(json) {
         $("#total_comments").text(decodeURIComponent(json.Metadata.TotalComments));
         $("#video_views").text(decodeURIComponent(json.Metadata.TotalLikes));
         $("#header").css({
-            "background-image": "url('"+decodeURIComponent(json.Metadata.Thumbnail)+"')"
+            "background-image": "url('" + decodeURIComponent(json.Metadata.Thumbnail) + "')"
         });
     } else if (json.Type == 'VineVideo') {
         $("#video_title").text(truncate(decodeURIComponent(json.Metadata.Caption), 50));
@@ -147,14 +147,14 @@ function drawReport(json) {
         $("#total_comments").text(decodeURIComponent(json.Metadata.TotalComments));
         $("#video_views").text(decodeURIComponent(json.Metadata.TotalLikes));
         $("#header").css({
-            "background-image": "url('"+decodeURIComponent(json.Metadata.Thumbnail)+"')"
+            "background-image": "url('" + decodeURIComponent(json.Metadata.Thumbnail) + "')"
         });
     }
 
     $("#comments_per_day").text(json.CommentAvgPerDay.toFixed(2));
     $(".progress-bar").attr('aria-valuenow', json.CommentCoveragePercent)
-        .css({'width': json.CommentCoveragePercent+'%'})
-        .text('Comments Analyzed: '+json.CommentCoveragePercent+'%');
+        .css({'width': json.CommentCoveragePercent + '%'})
+        .text('Comments Analyzed: ' + json.CommentCoveragePercent + '%');
 
     // Sort the keyword list
     sortable = [];
@@ -162,28 +162,42 @@ function drawReport(json) {
         sortable.push([k, json.Keywords[k]]);
     }
 
-    sortable.sort(function(a, b) {return b[1] - a[1]})
+    sortable.sort(function (a, b) {
+        return b[1] - a[1]
+    })
 
     var y = 0;
     for (var s in sortable) {
         y++;
-        $("#keywords").append('<tr><td>'+y+'.</td><td>'+sortable[s][0]+' ('+sortable[s][1]+')</td></tr>');
+        $("#keywords").append('<tr><td>' + y + '.</td><td>' + sortable[s][0] + ' (' + sortable[s][1] + ')</td></tr>');
     }
 
-    //if (json.TopComments) {
-    //    $("#sampling_header").text("Top Comments")
-    //    json.TopComments.forEach(function(v, i, a) {
-    //        $("#sampling").append('<div class="comment"><h4><a href="'+userLink(v.AuthorName, json.Type)+'">@'+v.AuthorName+'</a> ('+v.Likes+' likes)</h4><p>'+v.Content+'</p></div>')
-    //    });
-    //} else if (json.SampleComments) {
-    //    json.SampleComments.forEach(function(v, i, a) {
-    //        $("#sampling").append('<div class="comment"><h4><a href="'+userLink(v.AuthorName, json.Type)+'">@'+v.AuthorName+'</a></h4><p>'+v.Content+'</p></div>')
-    //    });
-    //}
+    if (json.TopComments) {
+        json.TopComments.forEach(function (v, i, a) {
+            $("#sampling").append('<div class="comment">' + v.Sentiment + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' + v.Content + '</p></div>')
+        });
+    }
+    var dp = {};
+    var terrible = "Terrible!";
+    var sucks = "Sucks";
+    var bad = "Bad";
+    var notgood = "Not Good";
+    var eh = "Eh";
+    var neutral = "Neutral";
+    var ok = "OK";
+    var good = "Good";
+    var likeit = "Like It";
+    var lovedit = "Loved It";
+    var awesome = "Awesome!";
+    var unknown = "Unknown";
 
+    var labels = [terrible, sucks, bad, notgood, eh, neutral, ok, good, likeit, lovedit, awesome, unknown];
     var dp = {};
     for (var x in json.Sentiment) {
         var n = json.Sentiment[x]["Name"];
+        if (n == "") {
+            n = unknown;
+        }
         var p = json.Sentiment[x]["Percent"];
 
         dp[n] = p;
@@ -193,15 +207,28 @@ function drawReport(json) {
 
     // Bar Chart
     var data = {
-        labels: ["Terrible!", "Sucks", "Bad", "Not Good", "Eh", "Neutral", "OK", "Good", "Like It", "Loved It", "Awesome!"],
+        labels: labels,
         datasets: [
             {
                 label: "Percent",
-                data: [dv(dp["-5"], 0), dv(dp["-4"], 0), dv(dp["-3"], 0), dv(dp["-2"], 0), dv(dp["-1"], 0), dv(dp["0"], 0), dv(dp["1"], 0), dv(dp["2"], 0), dv(dp["3"], 0), dv(dp["4"], 0), dv(dp["5"], 0)]
+                data: [dv(dp[terrible], 0), dv(dp[sucks], 0), dv(dp[bad], 0), dv(dp[notgood], 0), dv(dp[eh], 0), dv(dp[neutral], 0), dv(dp[ok], 0), dv(dp[good], 0), dv(dp[likeit], 0), dv(dp[lovedit], 0), dv(dp[awesome], 0), dv(dp[unknown], 0)]
             }
         ]
     };
     new Chart(ctx).Bar(data, {scaleShowGridLines: false, responsive: true, maintainAspectRatio: false});
+
+
+    if (json.SentimentList) {
+
+        for (var x in json.SentimentList) {
+            json.SentimentList[x].forEach(function (v, i, a) {
+                $("#all_sampling").append('<div class="comment">' + v.Sentiment + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' + v.Content + '</p></div>')
+
+            });
+        }
+    }
+
+
 }
 
 },{"chart.js":2,"ga-browser":3,"jdenticon":5,"jquery":6,"md5":7,"moment":11,"underscore":12}],2:[function(require,module,exports){

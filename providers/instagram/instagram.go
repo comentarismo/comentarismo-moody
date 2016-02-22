@@ -1,4 +1,4 @@
-// Package facebook implements the OAuth2 protocol for authenticating users through Facebook.
+// Package facebook implements the OAuth2 protocol for authenticating users through Instagram.
 // This package can be used as a reference implementation of an OAuth2 provider for
 package instagram
 
@@ -11,7 +11,7 @@ import (
 	"errors"
 )
 
-// New creates a new Facebook provider, and sets up important connection details.
+// New creates a new Instagram provider, and sets up important connection details.
 // You should always call `facebook.New` to get a new Provider. Never try to create
 // one manually.
 func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
@@ -22,7 +22,7 @@ func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 	return p
 }
 
-// Provider is the implementation of `Provider` for accessing Facebook.
+// Provider is the implementation of `Provider` for accessing Instagram.
 type Provider struct {
 	ClientKey   string
 	Secret      string
@@ -42,15 +42,16 @@ func (p *Provider) Name() string {
 	return "instagram"
 }
 
+//thePost = &model.InstagramPic{ShortCode: urlParts[len(urlParts)-1]}
 func (p *Provider) SetID(urlParts [] string) error {
 	p.ID = urlParts[len(urlParts)-1]
-	p.PageName = urlParts[len(urlParts)-2]
 	return nil
 }
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
-	theReport.Type = "FacebookPost"
+	theReport.Type = "InstagramPic"
 	theReport.ID = p.ID
+	theReport.Title = p.Caption
 	theReport.PublishedAt = p.PublishedAt
 	theReport.TotalComments = p.TotalComments
 	theReport.Metadata = p
@@ -146,7 +147,7 @@ func (this *Provider) GetPageID() model.Provider {
 	return this
 }
 
-func fbRequest(path, FacebookKey, FacebookSecret string) (*http.Response, error) {
+func fbRequest(path, InstagramKey, InstagramSecret string) (*http.Response, error) {
 	u, err := url.Parse(path)
 	if err != nil {
 		return nil, errors.New("FB request path invalid.")
@@ -156,7 +157,7 @@ func fbRequest(path, FacebookKey, FacebookSecret string) (*http.Response, error)
 	u.Host = "graph.facebook.com"
 
 	query := u.Query()
-	query.Add("access_token", FacebookKey + "|" + FacebookSecret)
+	query.Add("access_token", InstagramKey + "|" + InstagramSecret)
 	u.RawQuery = query.Encode()
 
 	response, err := http.Get(u.String())

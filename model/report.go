@@ -12,7 +12,9 @@ type Report struct {
 	CommentCoveragePercent float64
 	CommentAvgPerDay       float64
 	Keywords               map[string]int
+
 	Sentiment              []SentimentTag
+	SentimentList		map[string][]*Comment
 	Metadata               Provider
 	SampleComments         []*Comment
 	TopComments            []*Comment

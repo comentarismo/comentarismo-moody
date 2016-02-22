@@ -67,14 +67,30 @@ func LoadTrainingData(path string) {
 	fmt.Println("Learning complete!")
 }
 
+var sentimentList map[string]string
+
+func init(){
+	sentimentList = make(map[string]string)
+	sentimentList["-5"] = "Terrible!"
+	sentimentList["-4"] = "Sucks"
+	sentimentList["-3"] = "Bad"
+	sentimentList["-2"] = "Not Good"
+	sentimentList["-1"] = "Eh"
+	sentimentList["0"] = "Neutral"
+	sentimentList["1"] = "OK"
+	sentimentList["2"] = "Good"
+	sentimentList["3"] = "Like It"
+	sentimentList["4"] = "Loved It"
+	sentimentList["5"] = "Awesome!"
+	sentimentList["6"] = "Unknown"
+}
 // GetSentiment classifies a single string of text. Returns the tag it matched.
 func GetSentiment(text string) string {
 	InitShield()
-
 	tag, err := shieldInstance.Classify(text)
-	if err == nil {
-		return tag
+	if err != nil || tag == "" {
+		tag = "6"
 	}
-
-	return "UNKNOWN"
+	//log.Println(text," classified as ", sentimentList[tag])
+	return sentimentList[tag]
 }

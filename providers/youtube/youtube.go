@@ -1,11 +1,11 @@
-// Package facebook implements the OAuth2 protocol for authenticating users through Facebook.
-// This package can be used as a reference implementation of an OAuth2 provider for
+// Package youtube implements the OAuth2 protocol for authenticating users through Youtube.
+// This package can be used as a reference implementation of an OAuth2 provider
 package youtube
 
 import (
 	"net/http"
 
-	transport "github.com/google/google-api-go-client/googleapi/transport"
+	"github.com/google/google-api-go-client/googleapi/transport"
 	youtube "google.golang.org/api/youtube/v3"
 
 	"comentarismo-moody/model"
@@ -18,13 +18,10 @@ import (
 func init(){
 
 }
-// New creates a new Facebook provider, and sets up important connection details.
-// You should always call `facebook.New` to get a new Provider. Never try to create
+// New creates a new Youtube provider, and sets up important connection details.
+// You should always call `youtube.New` to get a new Provider. Never try to create
 // one manually.
 func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
-	if(clientKey == ""){
-		clientKey = "AIzaSyBameiyxxJw0W27lydpPuPRocfvGza9gXM"
-	}
 	p := &Provider{
 		ClientKey:   clientKey,
 		Secret:      secret,
@@ -32,7 +29,8 @@ func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 	return p
 }
 
-// Provider is the implementation of `Provider` for accessing Facebook.
+// Provider is the implementation of `Provider` for accessing Youtube.
+//Provider.Secret is not used for youtube but is here just in case
 type Provider struct {
 	ClientKey   string
 	Secret      string
@@ -69,7 +67,7 @@ func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList
 
 
 
-// Debug is a no-op for the facebook package.
+// Debug is a no-op for the package.
 func (p *Provider) Debug(debug bool) {}
 
 func (this *Provider) GetPageID() model.Provider {

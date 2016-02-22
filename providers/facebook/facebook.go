@@ -15,12 +15,6 @@ import (
 // You should always call `facebook.New` to get a new Provider. Never try to create
 // one manually.
 func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
-	if clientKey == "" {
-		clientKey = "118792195142376"
-	}
-	if secret == "" {
-		secret = "49e8c46b9bec4f484fa045cedac63ea2"
-	}
 	p := &Provider{
 		ClientKey:   clientKey,
 		Secret:      secret,
