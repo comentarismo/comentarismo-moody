@@ -23,6 +23,7 @@
 }());
 
 $ = require('jquery'),
+    emojione = require("emojione"),
     analytics = require('ga-browser')(),
     _ = require('underscore'),
     jdenticon = require("jdenticon"),
@@ -171,12 +172,6 @@ function drawReport(json) {
         $("#keywords").append('<tr><td>' + y + '.</td><td>' + sortable[s][0] + ' (' + sortable[s][1] + ')</td></tr>');
     }
 
-    if (json.TopComments) {
-        json.TopComments.forEach(function (v, i, a) {
-            $("#sampling").append('<div class="comment">' + v.Sentiment + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' + v.Content + '</p></div>')
-        });
-    }
-    var dp = {};
     var terrible = "Terrible!";
     var sucks = "Sucks";
     var bad = "Bad";
@@ -189,6 +184,27 @@ function drawReport(json) {
     var lovedit = "Loved It";
     var awesome = "Awesome!";
     var unknown = "Unknown";
+
+
+    var emojis = {
+        "Terrible!": terrible + emojione.shortnameToUnicode(":scream:"),
+        "Sucks": sucks + emojione.shortnameToUnicode(":angry:"),
+        "Bad": bad + emojione.shortnameToUnicode(":worried:"),
+        "Not Good": notgood + emojione.shortnameToUnicode(":unamused:"),
+        "Eh": eh + emojione.shortnameToUnicode(":confused:"),
+        "Neutral": neutral + emojione.shortnameToUnicode(":expressionless:"),
+        "OK": ok + emojione.shortnameToUnicode(":neutral_face:"),
+        "Good": good + emojione.shortnameToUnicode(":smile:"),
+        "Like It": likeit + emojione.shortnameToUnicode(":smiley:"),
+        "Loved It": lovedit + emojione.shortnameToUnicode(":yum:"),
+        "Awesome!": awesome + emojione.shortnameToUnicode(":grinning:"),
+        "Unknown": unknown + emojione.shortnameToUnicode(":no_mouth:")
+    };
+
+    var elabels = [
+        emojis[terrible], emojis[sucks], emojis[bad], emojis[notgood], emojis[eh], emojis[neutral],
+        emojis[ok], emojis[good], emojis[likeit], emojis[lovedit], emojis[awesome], emojis[unknown]
+    ];
 
     var labels = [terrible, sucks, bad, notgood, eh, neutral, ok, good, likeit, lovedit, awesome, unknown];
     var dp = {};
@@ -206,7 +222,7 @@ function drawReport(json) {
 
     // Bar Chart
     var data = {
-        labels: labels,
+        labels: elabels,
         datasets: [
             {
                 label: "Percent",
@@ -217,15 +233,23 @@ function drawReport(json) {
     new Chart(ctx).Bar(data, {scaleShowGridLines: false, responsive: true, maintainAspectRatio: false});
 
 
+    if (json.TopComments) {
+        json.TopComments.forEach(function (v, i, a) {
+            $("#sampling").append('<div class="comment">' + emojis[v.Sentiment] + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' + emojione.shortnameToImage(v.Content) + '</p></div>')
+        });
+    }
+
     if (json.SentimentList) {
 
         for (var x in json.SentimentList) {
             json.SentimentList[x].forEach(function (v, i, a) {
-                $("#all_sampling").append('<div class="comment">' + v.Sentiment + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' + v.Content + '</p></div>')
+                $("#all_sampling").append('<div class="comment">' + emojis[v.Sentiment] + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' +  emojione.shortnameToImage(v.Content) + '</p></div>')
 
             });
         }
     }
+
+
 
 
 }
