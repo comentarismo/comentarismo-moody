@@ -7,6 +7,7 @@ import (
 	"os"
 	"github.com/gorilla/pat"
 	gracehttp "github.com/facebookgo/grace/gracehttp"
+	redis "gopkg.in/redis.v3"
 
 	"comentarismo-moody/providers/facebook"
 	"comentarismo-moody/providers/youtube"
@@ -18,6 +19,7 @@ import (
 
 var (
 	router *pat.Router
+	Client *redis.Client
 )
 
 
@@ -43,6 +45,15 @@ func init() {
 	}
 	if REDIS_PASS == "" {
 	}
+
+	Client = redis.NewClient(&redis.Options{
+		Addr:     REDIS_HOST,
+		Password: REDIS_PASS, // no password set
+		DB:       0,  // use default DB
+	})
+
+	pong, err := Client.Ping().Result()
+	log.Println(pong, err)
 }
 
 //NewServer return pointer to new created server object
