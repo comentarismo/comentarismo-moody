@@ -316,7 +316,7 @@ func (p *connPool) reaper() {
 	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
 
-	for range ticker.C {
+	for _ = range ticker.C {
 		if p.closed() {
 			break
 		}

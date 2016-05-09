@@ -188,7 +188,7 @@ func (ring *Ring) rebalance() {
 func (ring *Ring) heartbeat() {
 	ticker := time.NewTicker(100 * time.Millisecond)
 	defer ticker.Stop()
-	for range ticker.C {
+	for _ = range ticker.C {
 		var rebalance bool
 
 		ring.mx.RLock()

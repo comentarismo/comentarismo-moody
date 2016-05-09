@@ -41,7 +41,7 @@ func init() {
 		Host = "http://localhost" + ":" + Port
 	}
 	if REDIS_HOST == "" {
-		REDIS_HOST = "192.168.0.42:6379"
+		REDIS_HOST = "g7-box:6379"
 	}
 	if REDIS_PASS == "" {
 	}

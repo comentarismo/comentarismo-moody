@@ -9,7 +9,7 @@ TARGET-MIN=comentarismo-moody-client-min.js
 TARGET-MIN-MAP=comentarismo-moody-client-min.map.json
 build_client: npm
 	$(NODE) $(BROWSERIFY) -o $(BUILD)/$(TARGET) $(SRC)
-	$(NODE) $(BROWSERIFY) -d -p [minifyify --map $(TARGET-MIN-MAP) --output $(BUILD)/$(TARGET-MIN-MAP)] -o $(BUILD)/$(TARGET-MIN) $(SRC)
+	#$(NODE) $(BROWSERIFY) -d -p [minifyify --map $(TARGET-MIN-MAP) --output $(BUILD)/$(TARGET-MIN-MAP)] -o $(BUILD)/$(TARGET-MIN) $(SRC)
 
 npm:
 	$(NPM) install

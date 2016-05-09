@@ -1,30 +1,7 @@
 {
 	"ImportPath": "comentarismo-moody",
-	"GoVersion": "go1.4.2",
+	"GoVersion": "go1.6",
 	"Deps": [
-		{
-			"ImportPath": "github.com/Sirupsen/logrus",
-			"Comment": "v0.8.2-2-g6ba91e2",
-			"Rev": "6ba91e24c498b49d0363c723e9e2ab2b5b8fd012"
-		},
-		{
-			"ImportPath": "github.com/cenkalti/backoff",
-			"Rev": "6c45d6bc1e78d94431dff8fc28a99f20bafa355a"
-		},
-		{
-			"ImportPath": "github.com/dancannon/gorethink",
-			"Comment": "v0.7.2",
-			"Rev": "2097b2a2d4616f7c83106af49f2e726ecc2d4cf9"
-		},
-		{
-			"ImportPath": "github.com/davecgh/go-spew/spew",
-			"Rev": "5215b55f46b2b919f50a1df0eaa5886afe4e3b3d"
-		},
-		{
-			"ImportPath": "github.com/dchest/captcha",
-			"Comment": "weekly.2012-03-04-18-g9e95214",
-			"Rev": "9e952142169c3cd6268c6482a3a61c121536aca2"
-		},
 		{
 			"ImportPath": "github.com/eaigner/shield",
 			"Rev": "7e8e5f1f2c821179b9d433c42169608b3d751389"
@@ -58,10 +35,6 @@
 			"Rev": "6ece6e0a09f28cc399b21550cbf37ab39ba63cce"
 		},
 		{
-			"ImportPath": "github.com/golang/protobuf/proto",
-			"Rev": "34a5f244f1c01cdfee8e60324258cfbb97a42aec"
-		},
-		{
 			"ImportPath": "github.com/google/google-api-go-client/googleapi/transport",
 			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
 		},
@@ -82,21 +55,8 @@
 			"Rev": "e35082b930883c224d6a01a3e6813a3ba31b16a9"
 		},
 		{
-			"ImportPath": "github.com/pmezard/go-difflib/difflib",
-			"Rev": "792786c7400a136282c1664665ae0a8db921c6c2"
-		},
-		{
-			"ImportPath": "github.com/stretchr/testify/assert",
-			"Comment": "v1.1.3-2-g9f9027f",
-			"Rev": "9f9027faeb0dad515336ed2f28317f9f8f527ab4"
-		},
-		{
 			"ImportPath": "golang.org/x/net/context",
 			"Rev": "cbbbe2bc0f2efdd2afb318d93f1eadb19350e4a3"
-		},
-		{
-			"ImportPath": "golang.org/x/oauth2",
-			"Rev": "b5adcc2dcdf009d0391547edc6ecbaff889f5bb9"
 		},
 		{
 			"ImportPath": "google.golang.org/api/gensupport",

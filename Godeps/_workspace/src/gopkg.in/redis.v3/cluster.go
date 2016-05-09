@@ -262,7 +262,7 @@ func (c *ClusterClient) lazyReloadSlots() {
 func (c *ClusterClient) reaper() {
 	ticker := time.NewTicker(time.Minute)
 	defer ticker.Stop()
-	for range ticker.C {
+	for _ = range ticker.C {
 		c.clientsMx.RLock()
 
 		if c.closed {

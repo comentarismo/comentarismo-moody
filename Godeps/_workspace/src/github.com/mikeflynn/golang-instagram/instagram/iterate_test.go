@@ -28,7 +28,7 @@ func TestIterate_GetUserFollowedBy(t *testing.T) {
 	}
 
 	// should be closed
-	if u, ok := <-userChan; ok {
+	if u, ok := <- userChan; ok {
 		t.Error("User Channel shouldn't have any more data on it. It should close!", u)
 	}
 
