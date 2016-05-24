@@ -9,8 +9,9 @@ import (
 	"os"
 )
 
-var REDIS_HOST = os.Getenv("redis_host")
-var REDIS_PASS = os.Getenv("redis_pass")
+var REDIS_HOST = os.Getenv("REDIS_HOST")
+var REDIS_PORT = os.Getenv("REDIS_PORT")
+var REDIS_PASSWORD = os.Getenv("REDIS_PASSWORD")
 
 var buf bytes.Buffer
 var shieldInstance shield.Shield
@@ -24,14 +25,17 @@ type SentimentTag struct {
 // InitShield instantiates the text classifier engine
 func InitShield() {
 	if REDIS_HOST == "" {
-		REDIS_HOST = "192.168.0.42:6379"
+		REDIS_HOST = "g7-box"
 	}
-	if REDIS_PASS == "" {
+	if REDIS_PORT == "" {
+		REDIS_HOST = "6379"
+	}
+	if REDIS_PASSWORD == "" {
 	}
 	if shieldInstance == nil {
 		shieldInstance = shield.New(
 			shield.NewEnglishTokenizer(),
-			shield.NewRedisStore(REDIS_HOST, REDIS_PASS, log.New(&buf, "logger: ", log.Lshortfile), ""),
+			shield.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), ""),
 		)
 	}
 }

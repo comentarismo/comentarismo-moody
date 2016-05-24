@@ -23,8 +23,9 @@ var (
 )
 
 
-var REDIS_HOST = os.Getenv("redis_host")
-var REDIS_PASS = os.Getenv("redis_pass")
+var REDIS_HOST = os.Getenv("REDIS_HOST")
+var REDIS_PORT = os.Getenv("REDIS_PORT")
+var REDIS_PASSWORD = os.Getenv("REDIS_PASSWORD")
 
 var Host = os.Getenv("host")
 
@@ -41,14 +42,17 @@ func init() {
 		Host = "http://localhost" + ":" + Port
 	}
 	if REDIS_HOST == "" {
-		REDIS_HOST = "g7-box:6379"
+		REDIS_HOST = "g7-box"
 	}
-	if REDIS_PASS == "" {
+	if REDIS_PORT == "" {
+		REDIS_HOST = "6379"
+	}
+	if REDIS_PASSWORD == "" {
 	}
 
 	Client = redis.NewClient(&redis.Options{
-		Addr:     REDIS_HOST,
-		Password: REDIS_PASS, // no password set
+		Addr:     REDIS_HOST+":"+REDIS_PORT,
+		Password: REDIS_PASSWORD, // no password set
 		DB:       0,  // use default DB
 	})
 
