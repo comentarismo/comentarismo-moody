@@ -18,9 +18,9 @@ func init() {
 }
 
 func MoodyHandler(w http.ResponseWriter, req *http.Request) {
-	log.Println("ReportHandler")
 	postURL := req.URL.Query().Get("vid")
 	refresh := req.URL.Query().Get("refresh")
+	log.Println("ReportHandler ",postURL,refresh)
 	var jsonBytes []byte
 
 	if (refresh == "") {
@@ -35,6 +35,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 			panic(err)
 		} else {
 			log.Println("Serve from cache")
+			w.Header().Set("Content-Type", "application/json")
 			w.Write([]byte(cached))
 			return
 		}

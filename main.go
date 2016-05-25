@@ -5,12 +5,12 @@ import (
 	"os"
 )
 
-//Host eg: localhost:3001 ; or website.com
+//Host eg: localhost:3003
 var Port = os.Getenv("PORT")
 
 func main() {
 	if Port == "" {
-		Port = "3000"
+		Port = "3003"
 	}
 	server.StartServer(Port)
 }
