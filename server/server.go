@@ -6,8 +6,9 @@ import (
 	"net/http"
 	"os"
 	"github.com/gorilla/pat"
-	gracehttp "github.com/facebookgo/grace/gracehttp"
+	"github.com/facebookgo/grace/gracehttp"
 	redis "gopkg.in/redis.v3"
+	r "github.com/dancannon/gorethink"
 
 	"comentarismo-moody/providers/facebook"
 	"comentarismo-moody/providers/youtube"
@@ -15,13 +16,14 @@ import (
 	"comentarismo-moody/providers/vinevideo"
 
 	"comentarismo-moody/model"
+	"strconv"
 )
 
 var (
+	Session *r.Session
 	router *pat.Router
 	Client *redis.Client
 )
-
 
 var REDIS_HOST = os.Getenv("REDIS_HOST")
 var REDIS_PORT = os.Getenv("REDIS_PORT")
@@ -31,9 +33,45 @@ var Host = os.Getenv("host")
 
 //Port eg: 3000
 var Port = os.Getenv("PORT")
+var DB = os.Getenv("db")
+
+//Table eg: 3001
+var Table = os.Getenv("table")
+
+var maxopen = os.Getenv("maxopen")
+var maxidle = os.Getenv("maxidle")
 
 func init() {
 	//var err error
+
+	if DB == "" {
+		DB = "g7-box:28015"
+	}
+
+	if Table == "" {
+		Table = "test"
+	}
+	if maxopen == "" {
+		maxopen = "80"
+	}
+	if maxidle == "" {
+		maxidle = "40"
+	}
+	maxo, _ := strconv.Atoi(maxopen)
+	maxi, _ := strconv.Atoi(maxidle)
+
+	log.Println("Loading standalone " + DB)
+	var err error
+	Session, err = r.Connect(r.ConnectOpts{
+		Address: DB,
+		Database: Table,
+		MaxOpen:  maxo,
+		MaxIdle: maxi,
+	})
+	if err != nil {
+		log.Fatalln("Error: %v", err)
+		os.Exit(0)
+	}
 
 	if Port == "" {
 		Port = "3000"
@@ -51,12 +89,16 @@ func init() {
 	}
 
 	Client = redis.NewClient(&redis.Options{
-		Addr:     REDIS_HOST+":"+REDIS_PORT,
+		Addr:     REDIS_HOST + ":" + REDIS_PORT,
 		Password: REDIS_PASSWORD, // no password set
-		DB:       0,  // use default DB
+		DB:       0, // use default DB
 	})
 
 	pong, err := Client.Ping().Result()
+	if err != nil {
+		log.Fatalln("Error: %v", err)
+		os.Exit(0)
+	}
 	log.Println(pong, err)
 }
 
@@ -69,7 +111,7 @@ func NewServer(Port string) *http.Server {
 	}
 }
 
-func initProviders(){
+func initProviders() {
 	log.Println("Going to register providers")
 	// Provider is the interface for all the various 3rd party Provider types (YouTube, Facebook, etc...)
 	model.UseProviders(

@@ -97,9 +97,9 @@ function userLink(username, type) {
 
 function setText(target, value, json, func, limit) {
     if (func) {
-        $(target).text(func(decodeURIComponent(json.Metadata[value]), limit));
+        $(target).text(func(decodeURIComponent(json.metadata[value]), limit));
     } else if (json) {
-        $(target).text(decodeURIComponent(json.Metadata[value]));
+        $(target).text(decodeURIComponent(json.metadata[value]));
     } else {
         $(target).text(value);
     }
@@ -107,59 +107,59 @@ function setText(target, value, json, func, limit) {
 
 function setCss(header, target, json) {
     $(header).css({
-        "background-image": "url('" + decodeURIComponent(json.Metadata[target]) + "')"
+        "background-image": "url('" + decodeURIComponent(json.metadata[target]) + "')"
     });
 }
 
 function drawReport(json) {
-    $("nav input").val(json.URL);
+    $("nav input").val(json.url);
     $("#report").show();
-    if (json.Type == 'YouTubeVideo') {
+    if (json.type == 'YouTubeVideo') {
 
-        setText("#video_title", "Title", json, truncate, 50);
-        setText("#channel_title", "ChannelTitle", json);
+        setText("#video_title", "title", json, truncate, 50);
+        setText("#channel_title", "channeltitle", json);
         setText("#network_title", "YouTube");
-        setText("#total_comments", "TotalComments", json);
-        setCss("#header", "Thumbnail", json);
+        setText("#total_comments", "totalcomments", json);
+        setCss("#header", "thumbnail", json);
 
     } else if (json.Type == 'InstagramPic') {
-        $("#video_title").text(truncate(decodeURIComponent(json.Metadata.Caption), 50));
-        $("#channel_title").text(decodeURIComponent(json.Metadata.UserName));
+        $("#video_title").text(truncate(decodeURIComponent(json.metadata.caption), 50));
+        $("#channel_title").text(decodeURIComponent(json.metadata.username));
         $("#network_title").text("Instagram");
-        $("#total_comments").text(decodeURIComponent(json.Metadata.TotalComments));
-        $("#video_views").text(decodeURIComponent(json.Metadata.TotalLikes));
+        $("#total_comments").text(decodeURIComponent(json.metadata.totalcomments));
+        $("#video_views").text(decodeURIComponent(json.metadata.totallikes));
         $("#header").css({
-            "background-image": "url('" + decodeURIComponent(json.Metadata.Thumbnail) + "')"
+            "background-image": "url('" + decodeURIComponent(json.metadata.thumbnail) + "')"
         });
     } else if (json.Type == 'FacebookPost') {
-        $("#video_title").text(truncate(decodeURIComponent(json.Metadata.Caption), 50));
-        $("#channel_title").text(decodeURIComponent(json.Metadata.UserName));
+        $("#video_title").text(truncate(decodeURIComponent(json.metadata.caption), 50));
+        $("#channel_title").text(decodeURIComponent(json.metadata.username));
         $("#network_title").text("Facebook");
-        $("#total_comments").text(decodeURIComponent(json.Metadata.TotalComments));
-        $("#video_views").text(decodeURIComponent(json.Metadata.TotalLikes));
+        $("#total_comments").text(decodeURIComponent(json.metadata.totalcomments));
+        $("#video_views").text(decodeURIComponent(json.metadata.totallikes));
         $("#header").css({
-            "background-image": "url('" + decodeURIComponent(json.Metadata.Thumbnail) + "')"
+            "background-image": "url('" + decodeURIComponent(json.metadata.thumbnail) + "')"
         });
     } else if (json.Type == 'VineVideo') {
-        $("#video_title").text(truncate(decodeURIComponent(json.Metadata.Caption), 50));
-        $("#channel_title").text(decodeURIComponent(json.Metadata.UserName));
+        $("#video_title").text(truncate(decodeURIComponent(json.metadata.caption), 50));
+        $("#channel_title").text(decodeURIComponent(json.metadata.username));
         $("#network_title").text("Vine");
-        $("#total_comments").text(decodeURIComponent(json.Metadata.TotalComments));
-        $("#video_views").text(decodeURIComponent(json.Metadata.TotalLikes));
+        $("#total_comments").text(decodeURIComponent(json.metadata.totalcomments));
+        $("#video_views").text(decodeURIComponent(json.metadata.totallikes));
         $("#header").css({
-            "background-image": "url('" + decodeURIComponent(json.Metadata.Thumbnail) + "')"
+            "background-image": "url('" + decodeURIComponent(json.metadata.thumbnail) + "')"
         });
     }
 
-    $("#comments_per_day").text(json.CommentAvgPerDay.toFixed(2));
-    $(".progress-bar").attr('aria-valuenow', json.CommentCoveragePercent)
-        .css({'width': json.CommentCoveragePercent + '%'})
-        .text('Comments Analyzed: ' + json.CommentCoveragePercent + '%');
+    $("#comments_per_day").text(json.commentavgperday.toFixed(2));
+    $(".progress-bar").attr('aria-valuenow', json.commentcoveragepercent)
+        .css({'width': json.commentcoveragepercent + '%'})
+        .text('Comments Analyzed: ' + json.commentcoveragepercent + '%');
 
     // Sort the keyword list
     sortable = [];
-    for (var k in json.Keywords) {
-        sortable.push([k, json.Keywords[k]]);
+    for (var k in json.keywords) {
+        sortable.push([k, json.keywords[k]]);
     }
 
     sortable.sort(function (a, b) {
@@ -208,12 +208,12 @@ function drawReport(json) {
 
     var labels = [terrible, sucks, bad, notgood, eh, neutral, ok, good, likeit, lovedit, awesome, unknown];
     var dp = {};
-    for (var x in json.Sentiment) {
-        var n = json.Sentiment[x]["Name"];
+    for (var x in json.sentiment) {
+        var n = json.sentiment[x]["name"];
         if (n == "") {
             n = unknown;
         }
-        var p = json.Sentiment[x]["Percent"];
+        var p = json.sentiment[x]["percent"];
 
         dp[n] = p;
     }
@@ -226,28 +226,83 @@ function drawReport(json) {
         datasets: [
             {
                 label: "Percent",
+                backgroundColor: [
+                    "#FF0000",
+                    "#E80957",
+                    "#E809BF",
+                    "#BB09E8",
+                    "#2709E8",
+                    "#0957E8",
+                    "#0980E8",
+                    "#09E8BF",
+                    "#09E85B",
+                    "#23E809",
+                    "#B8E809",
+                    "#E8E409",
+                ],
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
                 data: [dv(dp[terrible], 0), dv(dp[sucks], 0), dv(dp[bad], 0), dv(dp[notgood], 0), dv(dp[eh], 0), dv(dp[neutral], 0), dv(dp[ok], 0), dv(dp[good], 0), dv(dp[likeit], 0), dv(dp[lovedit], 0), dv(dp[awesome], 0), dv(dp[unknown], 0)]
             }
         ]
     };
-    new Chart(ctx).Bar(data, {scaleShowGridLines: false, responsive: true, maintainAspectRatio: false});
 
 
-    if (json.TopComments) {
-        json.TopComments.forEach(function (v, i, a) {
-            $("#sampling").append('<div class="comment">' + emojis[v.Sentiment] + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' + emojione.shortnameToImage(v.Content) + '</p></div>')
-        });
-    }
+    new Chart(ctx,{type: 'bar', data:data, options: {showLines: false, responsive: true, maintainAspectRatio: false}});
 
-    if (json.SentimentList) {
 
-        for (var x in json.SentimentList) {
-            json.SentimentList[x].forEach(function (v, i, a) {
-                $("#all_sampling").append('<div class="comment">' + emojis[v.Sentiment] + '<h4><a href="' + userLink(v.AuthorName, json.Type) + '">@' + v.AuthorName + '</a> (' + v.Likes + ' likes)</h4><p>' +  emojione.shortnameToImage(v.Content) + '</p></div>')
+    var ctx2 = document.getElementById("scaleChart").getContext("2d");
 
-            });
-        }
-    }
+    // Bar Chart
+    var data2 = {
+        labels: elabels,
+        datasets: [
+            {
+                label: "Percent",
+                backgroundColor: [
+                    "#FF0000",
+                    "#E80957",
+                    "#E809BF",
+                    "#BB09E8",
+                    "#2709E8",
+                    "#0957E8",
+                    "#0980E8",
+                    "#09E8BF",
+                    "#09E85B",
+                    "#23E809",
+                    "#B8E809",
+                    "#E8E409",
+                ],
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 1,
+                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [dv(dp[terrible], 0), dv(dp[sucks], 0), dv(dp[bad], 0), dv(dp[notgood], 0), dv(dp[eh], 0), dv(dp[neutral], 0), dv(dp[ok], 0), dv(dp[good], 0), dv(dp[likeit], 0), dv(dp[lovedit], 0), dv(dp[awesome], 0), dv(dp[unknown], 0)]
+            }
+        ]
+    };
+
+
+    new Chart(ctx2,{type: 'pie', data:data2, options: {}});
+
+
+    //if (json.topcomments) {
+    //    json.topcomments.forEach(function (v, i, a) {
+    //        $("#sampling").append('<div class="comment">' + emojis[v.sentiment] + '<h4><a href="' + userLink(v.authorname, json.Type) + '">@' + v.authorname + '</a> (' + v.likes + ' likes)</h4><p>' + emojione.shortnameToImage(v.content) + '</p></div>')
+    //    });
+    //}
+
+    //if (json.sentimentlist) {
+    //
+    //    for (var x in json.sentimentlist) {
+    //        json.sentimentlist[x].forEach(function (v, i, a) {
+    //            $("#all_sampling").append('<div class="comment">' + emojis[v.sentiment] + '<h4><a href="' + userLink(v.authorname, json.Type) + '">@' + v.authorname + '</a> (' + v.likes + ' likes)</h4><p>' +  emojione.shortnameToImage(v.content) + '</p></div>')
+    //
+    //        });
+    //    }
+    //}
 
 
 

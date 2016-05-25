@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "chart.js": "^1.0.2",
+    "chart.js": "^2.1.3",
     "emojione": "^2.1.1",
     "ga-browser": "^1.0.0",
     "jdenticon": "^1.3.2",

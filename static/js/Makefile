@@ -12,4 +12,4 @@ build_client: npm
 	#$(NODE) $(BROWSERIFY) -d -p [minifyify --map $(TARGET-MIN-MAP) --output $(BUILD)/$(TARGET-MIN-MAP)] -o $(BUILD)/$(TARGET-MIN) $(SRC)
 
 npm:
-	$(NPM) install
+#	$(NPM) install

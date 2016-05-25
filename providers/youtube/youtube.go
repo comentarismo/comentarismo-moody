@@ -32,16 +32,16 @@ func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 // Provider is the implementation of `Provider` for accessing Youtube.
 //Provider.Secret is not used for youtube but is here just in case
 type Provider struct {
-	ClientKey   string
-	Secret      string
-	ID            string
-	Title         string
-	VideoViews    uint64
-	ChannelID     string
-	ChannelTitle  string
-	TotalComments uint64
-	Thumbnail     string
-	PublishedAt   string
+	ClientKey   string `schema:"clientkey" gorethink:"clientkey,omitempty" json:"clientkey,omitempty"`
+	Secret      string `schema:"secret" gorethink:"secret,omitempty" json:"secret,omitempty"`
+	ID            string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Title         string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	VideoViews    uint64 `schema:"videoviews" gorethink:"videoviews,omitempty" json:"videoviews,omitempty"`
+	ChannelID     string `schema:"channelid" gorethink:"channelid,omitempty" json:"channelid,omitempty"`
+	ChannelTitle  string `schema:"channeltitle" gorethink:"channeltitle,omitempty" json:"channeltitle,omitempty"`
+	TotalComments uint64 `schema:"totalcomments" gorethink:"totalcomments,omitempty" json:"totalcomments,omitempty"`
+	Thumbnail     string `schema:"thumbnail" gorethink:"thumbnail,omitempty" json:"thumbnail,omitempty"`
+	PublishedAt   string `schema:"publishedat" gorethink:"publishedat,omitempty" json:"publishedat,omitempty"`
 }
 
 // Name is the name used to retrieve this provider later.
@@ -62,6 +62,7 @@ func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList
 	theReport.PublishedAt = p.PublishedAt
 	theReport.TotalComments = p.TotalComments
 	theReport.Metadata = p
+	//clear key and secret fields
 	theReport.TopComments = comments.GetMostLiked(10)
 }
 

@@ -18,8 +18,8 @@ var shieldInstance shield.Shield
 
 // SentimentTag is a list entry of the tag and the percent of comments that were classified with that tag.
 type SentimentTag struct {
-	Name    string
-	Percent float64
+	Name    string `schema:"name" gorethink:"url,omitempty" json:"name,omitempty"`
+	Percent float64 `schema:"percent" gorethink:"percent,omitempty" json:"percent,omitempty"`
 }
 
 // InitShield instantiates the text classifier engine

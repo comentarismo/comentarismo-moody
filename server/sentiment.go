@@ -3,7 +3,6 @@ package server
 import (
 	model "comentarismo-moody/model"
 	"encoding/json"
-	"fmt"
 	"log"
 	"math"
 	"regexp"
@@ -11,6 +10,7 @@ import (
 	"time"
 	"os"
 	"strings"
+	"errors"
 )
 
 var (
@@ -51,7 +51,7 @@ type WebError struct {
 
 func LoadTrainingData() bool {
 	if Training == "" {
-		Training = "./static/training/afinn-111.csv"
+		Training = "./static/training/afinn-111-en.csv"
 	}
 	if IsTrained == false {
 		log.Println("Training " + Training)
@@ -65,15 +65,17 @@ func LoadTrainingData() bool {
 }
 
 
-func RunReport(postURL string) []byte {
+func RunReport(postURL string)  (model.Report, error) {
 	// Parse URL
 	notTrained := LoadTrainingData()
 	if !notTrained {
-		return jsonError("Unable to train the engine for this url.")
+		log.Println("Unable to train the engine for this url.")
+		return 	model.Report{},errors.New("Redis Cache is Disabled")
+
 	}
 	domain, urlParts := parseURL(postURL)
 	if domain == "" || len(urlParts) == 0 {
-		return jsonError("Unable to parse post url.")
+		return 	model.Report{},errors.New("Unable to parse post url.")
 	}
 
 	// Create Report
@@ -85,14 +87,14 @@ func RunReport(postURL string) []byte {
 	provider, err := model.GetProvider(domain)
 	if err != nil {
 		log.Println(err)
-		return jsonError("Could not GetProvider.")
+		return 	model.Report{},errors.New("Could not GetProvider.")
 	}
 
 	err = provider.SetID(urlParts)
 	if err != nil {
 		//log.Println(err)
 		log.Println("Could not SetID.")
-		return jsonError("Could not SetID.")
+		return 	model.Report{},errors.New("Could not SetID.")
 	}
 
 	//Fetch the metadata
@@ -100,7 +102,7 @@ func RunReport(postURL string) []byte {
 
 	if !flag {
 		log.Println("Could not fetch metadata.")
-		return jsonError("Could not fetch metadata.")
+		return 	model.Report{},errors.New("Could not fetch metadata.")
 	}
 
 
@@ -111,9 +113,8 @@ func RunReport(postURL string) []byte {
 	//// If we don't get an comments back, wait for the metadata call to return and send an error.
 	if comments.IsEmpty() {
 		log.Println("No comments found for this post.")
-		return jsonError("No comments found for this post.")
+		return 	model.Report{},errors.New("No comments found for this post.")
 	}
-
 	provider.SetReport(&theReport, comments)
 
 	// Set comments returned
@@ -149,16 +150,12 @@ func RunReport(postURL string) []byte {
 	delta := time.Now().Sub(t)
 	theReport.CommentAvgPerDay = float64(theReport.TotalComments) / (float64(delta.Hours()) / float64(24))
 
-	reportJSON, err := json.Marshal(theReport)
-	if err != nil {
-		fmt.Println(err)
-	}
 	log.Println("OK Going to return report for ", domain," TotalComments: ",theReport.TotalComments)
 
 	log.Println("SentimentList len ",len(theReport.SentimentList))
 
 	// Output Report
-	return reportJSON
+	return theReport,nil
 }
 
 func jsonError(msg string) []byte {

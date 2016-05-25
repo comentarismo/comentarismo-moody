@@ -8,13 +8,13 @@ import (
 
 // Comment is the distilled comment dataset
 type Comment struct {
-	ID         string
-	Published  string
-	Title      string
-	Content    string
-	AuthorName string
-	Sentiment  string
-	Likes      int64
+	ID         string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Published  string `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
+	Title      string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	Content    string `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
+	AuthorName string `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
+	Sentiment  string `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	Likes      int64 `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
 }
 
 type CommentList struct {
@@ -100,12 +100,19 @@ func (a ByLikes) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByLikes) Less(i, j int) bool { return a[i].Likes > a[j].Likes }
 
 func (commentList *CommentList) GetMostLiked(count int) []*Comment {
+	if commentList == nil {
+		return []*Comment{}
+	}
 	bl := ByLikes(commentList.Comments)
+	if len(bl) == 0 {
+		return []*Comment{}
+	}
+
 	sort.Sort(bl)
 
 	resp := []*Comment{}
 
-	for i := 0; i < count; i++ {
+	for i := 0; i < count && i < len(bl); i++ {
 		resp = append(resp, bl[i])
 	}
 	return resp
