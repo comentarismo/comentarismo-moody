@@ -14,7 +14,7 @@ type Report struct {
 	Sentiment              []SentimentTag `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
 	SentimentList          map[string][]*Comment `schema:"sentimentlist" gorethink:"sentimentlist,omitempty" json:"sentimentlist,omitempty"`
 	Metadata               Provider `schema:"metadata" gorethink:"metadata,omitempty" json:"metadata,omitempty"`
-	SampleComments         []*Comment `schema:"samplecomments" gorethink:"samplecomments,omitempty" json:"samplecomments,omitempty"`
+	//SampleComments         []*Comment `schema:"samplecomments" gorethink:"samplecomments,omitempty" json:"samplecomments,omitempty"`
 	TopComments            []*Comment `schema:"topcomments" gorethink:"topcomments,omitempty" json:"topcomments,omitempty"`
 }
 

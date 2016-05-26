@@ -141,7 +141,7 @@ func RunReport(postURL string)  (model.Report, error) {
 	}
 
 	// Pull a few sample comments
-	theReport.SampleComments = comments.GetRandom(3)
+	//theReport.SampleComments = comments.GetRandom(3)
 	theReport.SentimentList = comments.GetSentimentList()
 
 	// Calculate Average Daily Comments

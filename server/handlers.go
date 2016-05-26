@@ -89,7 +89,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 			}
 
 			log.Println("SentimentList: ",len(item.SentimentList))
-			log.Println("SampleComments: ",len(item.SampleComments))
+			//log.Println("SampleComments: ",len(item.SampleComments))
 			log.Println("TopComments: ",len(item.TopComments))
 
 			if len(item.SentimentList) == 0 {
