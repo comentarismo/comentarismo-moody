@@ -68,25 +68,25 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		theReport := model.Report{}
 		provider.SetReport(&theReport, model.CommentList{})
 
+		item := model.Report{}
 		//if found rethinkdb save cache redis
 		res, err := r.Table("sentiment").Get(theReport.ID).Run(Session)
-		if err != nil {
+		if err != nil || res == nil {
 			log.Println("Could not get report_" + postURL + " does not exists",err)
 			valid = false
-		}
-		if res.IsNil() {
+		} else  if res.IsNil() {
 			log.Println("Could not SetID. report_" + postURL + " does not exists",err)
 			valid = false
-		}
-		defer res.Close()
-
-		if valid {
-			item := model.Report{}
+		} else {
+			defer res.Close()
 			res.One(&item)
 			if (item.ID == "") {
 				valid = false
 				log.Println("Could GET ID. report_" + postURL + " does not exists", err)
 			}
+		}
+
+		if valid {
 
 			log.Println("SentimentList: ",len(item.SentimentList))
 			//log.Println("SampleComments: ",len(item.SampleComments))
@@ -131,20 +131,24 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		res, err := r.Table("sentiment").Get(theReport.ID).Pluck("id").Run(Session)
 		if err != nil {
 			update = false
-		}
-		if res.IsNil() {
+		}else if res.IsNil() {
 			update = false
+		} else {
+			defer res.Close()
+			item := model.Report{}
+			res.One(&item)
+			if(item.ID == ""){
+				update = false
+			}
+			log.Println("lets update sentiment report")
+			if item.ID == "" {
+				update = false
+			}
 		}
-		defer res.Close()
 
-		item := model.Report{}
-		res.One(&item)
-		if(item.ID == ""){
-			update = false
-		}
 
 		if update {
-			log.Println("lets update sentiment report")
+
 
 			//TODO: need to merge comments and classify censored comments as well
 
