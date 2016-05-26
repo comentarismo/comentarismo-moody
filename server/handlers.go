@@ -97,7 +97,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 			}
 
 			if len(item.SentimentList) > 0 {
-				jsonBytes, err = json.Marshal(item)
+				jsonBytes, err = json.Marshal(&item)
 
 				if err != nil {
 					fmt.Println("Error: ", err)
@@ -160,7 +160,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 
-		jsonBytes, err = json.Marshal(theReport)
+		jsonBytes, err = json.Marshal(&theReport)
 		if err != nil {
 			fmt.Println("Error: ",err)
 			w.Write([]byte(`[]`))
