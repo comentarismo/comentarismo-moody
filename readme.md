@@ -14,7 +14,12 @@ $ yum --enablerepo=remi,remi-test install redis
 [root@g7 ~]# service redis start/stop/restart
 Usage: /etc/init.d/redis {start|stop|status|restart|condrestart|try-restart}
 
-
+Run server
 ``
 REDIS_HOST=localhost REDIS_PORT=6379 db=ns351151.ip-91-121-75.eu:28015 nohup ./main &.
+```
+
+Tail logs
+```
+tail -f /opt/gocode/src/comentarismo-moody/nohup.out
 ```
