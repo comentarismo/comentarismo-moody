@@ -1,7 +1,22 @@
 {
 	"ImportPath": "comentarismo-moody",
-	"GoVersion": "go1.6",
+	"GoVersion": "go1.6.2",
 	"Deps": [
+		{
+			"ImportPath": "github.com/Sirupsen/logrus",
+			"Comment": "v0.10.0-16-gcd7d1bb",
+			"Rev": "cd7d1bbe41066b6c1f19780f895901052150a575"
+		},
+		{
+			"ImportPath": "github.com/cenkalti/backoff",
+			"Comment": "v1.0.0-1-gc29158a",
+			"Rev": "c29158af31815ccc31ca29c86c121bc39e00d3d8"
+		},
+		{
+			"ImportPath": "github.com/dancannon/gorethink",
+			"Comment": "v2.0.2",
+			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+		},
 		{
 			"ImportPath": "github.com/eaigner/shield",
 			"Rev": "7e8e5f1f2c821179b9d433c42169608b3d751389"
@@ -35,6 +50,10 @@
 			"Rev": "6ece6e0a09f28cc399b21550cbf37ab39ba63cce"
 		},
 		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "7cc19b78d562895b13596ddce7aafb59dd789318"
+		},
+		{
 			"ImportPath": "github.com/google/google-api-go-client/googleapi/transport",
 			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
 		},
@@ -51,8 +70,16 @@
 			"Rev": "ae2e162c4b2ae96aa66b596b2c18f17834299ed0"
 		},
 		{
+			"ImportPath": "github.com/hailocab/go-hostpool",
+			"Rev": "e80d13ce29ede4452c43dea11e79b9bc8a15b478"
+		},
+		{
 			"ImportPath": "github.com/mikeflynn/golang-instagram/instagram",
 			"Rev": "e35082b930883c224d6a01a3e6813a3ba31b16a9"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/pbkdf2",
+			"Rev": "019870fc9d457ee8abd13a2e93e3f2a3b55b7119"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
@@ -73,6 +100,25 @@
 		{
 			"ImportPath": "gopkg.in/bsm/ratelimit.v1",
 			"Rev": "f14ad9c78b155f69b480cfa41cb655259baac260"
+		},
+		{
+			"ImportPath": "gopkg.in/dancannon/gorethink.v2/encoding",
+			"Comment": "v2.0.2",
+			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+		},
+		{
+			"ImportPath": "gopkg.in/dancannon/gorethink.v2/ql2",
+			"Comment": "v2.0.2",
+			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+		},
+		{
+			"ImportPath": "gopkg.in/dancannon/gorethink.v2/types",
+			"Comment": "v2.0.2",
+			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+		},
+		{
+			"ImportPath": "gopkg.in/fatih/pool.v2",
+			"Rev": "cba550ebf9bce999a02e963296d4bc7a486cb715"
 		},
 		{
 			"ImportPath": "gopkg.in/redis.v3",
