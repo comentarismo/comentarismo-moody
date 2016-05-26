@@ -18,6 +18,8 @@ func init() {
 }
 
 func MoodyHandler(w http.ResponseWriter, req *http.Request) {
+	AllowOrigin(w, req)
+
 	postURL := req.URL.Query().Get("vid")
 	refresh := req.URL.Query().Get("refresh")
 	log.Println("ReportHandler ",postURL,refresh)
@@ -175,4 +177,14 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
+}
+
+func AllowOrigin(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	//TODO: add origin validation
+	if origin := r.Header.Get("Origin"); origin != "" {
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+	}
 }
