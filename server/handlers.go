@@ -128,7 +128,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		update := true
 
-		res, err := r.Table("sentiment").Get(theReport.ID).Run(Session)
+		res, err := r.Table("sentiment").Get(theReport.ID).Pluck("id").Run(Session)
 		if err != nil {
 			update = false
 		}
@@ -154,7 +154,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 			}
 		}else {
 			log.Println("save first time sentiment report")
-			_, err = r.Table("sentiment").Insert(theReport).RunWrite(Session)
+			_, err = r.Table("sentiment").Insert(theReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
 			if err != nil {
 				log.Println("ERROR: INSERT SENTIMENT TABLE JUST FAILED :|")
 			}
