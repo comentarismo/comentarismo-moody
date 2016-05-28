@@ -3,6 +3,8 @@ package sentiment_test
 import (
 	"testing"
 	"comentarismo-moody/sentiment"
+	"log"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestTokenize(t *testing.T) {
@@ -10,23 +12,27 @@ func TestTokenize(t *testing.T) {
 	text := "lorem    ipsum able hello erik    can do hi there  \t  spaaace! lorem"
 	m := tokenizer.Tokenize(text)
 
-	testWords := []string{
-		"lorem",
-		"ipsum",
-		"hello",
-		"erik",
-		"spaaace",
+	testWords := map[string]int64{
+		"lorem":2,
+		"ipsum":1,
+		"hello":1,
+		"erik":1,
+		"spaaace":1,
 	}
 
-	for _, testWord := range testWords {
+	log.Println(m)
+
+	for testWord, testWordValue := range testWords {
 		valid := false
-		for foundWord,_  := range m {
+		for foundWord, foundWordValue := range m {
 			if testWord == foundWord {
+				//log.Println(testWord, testWordValue, foundWord, foundWordValue)
+				assert.Equal(t, testWordValue, foundWordValue)
 				valid = true
 			}
 		}
 		if !valid {
-			t.Fatal("Word expected never found --> ",testWord)
+			t.Fatal("Word expected never found --> ", testWord)
 		}
 	}
 

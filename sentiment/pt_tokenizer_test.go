@@ -25,7 +25,7 @@ func TestPtTokenize(t *testing.T) {
 		for foundWord, foundWordValue  := range m {
 			if testWord == foundWord {
 				//testWordValue
-				log.Println(testWord,testWordValue,foundWord,foundWordValue)
+				//log.Println(testWord,testWordValue,foundWord,foundWordValue)
 				assert.Equal(t, testWordValue, foundWordValue)
 				valid = true
 			}
