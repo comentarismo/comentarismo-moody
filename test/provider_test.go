@@ -3,12 +3,12 @@ package test
 import (
 	"testing"
 
-	model "comentarismo-moody/model"
+	"comentarismo-moody/model"
 	"comentarismo-moody/providers/facebook"
-	youtube "comentarismo-moody/providers/youtube"
+	"comentarismo-moody/providers/youtube"
 	"comentarismo-moody/providers/faux"
-	assert "github.com/stretchr/testify/assert"
-"comentarismo-moody/providers/instagram"
+	"github.com/stretchr/testify/assert"
+	"comentarismo-moody/providers/instagram"
 	"comentarismo-moody/providers/vinevideo"
 )
 

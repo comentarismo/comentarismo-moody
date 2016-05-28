@@ -6,21 +6,6 @@ import (
 	"sort"
 )
 
-// Comment is the distilled comment dataset
-type Comment struct {
-	ID         string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
-	Published  string `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
-	Title      string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	Content    string `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
-	AuthorName string `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
-	Sentiment  string `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
-	Likes      int64 `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
-}
-
-type CommentList struct {
-	Comments []*Comment
-}
-
 // Comment methods
 func (comment *Comment) GetSentiment() string {
 	if comment.Sentiment == "" {

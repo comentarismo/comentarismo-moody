@@ -4,9 +4,9 @@ import (
 	"bytes"
 	"encoding/csv"
 	"fmt"
-	"github.com/eaigner/shield"
 	"log"
 	"os"
+	"comentarismo-moody/sentiment"
 )
 
 var REDIS_HOST = os.Getenv("REDIS_HOST")
@@ -14,28 +14,23 @@ var REDIS_PORT = os.Getenv("REDIS_PORT")
 var REDIS_PASSWORD = os.Getenv("REDIS_PASSWORD")
 
 var buf bytes.Buffer
-var shieldInstance shield.Shield
-
-// SentimentTag is a list entry of the tag and the percent of comments that were classified with that tag.
-type SentimentTag struct {
-	Name    string `schema:"name" gorethink:"url,omitempty" json:"name,omitempty"`
-	Percent float64 `schema:"percent" gorethink:"percent,omitempty" json:"percent,omitempty"`
-}
+var sentimentInstance sentiment.Sentiment
 
 // InitShield instantiates the text classifier engine
-func InitShield() {
+func InitSentiment() {
 	if REDIS_HOST == "" {
 		REDIS_HOST = "g7-box"
 	}
 	if REDIS_PORT == "" {
-		REDIS_HOST = "6379"
+		REDIS_PORT = "6379"
 	}
 	if REDIS_PASSWORD == "" {
 	}
-	if shieldInstance == nil {
-		shieldInstance = shield.New(
-			shield.NewEnglishTokenizer(),
-			shield.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), ""),
+	if sentimentInstance == nil {
+		log.Println("Starting redis text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		sentimentInstance = sentiment.New(
+			sentiment.NewTokenizer(),
+			sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), ""),
 		)
 	}
 }
@@ -59,13 +54,25 @@ func LoadTrainingData(path string) {
 		os.Exit(1)
 	}
 
-	InitShield()
+	InitSentiment()
 
 	fmt.Println("Learning started.")
 
+	//sets := []shield.Set{}
+	//for _, row := range csvData {
+	//	//c := strings.SplitN(v, " ", 2)
+	//	sets = append(sets, shield.Set{
+	//		Class: row[0],
+	//		Text:  row[1],
+	//	})
+	//}
+
+	//shieldInstance.BulkLearn(sets)
+
 	for _, row := range csvData {
 		// score, _ := strconv.ParseInt(row[1], 10, 0)
-		shieldInstance.Learn(row[1], row[0])
+		//log.Println(row[1], row[0])
+		sentimentInstance.Learn(row[1], row[0])
 	}
 
 	fmt.Println("Learning complete!")
@@ -90,11 +97,22 @@ func init(){
 }
 // GetSentiment classifies a single string of text. Returns the tag it matched.
 func GetSentiment(text string) string {
-	InitShield()
-	tag, err := shieldInstance.Classify(text)
-	if err != nil || tag == "" {
+	InitSentiment()
+
+	//sanitize the text
+	//text = strings.Replace(text, "?", " ", 1)
+
+	tag, err := sentimentInstance.Classify(text)
+	if err != nil {
+		log.Println("Error: GetSentiment after Classify ",text,err)
+	} else if tag == "" {
 		tag = "6"
 	}
-	//log.Println(text," classified as ", sentimentList[tag])
+
+	if sentimentList[tag] == "" {
+		panic("Sentiment could not be defined, it maybe that the engine has old test data and is impacting the classify algorithm. hint: use FLUSHALL to cleanup database ")
+	}
+	log.Println("tag: ",tag)
+	log.Println(text," classified as ", sentimentList[tag])
 	return sentimentList[tag]
 }

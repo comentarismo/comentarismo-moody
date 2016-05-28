@@ -20,32 +20,34 @@ func Test_Youtube_Sentiment(t *testing.T) {
 		y := youtube.New(YOUTUBE_KEY, "", "")
 		model.UseProviders(y)
 
-		postURL := "https://www.youtube.com/watch?v=gKI78VOh4Aw"
-		server.Training = "../static/training/afinn-111.csv"
-		raw := server.RunReport(postURL)
+		postURL := "https://www.youtube.com/watch?v=hAu5_m26Tsc"
+		server.Training = "../static/training/afinn-111-en.csv"
+		theReport, err := server.RunReport(postURL)
+		raw, err := json.Marshal(&theReport)
+
+		So(err,ShouldBeNil)
 		So(raw,ShouldNotBeNil)
+		log.Println("len(raw) ",len(raw))
 		So(len(raw),ShouldBeGreaterThan,0)
-		log.Println(len(raw))
-		report := model.Report{}
 
-		err := json.Unmarshal(raw, &report)
-		if err != nil {
-			log.Println(err)
-		}
-		So(report.TotalComments, ShouldBeGreaterThan, 0)
-		log.Println("Total comments ",report.TotalComments)
+		//report := model.Report{}
 
+		//err = json.Unmarshal(raw, &report)
+		//So(err,ShouldBeNil)
 
-		So(len(report.Sentiment), ShouldBeGreaterThan, 0)
-		So(len(report.SentimentList), ShouldBeGreaterThan, 0)
+		log.Println("Total comments ",theReport.TotalComments)
+		So(theReport.TotalComments, ShouldBeGreaterThan, 0)
+
+		So(len(theReport.Sentiment), ShouldBeGreaterThan, 0)
+		So(len(theReport.SentimentList), ShouldBeGreaterThan, 0)
 
 		log.Println("Sentiment Graph ")
-		for _,s := range report.Sentiment {
+		for _,s := range theReport.Sentiment {
 			log.Println(s)
 		}
 
 		log.Println("Sentiment List ")
-		for k,s := range report.SentimentList {
+		for k,s := range theReport.SentimentList {
 			log.Println(k)
 			log.Printf("%v",s)
 		}

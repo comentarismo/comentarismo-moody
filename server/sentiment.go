@@ -1,7 +1,7 @@
 package server
 
 import (
-	model "comentarismo-moody/model"
+	"comentarismo-moody/model"
 	"encoding/json"
 	"log"
 	"math"
@@ -27,7 +27,9 @@ var (
 	VINEVIDEO_SECRET = os.Getenv("VINEVIDEO_SECRET")
 
 	Training = os.Getenv("training")
+	IsTrainedENV = os.Getenv("IS_TRAINED")
 	IsTrained = false
+
 )
 
 func init() {
@@ -42,6 +44,12 @@ func init() {
 	if FACEBOOK_SECRET == "" {
 		FACEBOOK_SECRET = "49e8c46b9bec4f484fa045cedac63ea2"
 	}
+
+	//define if engine is trained
+	if IsTrainedENV == "" {
+		IsTrained = false
+	}
+
 }
 
 type WebError struct {
@@ -49,10 +57,27 @@ type WebError struct {
 }
 
 
-func LoadTrainingData() bool {
-	if Training == "" {
-		Training = "./static/training/afinn-111-en.csv"
+func LoadTrainingData(lang string) bool {
+	pwd, _ := os.Getwd()
+
+	targetDir := pwd+"/../static/training/afinn-111-en.csv";
+	if lang == "pt" {
+		targetDir = pwd+"/../static/training/afinn-111-pt.csv"
+	}else {
+		//wtf
 	}
+	Training = targetDir
+
+	//check with redis if we are already trained
+	//istrained, err := Client.Get("IsTrained").Result()
+	//if err == redis.Nil {
+	//	IsTrained = false
+	//} else if err != nil {
+	//	IsTrained = false
+	//}else if istrained == "true" {
+	//	IsTrained = true
+	//}
+
 	if IsTrained == false {
 		log.Println("Training " + Training)
 		trainingFiles := strings.Split(Training, ",")
@@ -60,17 +85,21 @@ func LoadTrainingData() bool {
 			model.LoadTrainingData(path)
 		}
 		IsTrained = true
+		////set redis
+		//Client.Set("IsTrained", "true", time.Minute * 1)
+		//Client.Set("IsTrained", "true", time.Hour * 24)
+
 	}
 	return IsTrained
 }
 
 
-func RunReport(postURL string)  (model.Report, error) {
+func RunReport(postURL,lang string)  (model.Report, error) {
 	// Parse URL
-	notTrained := LoadTrainingData()
+	notTrained := LoadTrainingData(lang)
 	if !notTrained {
 		log.Println("Unable to train the engine for this url.")
-		return 	model.Report{},errors.New("Redis Cache is Disabled")
+		return 	model.Report{},errors.New("Unable to train the engine for this url.")
 
 	}
 	domain, urlParts := parseURL(postURL)

@@ -18,3 +18,23 @@ type Report struct {
 	TopComments            []*Comment `schema:"topcomments" gorethink:"topcomments,omitempty" json:"topcomments,omitempty"`
 }
 
+// SentimentTag is a list entry of the tag and the percent of comments that were classified with that tag.
+type SentimentTag struct {
+	Name    string `schema:"name" gorethink:"url,omitempty" json:"name,omitempty"`
+	Percent float64 `schema:"percent" gorethink:"percent,omitempty" json:"percent,omitempty"`
+}
+
+// Comment is the distilled comment dataset
+type Comment struct {
+	ID         string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Published  string `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
+	Title      string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	Content    string `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
+	AuthorName string `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
+	Sentiment  string `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	Likes      int64 `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
+}
+
+type CommentList struct {
+	Comments []*Comment
+}

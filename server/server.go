@@ -60,7 +60,7 @@ func init() {
 	maxo, _ := strconv.Atoi(maxopen)
 	maxi, _ := strconv.Atoi(maxidle)
 
-	log.Println("Loading standalone " + DB)
+	log.Println("Loading Rethinkdb standalone " + DB)
 	var err error
 	Session, err = r.Connect(r.ConnectOpts{
 		Address: DB,
@@ -69,7 +69,7 @@ func init() {
 		MaxIdle: maxi,
 	})
 	if err != nil {
-		log.Fatalln("Error: %v", err)
+		log.Fatalln("Error: Loading Rethinkdb standalone -> ", err)
 		os.Exit(0)
 	}
 
@@ -83,10 +83,12 @@ func init() {
 		REDIS_HOST = "g7-box"
 	}
 	if REDIS_PORT == "" {
-		REDIS_HOST = "6379"
+		REDIS_PORT = "6379"
 	}
 	if REDIS_PASSWORD == "" {
 	}
+
+	log.Println("Loading Redis standalone ", REDIS_HOST + ":" + REDIS_PORT )
 
 	Client = redis.NewClient(&redis.Options{
 		Addr:     REDIS_HOST + ":" + REDIS_PORT,
@@ -96,7 +98,7 @@ func init() {
 
 	pong, err := Client.Ping().Result()
 	if err != nil {
-		log.Fatalln("Error: %v", err)
+		log.Fatalln("Error: Loading Redis standalone -> ", err)
 		os.Exit(0)
 	}
 	log.Println(pong, err)
@@ -111,7 +113,7 @@ func NewServer(Port string) *http.Server {
 	}
 }
 
-func initProviders() {
+func InitProviders() {
 	log.Println("Going to register providers")
 	// Provider is the interface for all the various 3rd party Provider types (YouTube, Facebook, etc...)
 	model.UseProviders(
@@ -125,7 +127,7 @@ func initProviders() {
 func StartServer(Port string) {
 	log.Println("Starting server")
 	s := NewServer(Port)
-	initProviders()
+	InitProviders()
 	fmt.Println("Server starting --> " + Port)
 
 	err := gracehttp.Serve(
@@ -142,6 +144,8 @@ func InitRouting() *pat.Router {
 	r := pat.New()
 
 	r.HandleFunc("/moody", MoodyHandler)
+
+	r.HandleFunc("/sentiment", SentimentHandler)
 
 	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	r.PathPrefix("/static/").Handler(s)

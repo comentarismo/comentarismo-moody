@@ -18,10 +18,6 @@
 			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
 		},
 		{
-			"ImportPath": "github.com/eaigner/shield",
-			"Rev": "7e8e5f1f2c821179b9d433c42169608b3d751389"
-		},
-		{
 			"ImportPath": "github.com/facebookgo/clock",
 			"Rev": "600d898af40aa09a7a93ecb9265d87b0504b6f03"
 		},

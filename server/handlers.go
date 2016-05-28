@@ -1,7 +1,7 @@
 package server
 
 import (
-//util "comentarismo-moody/util"
+	//util "comentarismo-moody/util"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -22,7 +22,20 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 	postURL := req.URL.Query().Get("vid")
 	refresh := req.URL.Query().Get("refresh")
-	log.Println("ReportHandler ",postURL,refresh)
+	lang := req.URL.Query().Get("lang")
+
+	if lang == "" {
+		lang = "en"
+	}
+	//validate inputs
+	if postURL == "" {
+		w.WriteHeader(http.StatusNotFound)
+		jsonBytes, _ := json.Marshal(WebError{Error: "Missing post URL or LANG"})
+		w.Write(jsonBytes)
+		return
+	}
+
+	log.Println("ReportHandler ", postURL, refresh)
 	var jsonBytes []byte
 
 	if (refresh == "") {
@@ -44,9 +57,10 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		log.Println("not in redis, is it on rethinkdb ??")
 
+		/** BEGIN Code to unmarshal the url into a valid ID that we can use in our internal database **/
 		domain, urlParts := parseURL(postURL)
 		if domain == "" || len(urlParts) == 0 {
-			log.Println("report_" + postURL + " does not exists")
+			log.Println("parseURL -> report_" + postURL + " does not exists")
 			log.Println("404 not found")
 			w.WriteHeader(http.StatusNotFound)
 			return
@@ -54,50 +68,77 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		provider, err := model.GetProvider(domain)
 		if err != nil {
-			log.Println("Could not GetProvider. report_" + postURL + " does not exists",err)
+			log.Println("Could not GetProvider. report_" + postURL + " does not exists", err)
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 
 		err = provider.SetID(urlParts)
 		if err != nil {
-			log.Println("Could not SetID. report_" + postURL + " does not exists",err)
+			log.Println("Could not SetID. report_" + postURL + " does not exists", err)
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 		theReport := model.Report{}
 		provider.SetReport(&theReport, model.CommentList{})
+		/** END Code to unmarshal the url into a valid ID that we can use in our internal database **/
 
-		item := model.Report{}
-		//if found rethinkdb save cache redis
-		res, err := r.Table("sentiment").Get(theReport.ID).Run(Session)
+		simpleReport := model.Report{}
+		commentsReport := model.Report{}
+
+
+		/** BEGIN recover the simple sentiment report **/
+		res, err := r.Table("sentiment_report").Get(theReport.ID).Run(Session)
+
+		//if found rethinkdb sentiment_report, query all comments and save cache redis
 		if err != nil || res == nil {
-			log.Println("Could not get report_" + postURL + " does not exists",err)
+			log.Println("Could not get report_" + postURL + " does not exists", err)
 			valid = false
-		} else  if res.IsNil() {
-			log.Println("Could not SetID. report_" + postURL + " does not exists",err)
+		} else if res.IsNil() {
+			log.Println("Could not SetID. report_" + postURL + " does not exists", err)
 			valid = false
 		} else {
 			defer res.Close()
-			res.One(&item)
-			if (item.ID == "") {
+			res.One(&simpleReport)
+			if (simpleReport.ID == "") {
 				valid = false
-				log.Println("Could GET ID. report_" + postURL + " does not exists", err)
+				log.Println("Could NOT GET ID. report_" + postURL + " exists")
 			}
 		}
+		/** END recover the simple sentiment report **/
+
+		/** BEGIN recover the comments sentiment report **/
+		if valid {
+			log.Println("load sentiment_report ok, going to load all comments now, this may break :| ")
+			res2, err := r.Table("sentiment").Get(theReport.ID).Pluck("sentimentlist", "topcomments").Run(Session)
+			if err != nil || res2 == nil {
+				log.Println("Could not get report_" + postURL + " does not exists", err)
+				valid = false
+			} else if res2.IsNil() {
+				log.Println("Could not SetID. report_" + postURL + " does not exists", err)
+				valid = false
+			} else {
+				defer res2.Close()
+				res2.One(&commentsReport)
+			}
+		}
+		/** END recover the comments sentiment report **/
+
 
 		if valid {
 
-			log.Println("SentimentList: ",len(item.SentimentList))
+			log.Println("SentimentList: ", len(commentsReport.SentimentList))
 			//log.Println("SampleComments: ",len(item.SampleComments))
-			log.Println("TopComments: ",len(item.TopComments))
+			log.Println("TopComments: ", len(commentsReport.TopComments))
 
-			if len(item.SentimentList) == 0 {
-				log.Println("RETHINKDB COULD NOT GET DATA CORRECTLY!!! karaidiasa!!!!!")
-			}
+			if len(commentsReport.SentimentList) > 0 {
 
-			if len(item.SentimentList) > 0 {
-				jsonBytes, err = json.Marshal(&item)
+				//merge both into one
+
+				simpleReport.SentimentList = commentsReport.SentimentList
+				simpleReport.TopComments = commentsReport.TopComments
+
+				jsonBytes, err = json.Marshal(&simpleReport)
 
 				if err != nil {
 					fmt.Println("Error: ", err)
@@ -112,75 +153,185 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 					w.Write(jsonBytes)
 					return;
 				}
+			} else {
+				log.Println("Error: OMG we could not get this SentimentList to work :| No dougnuts for you today o__0 ")
 			}
+		} else {
+			log.Println("Error: OMG we could not get this validation to work :| No dougnuts for you today o__0 ")
 		}
 
 	}
 
+	log.Println("Will generate a new report -->", postURL)
 
-	if postURL != "" {
-		log.Println(postURL)
-		theReport, err := RunReport(postURL)
-		if err != nil {
-			fmt.Println("Error: ",err)
-		}
-		//save to rethinkdb
-
-		update := true
-
-		res, err := r.Table("sentiment").Get(theReport.ID).Pluck("id").Run(Session)
-		if err != nil {
-			update = false
-		}else if res.IsNil() {
-			update = false
-		} else {
-			defer res.Close()
-			item := model.Report{}
-			res.One(&item)
-			if(item.ID == ""){
-				update = false
-			}
-			log.Println("lets update sentiment report")
-			if item.ID == "" {
-				update = false
-			}
-		}
-
-
-		if update {
-
-
-			//TODO: need to merge comments and classify censored comments as well
-
-			_, err = r.Table("sentiment").Get(theReport.ID).Update(theReport).RunWrite(Session)
-			if err != nil {
-				log.Println("ERROR: UPDATE SENTIMENT TABLE JUST FAILED :|")
-			}
-		}else {
-			log.Println("save first time sentiment report")
-			_, err = r.Table("sentiment").Insert(theReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
-			if err != nil {
-				log.Println("ERROR: INSERT SENTIMENT TABLE JUST FAILED :|")
-			}
-		}
-
-		jsonBytes, err = json.Marshal(&theReport)
-		if err != nil {
-			fmt.Println("Error: ",err)
-			w.Write([]byte(`[]`))
-			return
-		}
-
-		//save to redis
-		Client.Set("report_" + postURL, jsonBytes, time.Hour * 1)
-		w.Header().Set("Content-Type", "application/json")
+	theReport, err := RunReport(postURL,lang)
+	if err != nil {
+		log.Println("Error: MoodyHandler() RunReport() ",err)
+		w.WriteHeader(http.StatusInternalServerError)
+		jsonBytes, _ := json.Marshal(WebError{Error: "RunReport failed :| -> "})
 		w.Write(jsonBytes)
+		return
+		//return here ???
+
+	}
+	//save to rethinkdb
+
+	//create simple report
+	simpleReport := CreateSimpleReport(theReport)
+
+	//create comments report
+	commentsReport := CreateCommentsReport(theReport)
+
+	update := true
+
+	res, err := r.Table("sentiment_report").Get(theReport.ID).Pluck("id").Run(Session)
+	if err != nil {
+		update = false
+	} else if res.IsNil() {
+		update = false
 	} else {
-		jsonBytes, _ = json.Marshal(WebError{Error: "Missing post URL."})
+		defer res.Close()
+		item := model.Report{}
+		res.One(&item)
+		if (item.ID == "") {
+			update = false
+		}
+		log.Println("lets update sentiment report")
+		if item.ID == "" {
+			update = false
+		}
+	}
+
+	//TODO: need to merge comments and classify censored comments
+	// classify if video is now censored at facebook with a flag and never remove comments from our database in that case
+
+	if update {
+
+		_, err = r.Table("sentiment_report").Get(theReport.ID).Update(simpleReport).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: UPDATE sentiment_report TABLE JUST FAILED :|")
+		}
+
+		_, err = r.Table("sentiment").Get(theReport.ID).Update(commentsReport).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: UPDATE sentiment TABLE JUST FAILED :|")
+		}
+
+	} else {
+
+		log.Println("save first time report into sentiment_report")
+
+		_, err = r.Table("sentiment_report").Insert(simpleReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: INSERT sentiment_report TABLE JUST FAILED :|")
+		}
+
+		log.Println("save first time report into sentiment")
+		_, err = r.Table("sentiment").Insert(commentsReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: INSERT sentiment TABLE JUST FAILED :|")
+		}
+	}
+
+	jsonBytes, err = json.Marshal(&theReport)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		w.Write([]byte(`[]`))
+		return
+	}
+
+	//save to redis
+	Client.Set("report_" + postURL, jsonBytes, time.Hour * 1)
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonBytes)
+
+}
+
+func CreateSimpleReport(theReport model.Report) (returnReport model.Report) {
+
+	returnReport.ID = theReport.ID
+	returnReport.URL = theReport.URL
+	returnReport.Type = theReport.Type
+	returnReport.Title = theReport.Title
+	returnReport.PublishedAt = theReport.PublishedAt
+	returnReport.TotalComments = theReport.TotalComments
+	returnReport.CollectedComments = theReport.CollectedComments
+	returnReport.CommentCoveragePercent = theReport.CommentCoveragePercent
+	returnReport.CommentAvgPerDay = theReport.CommentAvgPerDay
+	returnReport.Keywords = theReport.Keywords
+	returnReport.Sentiment = theReport.Sentiment
+	returnReport.Metadata = theReport.Metadata
+
+	return returnReport
+}
+
+func CreateCommentsReport(theReport model.Report) (returnReport model.Report) {
+
+	returnReport.ID = theReport.ID
+	returnReport.SentimentList = theReport.SentimentList
+	returnReport.TopComments = theReport.TopComments
+
+	return returnReport
+}
+
+func SentimentHandler(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()  //Parse url parameters passed, then parse the response packet for the POST body (request body)
+	//log.Println(req.Form) // print information on server side.
+	lang := req.URL.Query().Get("lang")
+
+	//validate inputs
+	if lang == "" {
+		w.WriteHeader(http.StatusNotFound)
+		jsonBytes, _ := json.Marshal(WebError{Error: "Missing lang"})
 		w.Write(jsonBytes)
 		return
 	}
 
+	notTrained := LoadTrainingData(lang)
+	if !notTrained {
+		log.Println("Unable to train the engine :| No dougnuts for you today o__0")
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	detectedLang := lang
+	log.Println("lang , ", detectedLang)
+	if detectedLang != "pt" && detectedLang != "en" {
+		errMsg := "Error: SentimentHandler Language " + detectedLang + " not yet supported, use lang=en or lang=pt"
+		log.Println(errMsg)
+		jsonBytes, _ := json.Marshal(WebError{Error: errMsg})
+		w.WriteHeader(http.StatusNotFound)
+		w.Write(jsonBytes)
+		return
+	}
+
+	text := req.Form["text"]
+	if len(text) == 0 {
+		log.Println("Error: SentimentHandler text 404 not found")
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	//classify text
+	comment := model.Comment{}
+	comment.Content = string(text[0])
+	comment.Sentiment = comment.GetSentiment()
+
+	if comment.Sentiment == "" {
+		log.Println("Error: SentimentHandler could not get the sentiment for this text :| ", comment.Content)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	//marshal comment
+	jsonBytes, err := json.Marshal(&comment)
+	if err != nil {
+		fmt.Println("Error: SentimentHandler Marshal -> ", err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonBytes)
 }
 
 func AllowOrigin(w http.ResponseWriter, r *http.Request) {

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	youtube "comentarismo-moody/providers/youtube"
+	"comentarismo-moody/providers/youtube"
 	"comentarismo-moody/model"
 )
 
