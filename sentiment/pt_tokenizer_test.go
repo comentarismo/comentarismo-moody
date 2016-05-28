@@ -35,8 +35,4 @@ func TestPtTokenize(t *testing.T) {
 		}
 	}
 
-	//if x != `map[lorem:2 ipsum:1 hello:1 erik:1 spaaace:1]` {
-	//if x != `map[ips:1 rik:1 spaaac:1]` {
-	//	t.Fatal(x)
-	//}
 }

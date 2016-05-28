@@ -7,17 +7,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTokenize(t *testing.T) {
-	tokenizer := sentiment.NewTokenizer()
-	text := "lorem    ipsum able hello erik    can do hi there  \t  spaaace! lorem"
+func TestFrTokenize(t *testing.T) {
+	tokenizer := sentiment.NewFrTokenizer()
+	text := "Vous avez bien dit en doublant le salaire des ouvriers"
 	m := tokenizer.Tokenize(text)
 
 	testWords := map[string]int64{
-		"lorem":2,
-		"ipsum":1,
-		"hello":1,
-		"erik":1,
-		"spaaace":1,
+		"avez":1,
+		"dit":1,
+		"ire":1,
+		"vriers":1,
 	}
 
 	//log.Println(m)
