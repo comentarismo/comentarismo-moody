@@ -3,14 +3,15 @@ package sentiment_test
 import (
 	"testing"
 	"comentarismo-moody/sentiment"
-	"log"
 	"github.com/stretchr/testify/assert"
+	"log"
 )
 
 func TestTokenize(t *testing.T) {
 	tokenizer := sentiment.NewTokenizer()
 	text := "lorem    ipsum able hello erik    can do hi there  \t  spaaace! lorem"
 	m := tokenizer.Tokenize(text)
+	log.Printf("%v", m)
 
 	testWords := map[string]int64{
 		"lorem":2,

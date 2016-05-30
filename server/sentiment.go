@@ -26,9 +26,11 @@ var (
 	VINEVIDEO_KEY = os.Getenv("VINEVIDEO_KEY")
 	VINEVIDEO_SECRET = os.Getenv("VINEVIDEO_SECRET")
 
-	Training = os.Getenv("training")
-	IsTrainedENV = os.Getenv("IS_TRAINED")
-	IsTrained = false
+	IsTrainedEn = false
+	IsTrainedEs = false
+	IsTrainedPt = false
+	IsTrainedIt = false
+	IsTrainedFr = false
 
 )
 
@@ -45,11 +47,6 @@ func init() {
 		FACEBOOK_SECRET = "49e8c46b9bec4f484fa045cedac63ea2"
 	}
 
-	//define if engine is trained
-	if IsTrainedENV == "" {
-		IsTrained = false
-	}
-
 }
 
 type WebError struct {
@@ -57,16 +54,21 @@ type WebError struct {
 }
 
 
-func LoadTrainingData(lang string) bool {
+func LoadTrainingData(lang string) (IsTrained bool) {
 	pwd, _ := os.Getwd()
 
 	targetDir := pwd+"/../static/training/afinn-111-en.csv";
 	if lang == "pt" {
 		targetDir = pwd+"/../static/training/afinn-111-pt.csv"
-	}else {
+	} else if lang == "es" {
+		targetDir = pwd+"/../static/training/afinn-111-es.csv"
+	} else if lang == "fr" {
+		targetDir = pwd+"/../static/training/afinn-111-fr.csv"
+	} else if lang == "it" {
+		targetDir = pwd+"/../static/training/afinn-111-it.csv"
+	} else {
 		//wtf
 	}
-	Training = targetDir
 
 	//check with redis if we are already trained
 	//istrained, err := Client.Get("IsTrained").Result()
@@ -78,21 +80,53 @@ func LoadTrainingData(lang string) bool {
 	//	IsTrained = true
 	//}
 
+	IsTrained = IsLangTrained(lang)
+
 	if IsTrained == false {
-		log.Println("Training " + Training)
-		trainingFiles := strings.Split(Training, ",")
+		log.Println("Training " + targetDir)
+		trainingFiles := strings.Split(targetDir, ",")
 		for _, path := range trainingFiles {
-			model.LoadTrainingData(path)
+			model.LoadTrainingData(lang,path)
 		}
 		IsTrained = true
+		SetLangTrained(lang)
 		////set redis
 		//Client.Set("IsTrained", "true", time.Minute * 1)
 		//Client.Set("IsTrained", "true", time.Hour * 24)
 
 	}
-	return IsTrained
+
+	return
 }
 
+func SetLangTrained(lang string) {
+	if lang == "en" {
+		IsTrainedEn = true
+	} else if lang == "pt" {
+		IsTrainedPt = true
+	} else if lang == "es" {
+		IsTrainedEs = true
+	} else if lang == "fr" {
+		IsTrainedFr = true
+	} else if lang == "it" {
+		IsTrainedIt = true
+	}
+}
+
+func IsLangTrained(lang string) ( isTrained bool ){
+	if lang == "en" {
+		isTrained = IsTrainedEn
+	} else if lang == "pt" {
+		isTrained = IsTrainedPt
+	} else if lang == "es" {
+		isTrained = IsTrainedEs
+	} else if lang == "fr" {
+		isTrained = IsTrainedFr
+	} else if lang == "it" {
+		isTrained = IsTrainedIt
+	}
+	return
+}
 
 func RunReport(postURL,lang string)  (model.Report, error) {
 	// Parse URL
@@ -126,6 +160,13 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 		return 	model.Report{},errors.New("Could not SetID.")
 	}
 
+	err = provider.SetLang(lang)
+	if err != nil {
+		//log.Println(err)
+		log.Println("Could not LANG on provider.")
+		return 	model.Report{},errors.New("Could not LANG on provider.")
+	}
+
 	//Fetch the metadata
 	flag := provider.GetMetadata()
 
@@ -133,8 +174,6 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 		log.Println("Could not fetch metadata.")
 		return 	model.Report{},errors.New("Could not fetch metadata.")
 	}
-
-
 
 	// Fetch the comments
 	comments := provider.GetComments()

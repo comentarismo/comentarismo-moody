@@ -8,12 +8,11 @@ import (
 	"comentarismo-moody/server"
 )
 
-//$ training=/opt/gocode/src/comentarismo-moody/static/training/afinn-111-en.csv godep go test
-func TestMoodyGet(t *testing.T) {
+func TestMoodyEnGet(t *testing.T) {
 
 	server.InitProviders()
 	testflight.WithServer(server.InitRouting(), func(r *testflight.Requester) {
-		response := r.Get("/moody?vid=https://www.youtube.com/watch?v=HKU96i_Qh8Y&refresh=true")
+		response := r.Get("/moody?vid=https://www.youtube.com/watch?v=HKU96i_Qh8Y&lang=en&refresh=true")
 		//response := r.Get("/moody?vid=https://www.youtube.com/watch?v=HKU96i_Qh8Y")
 
 		log.Println(len(response.Body))

@@ -10,6 +10,7 @@ import (
 type Provider interface {
 	Name() string
 	SetID([]string) error
+	SetLang(lang string) error
 	SetReport(*Report, CommentList)
 	//BeginAuth(state string) (Session, error)
 	//UnmarshalSession(string) (Session, error)

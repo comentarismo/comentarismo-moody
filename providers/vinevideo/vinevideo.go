@@ -29,6 +29,7 @@ type Provider struct {
 	ClientKey   string
 	Secret      string
 	ID            string // id
+	Language      string // lang
 	PageName      string
 	PageID        string
 	Type          string // type
@@ -67,6 +68,11 @@ func (p *Provider) Name() string {
 //	thePost = &model.VineVideo{ShortCode: urlParts[len(urlParts)-1]}
 func (p *Provider) SetID(urlParts [] string) error {
 	p.ID = urlParts[len(urlParts)-1]
+	return nil
+}
+
+func (p *Provider) SetLang(lang string) error {
+	p.Language = lang
 	return nil
 }
 

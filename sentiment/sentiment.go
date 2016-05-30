@@ -98,7 +98,7 @@ func (s *TokenStore) Score(text string) (scores map[string]float64, err error) {
 	Debug("sentiment.Score, words len ",len(words))
 
 	if( len(wordFreqs) ==0 || len(words) == 0){
-		Debug("Error: We are not able to get wordFreqs or words, in order to prevent rong number of arguments for 'hmget' command we will return now! ",len(words))
+		Debug("Error: We are not able to get wordFreqs or words, in order to prevent wrong number of arguments for 'hmget' command we will return now! ",len(words))
 		return
 	}
 
@@ -170,6 +170,7 @@ func (s *TokenStore) Classify(text string) (class string, err error) {
 			class, score = k, v
 		}
 	}
+	Debug("class, score -> ",class, score)
 	return
 }
 

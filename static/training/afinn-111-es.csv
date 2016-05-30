@@ -1,2448 +1,2446 @@
-abandonar, -2
-abandonado, -2
-abandona, -2
-secuestrado, -2
-secuestro, -2
-secuestros, -2
-aborrecer, -3
-aborrecido, -3
-aberrante, -3
-aborrece, -3
-habilidades, 2
-capacidad, 2
-bordo, 1
-en ausencia, -1
-ausencia, -1
-ausentes, -1
-absolver, 2
-absueltos, 2
-absuelve, 2
-absolver, 2
-absorbida, 1
-abuso, -3
-abusado, -3
-abusos, -3
-abusivo, -3
-aceptar, 1
-aceptado, 1
-aceptar, 1
-acepta, 1
-accidente, -2
-accidental, -2
-accidentalmente, -2
-accidentes, -2
-lograr, 2
-logrado, 2
-logra, 2
-acusación, -2
-acusaciones, -2
-acusar, -2
-acusado, -2
-acusa, -2
-acusando, -2
-dolor, -2
-alcanzables, 1
-dolor, -2
-absolver, 2
-absuelve, 2
-absueltos, 2
-absolver, 2
-mordaz, -3
-activo, 1
-adecuada, 1
-admirar, 3
-admirado, 3
-admira, 3
-admirando, 3
-admitir, -1
-admite, -1
-admitido, -1
-amonestar, -2
-advertido, -2
-adoptar, 1
-adopta, 1
-adorable, 3
-adore, 3
-adorado, 3
-adora, 3
-avanzada, 1
-ventaja, 2
-ventajas, 2
-aventura, 2
-aventuras, 2
-aventurero, 2
-afectada, -1
-afecto, 3
-cariñoso, 3
-afligidos, -1
-ofendida, -1
-miedo, -2
-agravar, -2
-agravado, -2
-agrava, -2
-agravante, -2
-agresión, -2
-agresiones, -2
-agresiva, -2
-horrorizado, -2
-agog, 2
-agonizar, -3
-agonizante, -3
-agoniza, -3
-agonizante, -3
-agonizar, -3
-agonizante, -3
-agoniza, -3
-agonizante, -3
-de acuerdo, 1
-agradable, 2
-acordado, 1
-acuerdo, 1
-está de acuerdo, 1
-alarma, -2
-alarmado, -2
-alarmista, -2
-alarmistas, -2
-por desgracia, -1
-alerta, -1
-alienación, -2
-viva, 1
-alérgica, -2
-permitir, 1
-solo, -2
-sorprender, 2
-sorprendido, 2
-sorprende, 2
-increíble, 4
-ambicioso, 2
-ambivalente, -1
-divertir, 3
-divertida, 3
-diversiones, 3
-diversiones, 3
-ira, -3
-enoja, -3
-enojado, -3
-angustia, -3
-angustiado, -3
-animosidad, -2
-molestar, -2
-molestia, -2
-molesto, -2
-molesto, -2
-molesta, -2
-antagónica, -2
-anti, -1
-anticipación, 1
-ansiedad, -2
-ansioso, -2
-apáticos, -3
-apatía, -3
-energúmeno, -3
-hecho una fiera, -3
-como una moto, -3
-apocalíptica, -2
-disculparse, -1
-disculpado, -1
-disculpa, -1
-disculpándose, -1
-disculparse, -1
-disculpado, -1
-disculpa, -1
-disculpándose, -1
-disculpa, -1
-aterrado, -2
-atroz, -2
-apaciguar, 2
-apaciguados, 2
-aplaca, 2
-apaciguamiento, 2
-aplaudir, 2
-aplaudido, 2
-aplaudiendo, 2
-aplaude, 2
-aplausos, 2
-apreciar, 2
-apreciado, 2
-aprecia, 2
-apreciando, 2
-aprecio, 2
-aprensión, -2
-aprobación, 2
-aprobado, 2
-aprueba, 2
-ardiente, 1
-arrestar, -2
-arrestado, -3
-detenciones, -2
-arrogante, -2
-avergonzado, -2
+abandonar,-2
+abandonado,-2
+abandona,-2
+secuestrado,-2
+secuestro,-2
+secuestros,-2
+aborrecer,-3
+aborrecido,-3
+aberrante,-3
+aborrece,-3
+habilidades,2
+capacidad,2
+bordo,1
+en ausencia,-1
+ausencia,-1
+ausentes,-1
+absolver,2
+absueltos,2
+absuelve,2
+absolver,2
+absorbida,1
+abuso,-3
+abusado,-3
+abusos,-3
+abusivo,-3
+aceptar,1
+aceptado,1
+aceptar,1
+acepta,1
+accidente,-2
+accidental,-2
+accidentalmente,-2
+accidentes,-2
+lograr,2
+logrado,2
+logra,2
+acusación,-2
+acusaciones,-2
+acusar,-2
+acusado,-2
+acusa,-2
+acusando,-2
+dolor,-2
+alcanzables,1
+dolor,-2
+absolver,2
+absuelve,2
+absueltos,2
+absolver,2
+mordaz,-3
+activo,1
+adecuada,1
+admirar,3
+admirado,3
+admira,3
+admirando,3
+admitir,-1
+admite,-1
+admitido,-1
+amonestar,-2
+advertido,-2
+adoptar,1
+adopta,1
+adorable,3
+adore,3
+adorado,3
+adora,3
+avanzada,1
+ventaja,2
+ventajas,2
+aventura,2
+aventuras,2
+aventurero,2
+afectada,-1
+afecto,3
+cariñoso,3
+afligidos,-1
+ofendida,-1
+miedo,-2
+agravar,-2
+agravado,-2
+agrava,-2
+agravante,-2
+agresión,-2
+agresiones,-2
+agresiva,-2
+horrorizado,-2
+agog,2
+agonizar,-3
+agonizante,-3
+agoniza,-3
+agonizante,-3
+agonizar,-3
+agonizante,-3
+agoniza,-3
+agonizante,-3
+de acuerdo,1
+agradable,2
+acordado,1
+acuerdo,1
+está de acuerdo,1
+alarma,-2
+alarmado,-2
+alarmista,-2
+alarmistas,-2
+por desgracia,-1
+alerta,-1
+alienación,-2
+viva,1
+alérgica,-2
+permitir,1
+solo,-2
+sorprender,2
+sorprendido,2
+sorprende,2
+increíble,4
+ambicioso,2
+ambivalente,-1
+divertir,3
+divertida,3
+diversiones,3
+diversiones,3
+ira,-3
+enoja,-3
+enojado,-3
+angustia,-3
+angustiado,-3
+animosidad,-2
+molestar,-2
+molestia,-2
+molesto,-2
+molesto,-2
+molesta,-2
+antagónica,-2
+anti,-1
+anticipación,1
+ansiedad,-2
+ansioso,-2
+apáticos,-3
+apatía,-3
+energúmeno,-3
+hecho una fiera,-3
+como una moto,-3
+apocalíptica,-2
+disculparse,-1
+disculpado,-1
+disculpa,-1
+disculpándose,-1
+disculparse,-1
+disculpado,-1
+disculpa,-1
+disculpándose,-1
+disculpa,-1
+aterrado,-2
+atroz,-2
+apaciguar,2
+apaciguados,2
+aplaca,2
+apaciguamiento,2
+aplaudir,2
+aplaudido,2
+aplaudiendo,2
+aplaude,2
+aplausos,2
+apreciar,2
+apreciado,2
+aprecia,2
+apreciando,2
+aprecio,2
+aprensión,-2
+aprobación,2
+aprobado,2
+aprueba,2
+ardiente,1
+arrestar,-2
+arrestado,-3
+detenciones,-2
+arrogante,-2
+avergonzado,-2
 avergonzarse,-2
-apenado, -2
-vergüenza, -2
-culo, -4
-asesinato, -3
-asesinatos, -3
-activo, 2
-activos, 2
-echar un polvo, -4
-vete al carajo, -4
-vete a la mierda, -4
-soy un asno, -4
-el sabelotodo, -4
-cubrirse las espaldas, -4
-zorra, -4
-culijefa, -4
-culo, -4
-asombro, 2
-asombrando, 3
-asombrado, 3
-asombrosa, 3
-sorprendentemente, 3
-asombra, 3
-ataque, -1
-atacado, -1
-atacar, -1
-ataques, -1
-atraer, 1
-atraído, 1
-atraer, 2
-atracción, 2
-atracciones, 2
-atrae, 1
-audaz, 3
-autoridad, 1
-prevenir, -1
-evitado, -1
-evita, -1
-ávido, 2
-evitar, -1
-evitado, -1
-evita, -1
-esperan, -1
-esperado, -1
-espera, -1
-premio, 3
-adjudicado, 3
-premios, 3
-impresionante, 4
-horrible, -3
-torpe, -2
-hacha, -1
-despedido, -1
-respaldado, 1
-respaldo, 2
-espalda, 1
-malvado, -3
-tipo duro, -3
-gruñón, -3
-chevy, -3
-mal, -3
-rescate, -2
-también engaña, -2
-prohibición, -2
-desterrar, -1
-quiebra, -3
-banquero, -3
-prohibido, -2
-banda, 2
-grupo, 1
-cuadrilla, -2
-barrera, -2
-bastardo, -5
-bastardos, -5
-batalla, -1
-batallas, -1
-golpeado, -2
-beatífica, 3
-golpes, -1
-bellezas, 3
-hermoso, 3
-maravillosamente, 3
-embellecer, 3
-menospreciar, -2
-menospreciado, -2
-amada, 3
-beneficio, 2
-beneficios, 2
-beneficiada, 2
-beneficiando, 2
-bereave, -2
-doliente, -2
-bereaves, -2
-bereaving, -2
-mejor, 3
-traicionar, -3
-traición, -3
-traicionado, -3
-traicionero, -3
-traiciona, -3
-mejor, 2
-sesgo, -1
-sesgada, -2
-grande, 1
-perra, -5
-perras, -5
-amargo, -2
-amargura, -2
-extraño, -2
-bla, -2
-culpa, -2
-culpado, -2
-culpa, -2
-culpar, -2
-bendiga, 2
-bendice, 2
-bendición, 3
-ciego, -1
-dicha, 3
-dichoso, 3
-alegre, 2
-bloque, -1
-superproducción, 3
-bloqueado, -1
-bloqueo, -1
-bloques, -1
-sangrienta, -3
-borrosa, -2
-jactanciosos, -2
-negrita, 2
-audazmente, 2
-bomba, -1
-impulsar, 1
-impulsado, 1
-impulsar, 1
-aumenta, 1
-taladro, -2
-aburrido, -2
-aburrido, -3
-moleste, -2
-molestado, -2
-molesta, -2
-molestos, -2
-boicot, -2
-boicoteado, -2
-boicot, -2
-boicots, -2
-lavado de cerebro, -3
-valiente, 2
-avance, 3
-impresionante, 5
-sobornar, -3
-brillante, 1
-más brillante, 2
-brillo, 1
-brillante, 4
-a paso ligero, 2
-se rompió, -1
-roto, -1
-melancólica, -2
-intimidado, -2
-bullshit, -4
-matón, -2
-intimidación, -2
-fastidio, -2
-boyante, 2
-carga, -2
-agobiados, -2
-sobrecargar, -2
-cargas, -2
-calma, 2
-calmado, 2
-calmante, 2
-calma, 2
-no puede soportar, -3
-cancelar, -1
-cancelado, -1
-cancelación, -1
-cancela, -1
-cáncer, -1
-capaz, 1
-cautivado, 3
-cuidar, 2
-sin preocupaciones, 1
-cuidado, 2
-cuidadosamente, 2
-descuidado, -2
-cuidados, 2
-sacar provecho, -2
-siniestro, -2
-catástrofe, -3
-catastrófica, -4
-cautelosos, -1
-celebrar, 3
-célebre, 3
-celebra, 3
-celebración, 3
-censurar, -2
-censurado, -2
-censores, -2
-cierto, 1
-disgusto, -2
-disgustado, -2
-desafío, -1
-oportunidad, 2
-posibilidades, 2
-caos, -2
-caótica, -2
-cargado, -3
-cargos, -2
-encanto, 3
-encantador, 3
-sin encanto, -3
-castigar, -3
-castigado, -3
-castiga, -3
-castigar, -3
-engañar, -3
-engañado, -3
-tramposo, -3
-tramposos, -3
-tramposos, -3
-alegría, 2
-animado, 2
-alegre, 2
-animando, 2
-triste, -2
-aplausos, 2
-alegre, 3
-acariciar, 2
-acariciado, 2
-cuida, 2
-acariciar, 2
-elegante, 2
-infantil, -2
-escalofriante, -1
-ahogarse, -2
-ahogada, -2
-estrangulaciones, -2
-asfixia, -2
-aclara, 2
-claridad, 2
-chocar, -2
-con clase, 3
-limpio, 2
-limpiador, 2
-claro, 1
-limpiado, 1
-claramente, 1
-despeja, 1
-inteligente, 2
-nublado, -1
-desorientado, -2
-gallo, -5
-tragona, -5
-hijos de puta, -5
-engreído, -2
-coaccionado, -2
-colapsar, -2
-colapsada, -2
-colapsos, -2
-colapso, -2
-chocar, -1
-choca, -1
-chocar, -1
-colisión, -2
-colisiones, -2
-connivencia, -3
-combate, -1
-combate, -1
-comedia, 1
-confort, 2
-cómoda, 2
-reconfortante, 2
-confort, 2
-comodidad, 2
-conforto, 2
-felicitar, 2
-elogiado, 2
-comprometerse, 1
-compromiso, 2
-comete, 1
-cometido, 1
-cometer, 1
-compasivo, 2
-obligado, 1
-competente, 2
-competitivo, 2
-complaciente, -2
-quejarse, -2
-quejado, -2
-se queja, -2
-integral, 2
-conciliar, 2
-conciliado, 2
-concilia, 2
-conciliando, 2
-condenar, -2
-condena, -2
-condenado, -2
-condena, -2
-confianza, 2
-confiado, 2
-conflicto, -2
-en conflicto, -2
-conflictivo, -2
-conflictos, -2
-confundir, -2
-confusa, -2
-confuso, -2
-felicidades, 2
-felicitarle, 2
-enhorabuena, 2
-felicitaciones, 2
-consentimiento, 2
-consentimientos, 2
-consolable, 2
-conspiración, -3
-limitado, -2
-contagio, -2
-contagios, -2
-contagiosa, -1
-menosprecio, -2
-despectivo, -2
-despectivamente, -2
-contender, -1
-contendiente, -1
-contendientes, -1
-polémico, -2
-contestable, -2
-controvertido, -2
-polémico, -2
-convencer, 1
-convencidos, 1
-convence, 1
-de fácil utilización, 2
-fresco, 1
-cosas interesantes, 3
-arrinconado, -2
-cadáver, -1
-costoso, -2
-coraje, 2
-valiente, 2
-cortés, 2
-cortesía, 2
-encubrimiento, -3
-cobarde, -2
-cobardes, -2
-comodidad, 2
-calambre, -1
-basura, -3
-accidente, -2
-loco, -2
-más loca, -2
-loco, -2
-creativo, 2
-cabizbajo, -2
-gritó, -2
-llora, -2
-crimen, -3
-penal, -3
-criminales, -3
-crisis, -3
-crítico, -2
-crítica, -2
-criticar, -2
-criticado, -2
-critica, -2
-criticar, -2
-críticos, -2
-crueles, -3
-crueldad, -3
-aplastar, -1
-aplastado, -2
-aplasta, -1
-trituración, -1
-llorar, -1
-llorando, -2
-coño, -5
-curioso, 1
-maldición, -1
-cortar, -1
-lindo, 2
-cortes, -1
-corte, -1
-cínico, -2
-cínico, -2
-cinismo, -2
-daños, -3
-daños, -3
-maldición, -4
-condenados, -4
-damnit, -4
-peligro, -2
-temerario, 2
-atrevida, 2
-más oscuro, -2
-oscuridad, -1
-impávido, 2
-muerto, -3
-un punto muerto, -2
-ensordecedor, -1
-querida, 2
-muy caro, 3
-muerte, -2
-elegante, 2
-deuda, -2
-engaño, -3
-engañosa, -3
-engañar, -3
-engañado, -3
-engaña, -3
-engañando, -3
-engaño, -3
-decisivo, 1
-dedicado, 2
-derrotado, -2
-defecto, -3
-defectos, -3
-defensor 2
-defensores, 2
-indefensa, -2
-aplazar, -1
-difiriendo, -1
-desafiante, -1
-déficit, -2
-degradar, -2
-degradado, -2
-degrada, -2
-deshumanizar, -2
-deshumanizada, -2
-deshumaniza, -2
-deshumanizante, -2
-deject, -2
-abatido, -2
-desanimo, -2
-desanimado, -2
-abatido, -2
-desánimo, -2
-retardo, -1
-retardada, -1
-deleite, 3
-encantados, 3
-deleitando, 3
-delicias, 3
-la demanda, -1
-exigido, -1
-exigente, -1
-demandas, -1
-demostración, -1
-desmoralizado, -2
-negado, -2
-denier, -2
-negadores, -2
-niega, -2
-denunciar, -2
-denuncia, -2
-negar, -2
-negar, -2
-deprimido, -2
-deprimente, -2
-descarrilar, -2
-descarrilado, -2
-descarrila, -2
-burlarse, -2
-ridiculizado, -2
-ridiculiza, -2
-deriding, -2
-burla, -2
-deseable, 2
-deseo, 1
-deseada, 2
-deseosos, 2
-la desesperación, -3
-desesperado, -3
-desesperaciones, -3
-desesperada, -3
-desesperadamente, -3
-abatido, -3
-destruir, -3
-destruido, -3
-destruir, -3
-destruye, -3
-destrucción, -3
-destructiva, -3
-individual, -1
-detener, -2
-detenidos, -2
-detención, -2
-determinado, 2
-devastar, -2
-devastado, -2
-devastadora, -2
-dedicado, 3
-diamante, 1
-polla, -4
-capullo, -4
-morir, -3
-muerto, -3
-difícil, -1
-tímido, -2
-dilema, -1
-dipshit, -3
-grave, -3
-horrible, -3
-suciedad, -2
-más sucio, -2
-más sucio, -2
-sucio, -2
-incapacitante, -1
-desventaja, -2
-desventaja, -2
-desaparecer, -1
-desaparecido, -1
-desaparece, -1
-defraudar, -2
-decepcionado, -2
-decepcionante, -2
-decepción, -2
-decepciones, -2
-decepciona, -2
-desastre, -2
-desastres, -2
-desastroso, -3
-creer, -2
-descartar, -1
-descartado, -1
-descartando, -1
-descartes, -1
-desconsolada, -2
-desconsuelo, -2
-descontentos, -2
-discordia, -2
-descontado, -1
-desalentado, -2
-desacreditada, -2
-desprecio, -2
-desgracia, -2
-caído en desgracia, -2
-disfrazar, -1
-disfrazada, -1
-disfraces, -1
-disfrazar, -1
-disgusto, -3
-disgustado, -3
-repugnante, -3
-descorazonado, -2
-deshonesto, -2
-desilusionado, -2
-inclinado, -2
-inconexa, -2
-aversión, -2
-pésimo, -2
-consternados, -2
-trastorno, -2
-desorganizado, -2
-desorientado, -2
-menospreciar, -2
-menospreciado, -2
-menosprecie, -2
-despectivo, -2
-disgustado, -2
-controversia, -2
-en disputa, -2
-disputas, -2
-contendiente, -2
-descalificado, -2
-inquietud, -2
-indiferencia, -2
-no considerada, -2
-sin tener en cuenta, -2
-no tiene en cuenta, -2
-la falta de respeto, -2
-faltado el respeto, -2
-interrupción, -2
-interrupciones, -2
-perturbador, -2
-insatisfechos, -2
-distorsionar, -2
-distorsionada, -2
-distorsionar, -2
-distorsiona, -2
-distraer, -2
-distraído, -2
-distracción, -2
-distrae, -2
-angustia, -2
-angustiado, -2
-angustias, -2
-angustiante, -2
-desconfianza, -3
-desconfiados, -3
-molestar, -2
-perturbado, -2
-perturbadora, -2
-perturba, -2
-tramado, -2
-mareos, -1
-esquivar, -2
-poco fiable, -2
-no funciona, -3
-dolorosa, -2
-no me gusta, -2
-condenación, -2
-condenado, -2
-duda, -1
-dudado, -1
-dudosa, -1
-duda, -1
-dudas, -1
-ducha, -3
-gilipollas, -3
-abatido, -2
-descorazonado, -2
-la baja, -2
-arrastre, -1
-arrastrado, -1
-arrastra, -1
-drenado, -2
-pavor, -2
-temido, -2
-terrible, -3
-temiendo, -2
-sueño, 1
-sueños, 1
-triste, -2
-caídos, -2
-deje caer, -1
-ahogarse, -2
-ahogado, -2
-ahoga, -2
-bebido, -2
-dudosa, -2
-sin fondos, -2
-opaco, -2
-mudo, -3
-idiota, -3
-volcar, -1
-descargado, -2
-vertederos, -1
-engañar a, -2
-engañado, -2
-disfunción, -2
-ansiosos, 2
-serio, 2
-aliviar, 2
-fácil, 1
-éxtasis, 4
-misterioso, -2
-eery, -2
-efectiva, 2
-efectivamente, 2
-eufórico, 3
-euforia, 3
-elegante, 2
-elegante, 2
-avergonzar, -2
-vergüenza, -2
-estorba -2
-embarazosa, -2
-vergüenza, -2
-amargada, -2
-abrazar, 1
-emergencia, -2
-empático, 2
-vacío, -1
-vacía, -1
-encantado, 2
-alentar, 2
-alentó, 2
-estímulo, 2
-alienta, 2
-endosar, 2
-endosado, 2
-endoso, 2
-hace suya, 2
-enemigos, -2
-enemigo, -2
-enérgico, 2
-participar, 1
-engancha, 1
-absorto, 1
-disfrutar, 2
-disfrutando, 2
-disfruta, 2
-iluminar, 2
-iluminado, 2
-esclarecedor, 2
-ilumina, 2
-tedio, -2
-enfurecer, -2
-enfurecido, -2
-enfurece, -2
-enfurecedora, -2
-enrapture, 3
-esclavizar, -2
-esclavizado, -2
-esclaviza, -2
-garantizar, 1
-asegurando, 1
-emprendedora, 1
-entretenido, 2
-cautivando, 3
-entusiasta, 3
-titulado, 1
-confiado, 2
-envidias, -1
-envidia, -2
-envidiarle, -1
-celos, -1
-errónea, -2
-error, -2
-errores, -2
-escapar, -1
-escapes, -1
-escapar, -1
-estimada, 2
-ético, 2
-euforia, 3
-eufórico, 4
-desalojo, -1
-mal, -3
-exagerar, -2
-exagerada, -2
-exagera, -2
-exagerando, -2
-exasperada, 2
-excelencia, 3
-excelente, 3
-excitar, 3
-excitado, 3
-excitación, 3
-emocionante, 3
-excluir, -1
-excluidos, -2
-exclusión, -1
-exclusivo, 2
-disculpa, -1
-exentas, -1
-agotado, -2
-eufórico, 3
-regocija, 3
-estimulante, 3
-exonerar, 2
-exonerados, 2
-exonera, 2
-exonerando, 2
-ampliar, 1
-se expande, 1
-expulsar, -2
-expulsado, -2
-expulsar, -2
-expulsa, -2
-explotar, -2
-explotados, -2
-explotación, -2
-exploits, -2
-exploración, 1
-exploraciones, 1
-exponer, -1
-expuesta, -1
-expone, -1
-exponer, -1
-extender, 1
-se extiende, 1
-exuberante, 4
-exultante, 3
-exultante, 3
-fabuloso, 4
-moda, -2
-marica, -3
-marica, -3
-maricones, -3
-fallar, -2
-fallado, -2
-en su defecto, -2
-falla, -2
-fracaso, -2
-fracasos, -2
-de poco ánimo, -2
-justa, 2
-fe, 1
-fiel, 3
-falso, -3
-falsificaciones, -3
-fingiendo, -3
-caído, -2
-caer, -1
-falsificado, -3
-falsificar, -3
-fama, 1
-ventilador, 3
-fantástico, 4
-farsa, -1
-fascinar, 3
-fascinado, 3
-fascina, 3
-fascinante, 3
-fascista, -2
-fascistas, -2
-víctimas mortales, -3
-fatalidad, -3
-fatiga, -2
-fatigado, -2
-fatigas, -2
-fatigante, -2
-favorecer, 2
-favorecida, 2
-favorito, 2
-favorito, 2
-favoritos, 2
-favores, 2
-miedo, -2
-temeroso, -2
-temiendo, -2
-sin miedo, 2
-temible, -2
-harto, -3
-débil, -2
-sentimiento, 1
-delitos, -3
-delito grave, -3
-ferviente, 2
-férvido, 2
-festivo, 2
-fiasco, -3
-inquieto, -2
-luchar, -1
-fina, 2
-fuego, -2
-despedido, -2
-disparando, -2
-ajuste, 1
-aptitud, 1
-insignia, 2
-huye, -1
-fracaso, -2
-fracasos, -2
-gripe, -2
-nervioso, -2
-centrado, 2
-aficionado, 2
-afición, 2
-engañar a, -2
-tonta, -2
-tontos, -2
-forzado, -1
-ejecución de una hipoteca, -2
-embargos, -2
-olvidar, -1
-olvidadizo, -2
-perdonar, 1
-indulgente, 1
-olvidado, -1
-afortunados, 2
-frenético, -1
-fraude, -4
-fraudes, -4
-defraudador, -4
-defraudadores, -4
-fraude, -4
-fraudulento, -4
-libre, 1
-libertad, 2
-frenesí, -3
-fresca, 1
-amable, 2
-susto, -2
-asustado, -2
-aterradora, -3
-juguetón, 2
-fruncir el ceño, -1
-frustrar, -2
-frustrado, -2
-frustra, -2
-frustrante, -2
-frustración, -2
-cogida, -4
-follada, -4
-hijo de puta, -4
-hijos de puta, -4
-puta, -4
-imbécil, -4
-jodido, -4
-cumplir, 2
-cumplido, 2
-cumple, 2
-fumante, -2
-diversión, 4
-entierro, -1
-funerales, -1
-enrrollado, 2
-más divertido, 4
-divertido, 4
-furiosa, -3
-inútil, 2
-mordaza, -2
-amordazado, -2
-ganar, 2
-ganado, 2
-ganando, 2
-ganancias, 2
-galante, 3
-galante, 3
-galantería, 3
-generoso, 2
-genial, 3
-fantasma, -1
-vertiginosa, -2
-regalo, 2
-contenta, 3
-glamour, 3
-atractivo, 3
-júbilo, 3
-alegre, 3
-penumbra, -1
-sombrío, -2
-gloriosa, 2
-gloria, 2
-sombrío, -2
-dios, 1
-maldito, -3
-regalo del cielo, 4
-bueno, 3
-bondad, 3
-gracia, 1
-gentil, 3
-magnífico, 3
-subvención, 1
-concedida, 1
-concesión, 1
-subvenciones, 1
-agradecido, 3
-gratificación, 2
-tumba, -2
-gris, -1
-grande, 3
-mayor, 3
-más grande, 3
-avaricia, -3
-codicioso, -2
-lavado verde, -3
-lavado verde, -3
-lavado verde, -3
-lavado verde, -3
-saludar, 1
-saludado, 1
-saludo, 1
-saludos, 2
-saluda, 1
-gris, -1
-dolor, -2
-afligido, -2
-bruto, -2
-creciente, 1
-el crecimiento, la 2
-garantía, 1
-culpabilidad, -3
-culpable, -3
-credulidad, -2
-ingenuos, -2
-arma, -1
-ja, 2
-granizo, 2
-granizado, 2
-desafortunado, -2
-infortunio, -2
-felicidad, 3
-feliz, 3
-duro, -1
-más resistentes, 2
-dificultad, -2
-Hardy, 2
-daño, -2
-perjudicado, -2
-perjudicial, -2
-dañar, -2
-daños, -2
-acosado, -2
-áspero, -2
-más duro, -2
-más duro, -2
-odio, -3
-odiado, -3
-enemigos, -3
-odios, -3
-odiar, -3
-refugio, -1
-encantada, -2
-inquietante, 1
-persigue, -1
-caos, -2
-sano, 2
-desgarrador, -3
-el corazón roto, -3
-sincera, 3
-cielo, 2
-celestial, 4
-apesadumbrado, 2
-acongojado, -2
-infierno, -4
-ayudar, 2
-útiles, 2
-ayudando, 2
-indefensa, -2
-ayuda, 2
-héroe, 2
-héroes, 2
-heroica, 3
-vacilante, -2
-dude, -2
-escondido, -1
-ocultar, -1
-esconde, -1
-ocultar, -1
-culminante, 2
-hilarante, 2
-obstáculo, -2
-broma, -2
-nostálgico, -2
-honesto, 2
-honor, 2
-honrado, 2
-honrar, 2
-honor, 2
-honrado, 2
-honrar, 2
-gamberro, -2
-vandalismo, -2
-gamberros, -2
-esperanza, 2
-esperanzador, 2
-con suerte, 2
-sin esperanza, -2
-desesperanza, -2
-esperanzas, 2
-esperando, 2
-horrendo, -3
-horrible, -3
-horrible, -3
-horrorizada, -3
-hostil, -2
-tendero, -2
-abrazo, 2
-enorme, 1
-abrazos, 2
-cómico, 3
-humillada, -3
-humillación, -3
-humor, 2
-buen humor, 2
-humor, 2
-chistoso, 2
-el hambre, -2
-hurra, 5
-daño, -2
-herir, -2
-duele, -2
-hipócrita, -2
-histeria, -3
-histérica, -3
-histeria, -3
-idiota, -3
-idiota, -3
-la ignorancia, -2
-ignorante, -2
-ignorar, -1
-ignorado, -2
-ignora, -1
-enfermo, -2
-ilegal, -3
-el analfabetismo, -2
-enfermedad, -2
-enfermedades, -2
-imbécil, -3
-inmovilizado, -1
-inmortal, 2
-inmunológico, 1
-impaciente, -2
-imperfecta, -2
-importancia, 2
-importante, 2
-imponer, -1
-impuesto, -1
-impone, -1
-imponente, -1
-impotente, -2
-impresionar, 3
-impresionado, 3
-impresiona, 3
-impresionante, 3
-preso, -2
-mejorar, 2
-mejorado, 2
-mejora, 2
-mejora, 2
-mejorar, 2
-incapacidad, -2
-la inacción, -2
-inadecuada, -2
-incapaz, -2
-incapacitado, -2
-indignado, -2
-incompetencia, -2
-incompetente, -2
-desconsiderada, -2
-inconveniente, -2
-inconveniente, -2
-aumentar, 1
-aumentado, 1
-indeciso, -2
-indestructible, 2
-indiferencia, -2
-indiferente, -2
-indignada, -2
-indignación, -2
-adoctrinar, -2
-adoctrinados, -2
-adoctrina, -2
-adoctrinar, -2
-ineficaz, -2
-ineficaz, -2
-encaprichado, 2
-enamoramiento, 2
-infectada, -2
-inferior, -2
-inflamado, -2
-influyente, 2
-infracción, -2
-infuriate, -2
-enfurecida, -2
-enfurece, -2
-exasperante, -2
-inhibir, -1
-lesionado, -2
-lesión, -2
-la injusticia, -2
-innovar, 1
-innova, 1
-la innovación, 1
-innovador, 2
-inquisición, -2
-inquisitivo, 2
-loco, -2
-locura, -2
-insegura, -2
-insensibles, -2
-insensibilidad, -2
-insignificante, -2
-insípida, -2
-inspiración, 2
-inspiración, 2
-inspirar, 2
-inspirado, 2
-inspira, 2
-inspirador, 3
-insulto, -2
-insultado, -2
-insulto, -2
-insultos, -2
-intacto, 2
-integridad, 2
-inteligente, 2
-intenso, 1
-intereses, 1
-interesados, 2
-interesante, 2
-intereses, 1
-interrogado, -2
-interrumpir, -2
-interrumpida, -2
-interrumpir, -2
-interrupción, -2
-interrumpe, -2
-intimidar, -2
-intimidar, -2
-intimida, -2
-intimidante, -2
-intimidación, -2
-intrincado, 2
-intrigas, 1
-invencible, 2
-invitar, 1
-acogedor, 1
-invulnerable, 2
-airado, -3
-irónica, -1
-ironía, -1
-irracional, -1
-irresistible, 2
-irresoluto, -2
-irresponsable, 2
-irreversible, -1
-irritar, -3
-irritada, -3
-irritante, -3
-aislado, -1
-picazón, -2
-burro, -4
-asnos, -4
-encarcelados, -2
-vivaz, 2
-celoso, -2
-peligro, -2
-tirón, -3
-jesús, 1
-joya, 1
-joyas, 1
-jocoso, 2
-unirse, 1
-broma, 2
-chistes, 2
-jovial, 2
-alegría, 3
-alegre, 3
-alegría, 3
-sin alegría, -2
-alegre, 3
-júbilo, 3
-nervioso, -1
-la justicia, 2
-justificadamente, 2
-justificada, 2
-agudo, 1
-matar, -3
-matado, -3
-matar, -3
-mata, -3
-especie, 2
-Kinder, 2
-besar, 2
-felicitaciones, 3
-carecen, -2
-displicente, -2
-lag, -1
-lag, -2
-retraso, -2
-retrasos, -2
-cojos, -2
-punto de referencia, 2
-reír, 1
-rió, 1
-reír, 1
-risas, 1
-laughting, 1
-lanzado, 1
-lawl, 3
-demanda, -2
-demandas, -2
-perezoso, -1
-fugas, -1
-filtrado, -1
-dejar, -1
-legal, 1
-legalmente, 1
-indulgente, 1
-letárgico, -2
-letargo, -2
-mentiroso, -3
-mentirosos, -3
-calumnioso, -2
-mentido, -2
-salvavidas, 4
-alegre, 1
-como, 2
-gustado, 2
-gustos, 2
-limitación, -1
-limitado, -1
-límites, -1
-litigios, -1
-litigiosa, -2
-animado, 2
-lívido, -2
-detestan, -3
-odiado, -3
-aborrece, -3
-repugnancia, -3
-vestíbulo, -2
-grupos de presión, -2
-lol, 3
-solitaria, -2
-solitario, -2
-anhelo, -1
-telar, -1
-cernía, -1
-avecina, -1
-telares, -1
-suelta, -3
-pierde, -3
-perdedor, -3
-perdedor, -3
-pérdida, -3
-perdido, -3
-adorable, 3
-amor, 3
-amado, 3
-bellezas, 3
-precioso, 3
-amoroso, 2
-más bajo, -1
-leal, 3
-lealtad, 3
-suerte, 3
-afortunadamente, 3
-suerte, 3
-lúgubre, -2
-loco, -1
-locos, -3
-acecho, -1
-acecho, -1
-se esconde, -1
-locos, -3
-enloquecedor, -3
-maquillada, -1
-locamente, -3
-locura, -3
-obligatoria, -1
-manipulado, -1
-manipular, -1
-manipulación, -1
-maravilla, 3
-maravillosa, 3
-maravillas, 3
-obra maestra, 4
-obras maestras, 4
-materia, 1
-asuntos, 1
-madura, 2
-significativo, 2
-sin sentido, -2
-medalla, 3
-la mediocridad, -3
-meditación, 1
-melancolía, -2
-amenaza, -2
-amenazado, -2
-piedad, 2
-alegre, 3
-lío, -2
-en mal estado, -2
-echar a perder, -2
-metódica, 2
-sin sentido, -2
-milagro, 4
-alegría, 3
-alegre, 3
-mirthfully, 3
-mal comportamiento, -2
-portado mal, -2
-porta mal, -2
-porta mal, -2
-travesura, -1
-males, -1
-desgraciado, -3
-la miseria, -2
-recelo, -2
-información errónea, -2
-mal informado, -2
-malinterpretado, -2
-engañosa, -3
-leído mal, -1
-información errónea, -2
-falsedad, -2
-señorita, -2
-perdido, -2
-que falta, -2
-error, -2
-equivocada, -2
-errores, -2
-confundir, -2
-malinterpreten, -2
-malentendido, -2
-malinterpreta, -2
-incomprendida, -2
-gemir, -2
-gemido, -2
-gemidos, -2
-gemidos, -2
-maqueta, -2
-burlado, -2
-burla, -2
-burla, -2
-mongering, -2
-monopolizar, -2
-monopolizado, -2
-monopoliza, -2
-monopolizando, -2
-temperamental, -1
-abatida, -1
-abatido, -1
-Morón, -3
-hijo de puta, -5
-puto, -5
-motivar, 1
-motivado, 2
-motivador, 2
-motivación, 1
-llorar, -2
-llorado, -2
-triste, -2
-luto, -2
-llora, -2
-malhumorado, -2
-asesinato, -2
-asesino, -2
-asesinar, -3
-asesina, -3
-asesinatos, -2
-mito, -1
-ingenua, -2
-desagradable, -3
-natural, 1
-ingenuo, -2
-necesitados, -2
-negativo, -2
-negatividad, -2
-negligencia, -2
-descuidado, -2
-descuido, -2
-descuida, -2
-nervios, -1
-nervioso, -2
-nerviosismo, -2
-bonito, 3
-ingenioso, 2
-niggas, -5
-negro, -5
-no, -1
-no es divertido, -3
-noble, 2
-ruidoso, -1
-sin sentido, -2
-entrometido, -2
-no es bueno, -2
-no trabajar, -3
-notorio, -2
-novela, 2
-entumecido, -1
-nueces, -3
-obliterar, -2
-borrado, -2
-desagradable, -3
-obsceno, -2
-obsesionado, 2
-obsoleta, -2
-obstáculo, -2
-obstáculos, -2
-obstinado, -2
-impar, -2
-ofender, -2
-ofendida, -2
-delincuente, -2
-infractor, -2
-ofende, -2
-fuera de línea, -1
-siniestra, 3
-una vez en-la-vida, 3
-oportunidades, 2
-oportunidad, 2
-oprimidos, -2
-opresivo, -2
-optimismo, 2
-optimista, 2
-optionless, -2
-protesta, -2
-ultraje, -3
-indignado, -3
-divulgación, 2
-excepcional, 5
-contento, 4
-sobrecarga, -1
-vecinos, -1
-reaccionar de forma exagerada, -2
-una reacción exagerada, -2
-sobrerreacción, -2
-sobrereacciona, -2
-exagerar, -2
-sobreventa, -2
-simplificación excesiva, -2
-simplificada, -2
-simplifica en exceso, -2
-Simplificando, -2
-exageración, -2
-exageraciones, -2
-sobrepeso, -1
-oxímoron, -1
-dolor, -2
-de dolor, -2
-pánico, -3
-pánico, -3
-pánicos, -3
-paraíso, 3
-paradoja, -1
-perdón, 2
-indultado, 2
-perdón, 2
-indultos, 2
-parlamentar, -1
-apasionado, 2
-pasivo, -1
-pasivamente, -1
-patética, -2
-pagar, -1
-paz, 2
-pacífica, 2
-pacífica, 2
-pena, -2
-pensativo, -1
-perfecto, 3
-perfeccionado, 2
-perfectamente, 3
-perfecciona, 2
-peligro, -2
-perjurio, -3
-autor, -2
-autores, -2
-perplejos, -2
-perseguir, -2
-perseguida, -2
-persigue, -2
-perseguir, -2
-perturbado, -2
-molestos, -2
-pesimismo, -2
-pesimista, -2
-petrificado, -2
-fóbico, -2
-pintoresco, 2
-cacharro, -1
-piqué, -2
-picado, -2
-orina, -4
-enojado, -4
-meando, -3
-lastimero, -2
-compadecía, -1
-piedad, -2
-lúdica, 2
-agradable, 3
-por favor, 1
-satisfechos, 3
-placer, 3
-contrapesado, -2
-veneno, -2
-envenenado, -2
-venenos, -2
-contaminar, -2
-contaminado, -2
-contamina, -2
-contaminadores, -2
-contamina, -2
-pobres, -2
-más pobre, -2
-popular, 3
-positivo, 2
-positivamente, 2
-posesiva, -2
-posponer, -1
-pospuesto, -1
-pospone, -1
-aplazamiento, -1
-la pobreza, -1
-poderosa, 2
-impotentes, -2
-alabanza, 3
-elogiado, 3
-alabanzas, 3
-alabar, 3
-rezar, 1
-ora, 1
-prblms, -2
-preparado, 1
-presión, -1
-presionados, -2
-fingir, -1
-pretendiendo, -1
-pretende, -1
-bonito, 1
-prevenir, -1
-impedido, -1
-prevenir, -1
-previene, -1
-pinchazo, -5
-prisión, -2
-prisionero, -2
-prisioneros, -2
-privilegiada, 2
-proactivo, 2
-problema, -2
-problemas, -2
-aprovechado, -2
-progreso, 2
-prominente, 2
-promesa, 1
-prometido, 1
-promesas, 1
-promover, 1
-promovido, 1
-promueve, 1
-promover, 1
-propaganda, -2
-procesar, -1
-procesado, -2
-enjuicia, -1
-persecución, -1
-prospecto, 1
-perspectivas, 1
-próspero, 3
-proteger, 1
-protegida, 1
-protege, 1
-protestar, -2
-manifestantes, -2
-protestar, -2
-protestas, -2
-orgulloso, 2
-orgullo, 2
-provocar, -1
-provocado, -1
-provoca, -1
-provocador, -1
-pseudociencia, -3
-castigar, -2
-castigado, -2
-castiga, -2
-punitivo, -2
-agresivo, -1
-desconcertado, -2
-temblor, -2
-cuestionable, -2
-cuestionado, -1
-cuestionamiento, -1
-el racismo, -3
-racista, -3
-racistas, -3
-rabia, -2
-rabioso, -2
-lluvioso, -1
-diatriba, -3
-ranter, -3
-ranters, -3
-rantes, -3
-violación, -4
-violador, -4
-éxtasis, 2
-raptados, 2
-éxtasis, 2
-entusiasta, 4
-sarpullido, -2
-ratificado, 2
-alcanzar, 1
-alcanzado, 1
-alcanza, 1
-alcanzando, 1
-tranquilizar, 1
-sentirse seguro, el 1
-tranquiliza, 1
-tranquilizador, 2
-rebelión, -2
-recesión, -2
-imprudente, -2
-recomendar, 2
-recomendado, 2
-recomienda, 2
-redimido, 2
-negarse, -2
-negado, -2
-negarse, -2
-lamentar, -2
-lamentable, -2
-lamenta, -2
-lamentar, -2
-lamentando, -2
-rechazar, -1
-rechazado, -1
-rechazar, -1
-rechaza, -1
-regocijarán, 4
-regocijado, 4
-se goza, 4
-regocijo, 4
-relajado, 2
-implacable, -1
-dependiente, 2
-aliviado, 2
-alivia, 1
-aliviar, 2
-paladeo, 2
-notable, 2
-remordimiento, -2
-repeler, -1
-rechazado, -2
-rescate, 2
-rescatado, 2
-rescates, 2
-resentido, -2
-renunciar, -1
-renunciado, -1
-renuncia, -1
-resuelta, 2
-resolver, 2
-resuelto, 2
-resuelve, 2
-Resolución de 2 de
-respetado, 2
-responsable, 2
-receptivo, 2
-reparador, 2
-inquieto, -2
-restauración, 1
-restaurada, 1
-restaura, 1
-restauración, 1
-restringir, -2
-restringido, -2
-restringir, -2
-restricción, -2
-restringe, -2
-retenido, -1
-retard, -2
-retrasados, -2
-retirarse, -1
-venganza, -2
-vengativa, -2
-reverenciado, 2
-revivir, 2
-revive, 2
-recompensa, 2
-recompensado, 2
-gratificante, 2
-recompensas, 2
-rica, 2
-ridícula, -3
-aparejo, -1
-aparejado, -1
-dirección correcta, 3
-rigurosa, 3
-rigurosamente, 3
-disturbios, -2
-disturbios, -2
-riesgo, -2
-riesgos, -2
-ladrón, -2
-túnica, -2
-robing, -2
-roba, -2
-robusto, 2
-romance, 2
-ruina, -2
-arruinado, -2
-arruinando, -2
-ruinas, -2
-sabotear, -2
-triste, -2
-entristecen, -2
-entristecido, -2
-por desgracia, -2
-segura, 1
-de forma segura, 1
-seguridad, 1
-saliente, 1
-ñoña, -1
-sarcástico, -2
-satisfecho, 2
-guardar, 2
-salvado, 2
-estafa, -2
-estafas, -2
-escándalo, -3
-escandalosa, -3
-escándalos, -3
-cabeza de turco, -2
-cabezas de turco, -2
-susto, -2
-miedo, -2
-miedo, -2
-escéptica, -2
-regañar, -2
-cucharada, 3
-desprecio, -2
-desdeñosa, -2
-gritar, -2
-gritado, -2
-gritando, -2
-gritos, -2
-atornillado, -2
-cagado, -3
-escoria, -4
-segura, 2
-asegurado, 2
-asegura, 2
-sedición, -2
-sediciosa, -2
-seducir, -1
-segura de sí misma, 2
-autoengañada, -2
-egoísta, -3
-el egoísmo, -3
-frase, -2
-condenado, -2
-frases, -2
-sentencia, -2
-sereno, 2
-severa, -2
-atractivo, 3
-inestable, -2
-vergüenza, -2
-avergonzado, -2
-vergüenza, -2
-acción, 1
-compartida, 1
-acciones, 1
-destrozado, -2
-mierda, -4
-shithead, -4
-mierda, -3
-choque, -2
-shock, -2
-impactante, -2
-disparar, -1
-miope, -2
-miopía, -2
-escasez, -2
-musaraña, -4
-tímido, -1
-enfermo, -2
-suspiro, -2
-importancia, 1
-significativo, 1
-silenciamiento, -1
-tonto, -1
-sincera, 2
-sinceramente, 2
-sincera, 2
-sinceridad, 2
-pecadora, -3
-singleminded, -2
-escéptico, -2
-escéptica, -2
-escepticismo, -2
-escépticos, -2
-dar un portazo, -2
-frenazo, -2
-golpear, -2
-raya vertical, -2
-recortado, -2
-barras inclinadas, -2
-la roza, -2
-la esclavitud, -3
-insomnio, -2
-pulido, 2
-más pulido, 2
-diestros, 2
-lento, -2
-puta, -5
-inteligente, 1
-inteligente, 2
-más inteligente, 2
-frotis, -2
-sonrisa, 2
-Sonreí, 2
-sonrisas, 2
-sonriente, 2
-el smog, -2
-disimulado, -1
-desairar, -2
-desairado, -2
-snubbing, -2
-desaires, -2
-aleccionador, 1
-solemne, -1
-sólido, 2
-la solidaridad, la 2
-solución, 1
-soluciones, 1
-resolver, 1
-resuelto, 1
-resuelve, 1
-la resolución, 1
-sombría, -2
-algún tipo, 0
-hijo de puta, -5
-calmar, 3
-calmado, 3
-calmante, 3
-sofisticado, 2
-dolor, -1
-tristeza, -2
-triste, -2
-Lo sentimos, -1
-correo no deseado, -2
-spammer, -3
-spammers, -3
-envío de correo basura, -2
-chispa, 1
-chispa, 3
-destellos, 3
-espumoso, 3
-especulativa, -2
-espíritu, 1
-enérgica, 2
-sin espíritu, -2
-rencoroso, -2
-espléndida, 3
-vivaz, 2
-abortada, -1
-arma blanca, -2
-acuchillado, -2
-estable, 2
-puñaladas, -2
-estancar, -2
-estancado, -2
-cale, -2
-la resistencia, la 2
-estampida, -2
-sobresaltado, -2
-hambre, -2
-hambre, -2
-se muere de hambre, -2
-hambrientos, -2
-firmes, 2
-robar, -2
-robos, -2
-estereotipo, -2
-estereotipado, -2
-sofocado, -1
-estimular, 1
-estimulado, 1
-estimula, 1
-estimulante, 2
-tacaños, -2
-robado, -2
-detener, -1
-detenido, -1
-parar, -1
-paradas, -1
-corpulento, 2
-recta, 1
-extraño, -1
-curiosamente, -1
-estrangulado, -2
-fuerza, 2
-fortalecer, 2
-fortalecido, 2
-fortalecimiento, 2
-fortalece, 2
-estresado, -2
-estresante, -2
-factores de estrés, -2
-asolado, -2
-huelga, -1
-delanteros, -2
-huelgas, -1
-fuerte, 2
-más fuerte, 2
-más fuerte, 2
-golpeado, -1
-luchar, -2
-luchado, -2
-luchas, -2
-luchando, -2
-terca, -2
-atascado, -2
-aturdido, -2
-impresionante, 4
-estúpida, -2
-estúpidamente, -2
-suave, 2
-sustancial, 1
-sustancialmente, 1
-subversivo, -2
-éxito, 2
-éxito, 3
-chupar, -3
-chupa, -3
-sufrir, -2
-sufrimiento, -2
-sufre, -2
-suicida, -2
-suicidio, -2
-demandar, -2
-el mal humor, -2
-sulky, -2
-hosco, -2
-sol, 2
-estupendo, 3
-excelente, 5
-superior, 2
-apoyo, 2
-compatible, 2
-partidario, 1
-partidarios, 1
-de soporte, 1
-de apoyo, 2
-soportes, 2
-sobrevivido, 2
-sobrevivir, 2
-superviviente, 2
-sospecha, -1
-sospechando, -1
-sospechosos, -1
-suspender, -1
-suspendido, -1
-sospechoso, -2
-jurar, -2
-toma de posesión, -2
-jura, -2
-dulce, 2
-rápido, 2
-rápidamente, 2
-estafa, -3
-estafas, -3
-estafa, -3
-simpático, 2
-simpatía, 2
-tard, -2
-lágrimas, -2
-tierna, 2
-tensa, -2
-tensión, -1
-terribles, -3
-terriblemente, -3
-fenomenal, 4
-aterrado, -3
-terror, -3
-aterrorizar, -3
-aterrorizado, -3
-aterroriza, -3
-agradecimiento, 2
-agradecido, 2
-gracias, 2
-espinoso, -2
-reflexivo, 2
-sin pensamientos, -2
-amenaza, -2
-amenazar, -2
-amenazados, -2
-amenazante, -2
-amenaza, -2
-amenazas, -2
-encantados, 5
-frustrar, -2
-frustrado, -2
-frustración, -2
-frustra, -2
-tímida, -2
-timorata, -2
-cansado, -2
-tetas, -2
-tolerante, 2
-desdentado, -2
-la parte superior, 2
-desgarrado, -2
-la tortura, -4
-torturado, -4
-torturas, -4
-torturar, -4
-totalitaria, -2
-totalitarismo, -2
-promocionado, -2
-reventa, -2
-revendedores, -2
-tragedia, -2
-trágica, -2
-tranquilo, 2
-trampa, -1
-atrapado, -2
-trauma, -3
-traumático, -3
-farsa, -2
-traición, -3
-traicionero, -3
-tesoro, 2
-tesoros, 2
-temblor, -2
-trémula, -2
-engañado, -2
-engaño, -2
-triunfo, 4
-triunfante, 4
-problemas, -2
-con problemas, -2
-Problemas, -2
-verdadera, 2
-confianza, 1
-grande, 2
-tumor, -2
-idiota, -5
-feo, -3
-inaceptable, -2
-poco apreciado, -2
-no aprobado, -2
-inconscientes, -2
-increíble, -1
-incrédulos, -1
-imparcial, 2
-incierto, -1
-claro, -1
-incómodo, -2
-despreocupado, -2
-sin confirmar, -1
-convencido, -1
-sin acreditar, -1
-indecisos, -1
-subestimación, -1
-subestimado, -1
-subestima, -1
-subestimación, -1
-minar, -2
-minado, -2
-socava, -2
-socavación, -2
-que no merecen, -2
-indeseable, -2
-inquieta, -2
-el desempleo, -2
-desigual, -1
-sin igual, 2
-poco ético, -2
-injusta, -2
-fuera de foco, -2
-incumplida, -2
-infeliz, -2
-insalubres, -2
-unificado, 1
-impresionado, -2
-inteligente, -2
-unido, 1
-injusta, -2
-digno de ser amado, -2
-sin amor, -2
-inigualable, 1
-desmotivado, -2
-poco profesional, -2
-unresearched, -2
-insatisfecha, -2
-sin garantía, -2
-sin resolver, -1
-poco sofisticado, -2
-inestable, -2
-imparable, 2
-sin soporte, -2
-seguro, -1
-sin tacha, 2
-no deseado, -2
-indigno, -2
-estomacal, -2
-trastornos, -2
-perturbador, -2
-tenso, -2
-urgente, -1
-útil, 2
-utilidad, 2
-inútil, -2
-inutilidad, -2
-vaga, -2
-validar, 1
-validado, 1
-valida, 1
-validar, 1
-veredicto, -1
-veredictos, -1
-creados, 1
-aflicción, -2
-irritante, -2
-vibrante, 3
-vicioso, -2
-víctima, -3
-victimizar, -3
-víctima, -3
-victimiza, -3
-victimizadora, -3
-víctimas, -3
-vigilante, 3
-vil, -3
-reivindicar, 2
-vindicada, 2
-reivindica, 2
-reivindicativa, 2
-violar, -2
-violados, -2
-viola, -2
-la violencia, -3
-violento, -3
-virtuoso, 2
-virulenta, -2
-visionario, 3
-visión, 1
-visiones, 1
-vitalidad, 3
-vitamina, 1
-mordaz, -3
-vivaz, 3
-vociferante, -1
-vulnerabilidad, -2
-vulnerable, -2
-paro, -2
-paros, -2
-pendejo, -3
-desee, 1
-guerra, -2
-caliente, 1
-calidez, 2
-advertir, -2
-advertido, -2
-advertencia, -3
-advertencias, -3
-advierte, -2
-perder, -1
-desperdiciado, -2
-perder, -2
-vacilante, -1
-débil, -2
-debilidad, -2
-riqueza, 3
-rico, 2
-cansado, -2
-llorar, -2
-llorando, -2
-raro, -2
-bienvenida, 2
-bienvenida, 2
-se felicita, 2
-caprichosa, 1
-cal, -3
-puta, -4
-malvados, -2
-viuda, -1
-voluntad, 2
-victoria, 4
-ganador, 4
-ganador, 4
-victorias, 4
-deseos, 1
-deseos, 1
-desear, 1
-retirada, -3
-woebegone, -2
-lamentable, -3
-maravilloso, 4
-lana, 4
-desgastado, -1
-preocupado, -3
-preocuparse, -3
-preocupante, -3
-peor, -3
-empeorar, -3
-empeorado, -3
-empeoramiento, -3
-empeora, -3
-adorado, 3
-peor, -3
-vale la pena, 2
-sin valor, -2
-digna, 2
-colérica, -3
-pecio, -2
-mal, -2
-agraviado, -2
-sí, 1
-anhelo, 1
-yeees, 2
-juvenil, 2
-asqueroso, -2
-delicioso, 3
-zelote, -2
-fanáticos, -2
-celoso, 2
+apenado,-2
+culo,-4
+asesinato,-3
+asesinatos,-3
+activo,2
+activos,2
+echar un polvo,-4
+vete al carajo,-4
+vete a la mierda,-4
+soy un asno,-4
+el sabelotodo,-4
+cubrirse las espaldas,-4
+zorra,-4
+culijefa,-4
+culo,-4
+asombro,2
+asombrando,3
+asombrado,3
+asombrosa,3
+sorprendentemente,3
+asombra,3
+ataque,-1
+atacado,-1
+atacar,-1
+ataques,-1
+atraer,1
+atraído,1
+atraer,2
+atracción,2
+atracciones,2
+atrae,1
+audaz,3
+autoridad,1
+prevenir,-1
+evitado,-1
+evita,-1
+ávido,2
+evitar,-1
+evitado,-1
+evita,-1
+esperan,-1
+esperado,-1
+espera,-1
+premio,3
+adjudicado,3
+premios,3
+impresionante,4
+horrible,-3
+torpe,-2
+hacha,-1
+despedido,-1
+respaldado,1
+respaldo,2
+espalda,1
+malvado,-3
+tipo duro,-3
+gruñón,-3
+chevy,-3
+mal,-3
+rescate,-2
+también engaña,-2
+prohibición,-2
+desterrar,-1
+quiebra,-3
+banquero,-3
+prohibido,-2
+banda,2
+grupo,1
+cuadrilla,-2
+barrera,-2
+bastardo,-5
+bastardos,-5
+batalla,-1
+batallas,-1
+golpeado,-2
+beatífica,3
+golpes,-1
+bellezas,3
+hermoso,3
+maravillosamente,3
+embellecer,3
+menospreciar,-2
+menospreciado,-2
+amada,3
+beneficio,2
+beneficios,2
+beneficiada,2
+beneficiando,2
+bereave,-2
+doliente,-2
+bereaves,-2
+bereaving,-2
+mejor,3
+traicionar,-3
+traición,-3
+traicionado,-3
+traicionero,-3
+traiciona,-3
+mejor,2
+sesgo,-1
+sesgada,-2
+grande,1
+perra,-5
+perras,-5
+amargo,-2
+amargura,-2
+extraño,-2
+bla,-2
+culpa,-2
+culpado,-2
+culpa,-2
+culpar,-2
+bendiga,2
+bendice,2
+bendición,3
+ciego,-1
+dicha,3
+dichoso,3
+alegre,2
+bloque,-1
+superproducción,3
+bloqueado,-1
+bloqueo,-1
+bloques,-1
+sangrienta,-3
+borrosa,-2
+jactanciosos,-2
+negrita,2
+audazmente,2
+bomba,-1
+impulsar,1
+impulsado,1
+impulsar,1
+aumenta,1
+taladro,-2
+aburrido,-2
+aburrido,-3
+moleste,-2
+molestado,-2
+molesta,-2
+molestos,-2
+boicot,-2
+boicoteado,-2
+boicot,-2
+boicots,-2
+lavado de cerebro,-3
+valiente,2
+avance,3
+impresionante,5
+sobornar,-3
+brillante,1
+más brillante,2
+brillo,1
+brillante,4
+a paso ligero,2
+se rompió,-1
+roto,-1
+melancólica,-2
+intimidado,-2
+bullshit,-4
+matón,-2
+intimidación,-2
+fastidio,-2
+boyante,2
+carga,-2
+agobiados,-2
+sobrecargar,-2
+cargas,-2
+calma,2
+calmado,2
+calmante,2
+calma,2
+no puede soportar,-3
+cancelar,-1
+cancelado,-1
+cancelación,-1
+cancela,-1
+cáncer,-1
+capaz,1
+cautivado,3
+cuidar,2
+sin preocupaciones,1
+cuidado,2
+cuidadosamente,2
+descuidado,-2
+cuidados,2
+sacar provecho,-2
+siniestro,-2
+catástrofe,-3
+catastrófica,-4
+cautelosos,-1
+celebrar,3
+célebre,3
+celebra,3
+celebración,3
+censurar,-2
+censurado,-2
+censores,-2
+cierto,1
+disgusto,-2
+disgustado,-2
+desafío,-1
+oportunidad,2
+posibilidades,2
+caos,-2
+caótica,-2
+cargado,-3
+cargos,-2
+encanto,3
+encantador,3
+sin encanto,-3
+castigar,-3
+castigado,-3
+castiga,-3
+castigar,-3
+engañar,-3
+engañado,-3
+tramposo,-3
+tramposos,-3
+tramposos,-3
+alegría,2
+animado,2
+alegre,2
+animando,2
+triste,-2
+aplausos,2
+alegre,3
+acariciar,2
+acariciado,2
+cuida,2
+acariciar,2
+elegante,2
+infantil,-2
+escalofriante,-1
+ahogarse,-2
+ahogada,-2
+estrangulaciones,-2
+asfixia,-2
+aclara,2
+claridad,2
+chocar,-2
+con clase,3
+limpio,2
+limpiador,2
+claro,1
+limpiado,1
+claramente,1
+despeja,1
+inteligente,2
+nublado,-1
+desorientado,-2
+gallo,-5
+tragona,-5
+hijos de puta,-5
+engreído,-2
+coaccionado,-2
+colapsar,-2
+colapsada,-2
+colapsos,-2
+colapso,-2
+chocar,-1
+choca,-1
+chocar,-1
+colisión,-2
+colisiones,-2
+connivencia,-3
+combate,-1
+combate,-1
+comedia,1
+confort,2
+cómoda,2
+reconfortante,2
+confort,2
+comodidad,2
+conforto,2
+felicitar,2
+elogiado,2
+comprometerse,1
+compromiso,2
+comete,1
+cometido,1
+cometer,1
+compasivo,2
+obligado,1
+competente,2
+competitivo,2
+complaciente,-2
+quejarse,-2
+quejado,-2
+se queja,-2
+integral,2
+conciliar,2
+conciliado,2
+concilia,2
+conciliando,2
+condenar,-2
+condena,-2
+condenado,-2
+condena,-2
+confianza,2
+confiado,2
+conflicto,-2
+en conflicto,-2
+conflictivo,-2
+conflictos,-2
+confundir,-2
+confusa,-2
+confuso,-2
+felicidades,2
+felicitarle,2
+enhorabuena,2
+felicitaciones,2
+consentimiento,2
+consentimientos,2
+consolable,2
+conspiración,-3
+limitado,-2
+contagio,-2
+contagios,-2
+contagiosa,-1
+menosprecio,-2
+despectivo,-2
+despectivamente,-2
+contender,-1
+contendiente,-1
+contendientes,-1
+polémico,-2
+contestable,-2
+controvertido,-2
+polémico,-2
+convencer,1
+convencidos,1
+convence,1
+de fácil utilización,2
+fresco,1
+cosas interesantes,3
+arrinconado,-2
+cadáver,-1
+costoso,-2
+coraje,2
+valiente,2
+cortés,2
+cortesía,2
+encubrimiento,-3
+cobarde,-2
+cobardes,-2
+comodidad,2
+calambre,-1
+basura,-3
+accidente,-2
+loco,-2
+más loca,-2
+loco,-2
+creativo,2
+cabizbajo,-2
+gritó,-2
+llora,-2
+crimen,-3
+penal,-3
+criminales,-3
+crisis,-3
+crítico,-2
+crítica,-2
+criticar,-2
+criticado,-2
+critica,-2
+criticar,-2
+críticos,-2
+crueles,-3
+crueldad,-3
+aplastar,-1
+aplastado,-2
+aplasta,-1
+trituración,-1
+llorar,-1
+llorando,-2
+coño,-5
+curioso,1
+maldición,-1
+cortar,-1
+lindo,2
+cortes,-1
+corte,-1
+cínico,-2
+cínico,-2
+cinismo,-2
+daños,-3
+daños,-3
+maldición,-4
+condenados,-4
+damnit,-4
+peligro,-2
+temerario,2
+atrevida,2
+más oscuro,-2
+oscuridad,-1
+impávido,2
+muerto,-3
+un punto muerto,-2
+ensordecedor,-1
+querida,2
+muy caro,3
+muerte,-2
+elegante,2
+deuda,-2
+engaño,-3
+engañosa,-3
+engañar,-3
+engañado,-3
+engaña,-3
+engañando,-3
+engaño,-3
+decisivo,1
+dedicado,2
+derrotado,-2
+defecto,-3
+defectos,-3
+defensor,2
+defensores,2
+indefensa,-2
+aplazar,-1
+difiriendo,-1
+desafiante,-1
+déficit,-2
+degradar,-2
+degradado,-2
+degrada,-2
+deshumanizar,-2
+deshumanizada,-2
+deshumaniza,-2
+deshumanizante,-2
+deject,-2
+abatido,-2
+desanimo,-2
+desanimado,-2
+abatido,-2
+desánimo,-2
+retardo,-1
+retardada,-1
+deleite,3
+encantados,3
+deleitando,3
+delicias,3
+la demanda,-1
+exigido,-1
+exigente,-1
+demandas,-1
+demostración,-1
+desmoralizado,-2
+negado,-2
+denier,-2
+negadores,-2
+niega,-2
+denunciar,-2
+denuncia,-2
+negar,-2
+negar,-2
+deprimido,-2
+deprimente,-2
+descarrilar,-2
+descarrilado,-2
+descarrila,-2
+burlarse,-2
+ridiculizado,-2
+ridiculiza,-2
+deriding,-2
+burla,-2
+deseable,2
+deseo,1
+deseada,2
+deseosos,2
+la desesperación,-3
+desesperado,-3
+desesperaciones,-3
+desesperada,-3
+desesperadamente,-3
+abatido,-3
+destruir,-3
+destruido,-3
+destruir,-3
+destruye,-3
+destrucción,-3
+destructiva,-3
+individual,-1
+detener,-2
+detenidos,-2
+detención,-2
+determinado,2
+devastar,-2
+devastado,-2
+devastadora,-2
+dedicado,3
+diamante,1
+polla,-4
+capullo,-4
+morir,-3
+muerto,-3
+difícil,-1
+tímido,-2
+dilema,-1
+dipshit,-3
+grave,-3
+horrible,-3
+suciedad,-2
+más sucio,-2
+más sucio,-2
+sucio,-2
+incapacitante,-1
+desventaja,-2
+desventaja,-2
+desaparecer,-1
+desaparecido,-1
+desaparece,-1
+defraudar,-2
+decepcionado,-2
+decepcionante,-2
+decepción,-2
+decepciones,-2
+decepciona,-2
+desastre,-2
+desastres,-2
+desastroso,-3
+creer,-2
+descartar,-1
+descartado,-1
+descartando,-1
+descartes,-1
+desconsolada,-2
+desconsuelo,-2
+descontentos,-2
+discordia,-2
+descontado,-1
+desalentado,-2
+desacreditada,-2
+desprecio,-2
+desgracia,-2
+caído en desgracia,-2
+disfrazar,-1
+disfrazada,-1
+disfraces,-1
+disfrazar,-1
+disgusto,-3
+disgustado,-3
+repugnante,-3
+descorazonado,-2
+deshonesto,-2
+desilusionado,-2
+inclinado,-2
+inconexa,-2
+aversión,-2
+pésimo,-2
+consternados,-2
+trastorno,-2
+desorganizado,-2
+desorientado,-2
+menospreciar,-2
+menospreciado,-2
+menosprecie,-2
+despectivo,-2
+disgustado,-2
+controversia,-2
+en disputa,-2
+disputas,-2
+contendiente,-2
+descalificado,-2
+inquietud,-2
+indiferencia,-2
+no considerada,-2
+sin tener en cuenta,-2
+no tiene en cuenta,-2
+la falta de respeto,-2
+faltado el respeto,-2
+interrupción,-2
+interrupciones,-2
+perturbador,-2
+insatisfechos,-2
+distorsionar,-2
+distorsionada,-2
+distorsionar,-2
+distorsiona,-2
+distraer,-2
+distraído,-2
+distracción,-2
+distrae,-2
+angustia,-2
+angustiado,-2
+angustias,-2
+angustiante,-2
+desconfianza,-3
+desconfiados,-3
+molestar,-2
+perturbado,-2
+perturbadora,-2
+perturba,-2
+tramado,-2
+mareos,-1
+esquivar,-2
+poco fiable,-2
+no funciona,-3
+dolorosa,-2
+no me gusta,-2
+condenación,-2
+condenado,-2
+duda,-1
+dudado,-1
+dudosa,-1
+duda,-1
+dudas,-1
+ducha,-3
+gilipollas,-3
+abatido,-2
+descorazonado,-2
+la baja,-2
+arrastre,-1
+arrastrado,-1
+arrastra,-1
+drenado,-2
+pavor,-2
+temido,-2
+terrible,-3
+temiendo,-2
+sueño,1
+sueños,1
+triste,-2
+caídos,-2
+deje caer,-1
+ahogarse,-2
+ahogado,-2
+ahoga,-2
+bebido,-2
+dudosa,-2
+sin fondos,-2
+opaco,-2
+mudo,-3
+idiota,-3
+volcar,-1
+descargado,-2
+vertederos,-1
+engañar a,-2
+engañado,-2
+disfunción,-2
+ansiosos,2
+serio,2
+aliviar,2
+fácil,1
+éxtasis,4
+misterioso,-2
+eery,-2
+efectiva,2
+efectivamente,2
+eufórico,3
+euforia,3
+elegante,2
+elegante,2
+avergonzar,-2
+vergüenza,-2
+estorba,-2
+embarazosa,-2
+amargada,-2
+abrazar,1
+emergencia,-2
+empático,2
+vacío,-1
+vacía,-1
+encantado,2
+alentar,2
+alentó,2
+estímulo,2
+alienta,2
+endosar,2
+endosado,2
+endoso,2
+hace suya,2
+enemigos,-2
+enemigo,-2
+enérgico,2
+participar,1
+engancha,1
+absorto,1
+disfrutar,2
+disfrutando,2
+disfruta,2
+iluminar,2
+iluminado,2
+esclarecedor,2
+ilumina,2
+tedio,-2
+enfurecer,-2
+enfurecido,-2
+enfurece,-2
+enfurecedora,-2
+enrapture,3
+esclavizar,-2
+esclavizado,-2
+esclaviza,-2
+garantizar,1
+asegurando,1
+emprendedora,1
+entretenido,2
+cautivando,3
+entusiasta,3
+titulado,1
+confiado,2
+envidias,-1
+envidia,-2
+envidiarle,-1
+celos,-1
+errónea,-2
+error,-2
+errores,-2
+escapar,-1
+escapes,-1
+escapar,-1
+estimada,2
+ético,2
+euforia,3
+eufórico,4
+desalojo,-1
+mal,-3
+exagerar,-2
+exagerada,-2
+exagera,-2
+exagerando,-2
+exasperada,2
+excelencia,3
+excelente,3
+excitar,3
+excitado,3
+excitación,3
+emocionante,3
+excluir,-1
+excluidos,-2
+exclusión,-1
+exclusivo,2
+disculpa,-1
+exentas,-1
+agotado,-2
+eufórico,3
+regocija,3
+estimulante,3
+exonerar,2
+exonerados,2
+exonera,2
+exonerando,2
+ampliar,1
+se expande,1
+expulsar,-2
+expulsado,-2
+expulsar,-2
+expulsa,-2
+explotar,-2
+explotados,-2
+explotación,-2
+exploits,-2
+exploración,1
+exploraciones,1
+exponer,-1
+expuesta,-1
+expone,-1
+exponer,-1
+extender,1
+se extiende,1
+exuberante,4
+exultante,3
+exultante,3
+fabuloso,4
+moda,-2
+marica,-3
+marica,-3
+maricones,-3
+fallar,-2
+fallado,-2
+en su defecto,-2
+falla,-2
+fracaso,-2
+fracasos,-2
+de poco ánimo,-2
+justa,2
+fe,1
+fiel,3
+falso,-3
+falsificaciones,-3
+fingiendo,-3
+caído,-2
+caer,-1
+falsificado,-3
+falsificar,-3
+fama,1
+ventilador,3
+fantástico,4
+farsa,-1
+fascinar,3
+fascinado,3
+fascina,3
+fascinante,3
+fascista,-2
+fascistas,-2
+víctimas mortales,-3
+fatalidad,-3
+fatiga,-2
+fatigado,-2
+fatigas,-2
+fatigante,-2
+favorecer,2
+favorecida,2
+favorito,2
+favorito,2
+favoritos,2
+favores,2
+miedo,-2
+temeroso,-2
+temiendo,-2
+sin miedo,2
+temible,-2
+harto,-3
+débil,-2
+sentimiento,1
+delitos,-3
+delito grave,-3
+ferviente,2
+férvido,2
+festivo,2
+fiasco,-3
+inquieto,-2
+luchar,-1
+fina,2
+fuego,-2
+despedido,-2
+disparando,-2
+ajuste,1
+aptitud,1
+insignia,2
+huye,-1
+fracaso,-2
+fracasos,-2
+gripe,-2
+nervioso,-2
+centrado,2
+aficionado,2
+afición,2
+engañar a,-2
+tonta,-2
+tontos,-2
+forzado,-1
+ejecución de una hipoteca,-2
+embargos,-2
+olvidar,-1
+olvidadizo,-2
+perdonar,1
+indulgente,1
+olvidado,-1
+afortunados,2
+frenético,-1
+fraude,-4
+fraudes,-4
+defraudador,-4
+defraudadores,-4
+fraude,-4
+fraudulento,-4
+libre,1
+libertad,2
+frenesí,-3
+fresca,1
+amable,2
+susto,-2
+asustado,-2
+aterradora,-3
+juguetón,2
+fruncir el ceño,-1
+frustrar,-2
+frustrado,-2
+frustra,-2
+frustrante,-2
+frustración,-2
+cogida,-4
+follada,-4
+hijo de puta,-4
+hijos de puta,-4
+puta,-4
+imbécil,-4
+jodido,-4
+cumplir,2
+cumplido,2
+cumple,2
+fumante,-2
+diversión,4
+entierro,-1
+funerales,-1
+enrrollado,2
+más divertido,4
+divertido,4
+furiosa,-3
+inútil,2
+mordaza,-2
+amordazado,-2
+ganar,2
+ganado,2
+ganando,2
+ganancias,2
+galante,3
+galante,3
+galantería,3
+generoso,2
+genial,3
+fantasma,-1
+vertiginosa,-2
+regalo,2
+contenta,3
+glamour,3
+atractivo,3
+júbilo,3
+alegre,3
+penumbra,-1
+sombrío,-2
+gloriosa,2
+gloria,2
+sombrío,-2
+dios,1
+maldito,-3
+regalo del cielo,4
+bueno,3
+bondad,3
+gracia,1
+gentil,3
+magnífico,3
+subvención,1
+concedida,1
+concesión,1
+subvenciones,1
+agradecido,3
+gratificación,2
+tumba,-2
+gris,-1
+grande,3
+mayor,3
+más grande,3
+avaricia,-3
+codicioso,-2
+lavado verde,-3
+lavado verde,-3
+lavado verde,-3
+lavado verde,-3
+saludar,1
+saludado,1
+saludo,1
+saludos,2
+saluda,1
+gris,-1
+dolor,-2
+afligido,-2
+bruto,-2
+creciente,1
+el crecimiento,2
+garantía,1
+culpabilidad,-3
+culpable,-3
+credulidad,-2
+ingenuos,-2
+arma,-1
+ja,2
+granizo,2
+granizado,2
+desafortunado,-2
+infortunio,-2
+felicidad,3
+feliz,3
+duro,-1
+más resistentes,2
+dificultad,-2
+Hardy,2
+daño,-2
+perjudicado,-2
+perjudicial,-2
+dañar,-2
+daños,-2
+acosado,-2
+áspero,-2
+más duro,-2
+más duro,-2
+odio,-3
+odiado,-3
+enemigos,-3
+odios,-3
+odiar,-3
+refugio,-1
+encantada,-2
+inquietante,1
+persigue,-1
+caos,-2
+sano,2
+desgarrador,-3
+el corazón roto,-3
+sincera,3
+cielo,2
+celestial,4
+apesadumbrado,2
+acongojado,-2
+infierno,-4
+ayudar,2
+útiles,2
+ayudando,2
+indefensa,-2
+ayuda,2
+héroe,2
+héroes,2
+heroica,3
+vacilante,-2
+dude,-2
+escondido,-1
+ocultar,-1
+esconde,-1
+ocultar,-1
+culminante,2
+hilarante,2
+obstáculo,-2
+broma,-2
+nostálgico,-2
+honesto,2
+honor,2
+honrado,2
+honrar,2
+honor,2
+honrado,2
+honrar,2
+gamberro,-2
+vandalismo,-2
+gamberros,-2
+esperanza,2
+esperanzador,2
+con suerte,2
+sin esperanza,-2
+desesperanza,-2
+esperanzas,2
+esperando,2
+horrendo,-3
+horrible,-3
+horrible,-3
+horrorizada,-3
+hostil,-2
+tendero,-2
+abrazo,2
+enorme,1
+abrazos,2
+cómico,3
+humillada,-3
+humillación,-3
+humor,2
+buen humor,2
+humor,2
+chistoso,2
+el hambre,-2
+hurra,5
+daño,-2
+herir,-2
+duele,-2
+hipócrita,-2
+histeria,-3
+histérica,-3
+histeria,-3
+idiota,-3
+idiota,-3
+la ignorancia,-2
+ignorante,-2
+ignorar,-1
+ignorado,-2
+ignora,-1
+enfermo,-2
+ilegal,-3
+el analfabetismo,-2
+enfermedad,-2
+enfermedades,-2
+imbécil,-3
+inmovilizado,-1
+inmortal,2
+inmunológico,1
+impaciente,-2
+imperfecta,-2
+importancia,2
+importante,2
+imponer,-1
+impuesto,-1
+impone,-1
+imponente,-1
+impotente,-2
+impresionar,3
+impresionado,3
+impresiona,3
+impresionante,3
+preso,-2
+mejorar,2
+mejorado,2
+mejora,2
+mejora,2
+mejorar,2
+incapacidad,-2
+la inacción,-2
+inadecuada,-2
+incapaz,-2
+incapacitado,-2
+indignado,-2
+incompetencia,-2
+incompetente,-2
+desconsiderada,-2
+inconveniente,-2
+inconveniente,-2
+aumentar,1
+aumentado,1
+indeciso,-2
+indestructible,2
+indiferencia,-2
+indiferente,-2
+indignada,-2
+indignación,-2
+adoctrinar,-2
+adoctrinados,-2
+adoctrina,-2
+adoctrinar,-2
+ineficaz,-2
+ineficaz,-2
+encaprichado,2
+enamoramiento,2
+infectada,-2
+inferior,-2
+inflamado,-2
+influyente,2
+infracción,-2
+infuriate,-2
+enfurecida,-2
+enfurece,-2
+exasperante,-2
+inhibir,-1
+lesionado,-2
+lesión,-2
+la injusticia,-2
+innovar,1
+innova,1
+la innovación,1
+innovador,2
+inquisición,-2
+inquisitivo,2
+loco,-2
+locura,-2
+insegura,-2
+insensibles,-2
+insensibilidad,-2
+insignificante,-2
+insípida,-2
+inspiración,2
+inspiración,2
+inspirar,2
+inspirado,2
+inspira,2
+inspirador,3
+insulto,-2
+insultado,-2
+insulto,-2
+insultos,-2
+intacto,2
+integridad,2
+inteligente,2
+intenso,1
+intereses,1
+interesados,2
+interesante,2
+intereses,1
+interrogado,-2
+interrumpir,-2
+interrumpida,-2
+interrumpir,-2
+interrupción,-2
+interrumpe,-2
+intimidar,-2
+intimidar,-2
+intimida,-2
+intimidante,-2
+intimidación,-2
+intrincado,2
+intrigas,1
+invencible,2
+invitar,1
+acogedor,1
+invulnerable,2
+airado,-3
+irónica,-1
+ironía,-1
+irracional,-1
+irresistible,2
+irresoluto,-2
+irresponsable,2
+irreversible,-1
+irritar,-3
+irritada,-3
+irritante,-3
+aislado,-1
+picazón,-2
+burro,-4
+asnos,-4
+encarcelados,-2
+vivaz,2
+celoso,-2
+peligro,-2
+tirón,-3
+jesús,1
+joya,1
+joyas,1
+jocoso,2
+unirse,1
+broma,2
+chistes,2
+jovial,2
+alegría,3
+alegre,3
+alegría,3
+sin alegría,-2
+alegre,3
+júbilo,3
+nervioso,-1
+la justicia,2
+justificadamente,2
+justificada,2
+agudo,1
+matar,-3
+matado,-3
+matar,-3
+mata,-3
+especie,2
+Kinder,2
+besar,2
+felicitaciones,3
+carecen,-2
+displicente,-2
+lag,-1
+lag,-2
+retraso,-2
+retrasos,-2
+cojos,-2
+punto de referencia,2
+reír,1
+rió,1
+reír,1
+risas,1
+laughting,1
+lanzado,1
+lawl,3
+demanda,-2
+demandas,-2
+perezoso,-1
+fugas,-1
+filtrado,-1
+dejar,-1
+legal,1
+legalmente,1
+indulgente,1
+letárgico,-2
+letargo,-2
+mentiroso,-3
+mentirosos,-3
+calumnioso,-2
+mentido,-2
+salvavidas,4
+alegre,1
+como,2
+gustado,2
+gustos,2
+limitación,-1
+limitado,-1
+límites,-1
+litigios,-1
+litigiosa,-2
+animado,2
+lívido,-2
+detestan,-3
+odiado,-3
+aborrece,-3
+repugnancia,-3
+vestíbulo,-2
+grupos de presión,-2
+lol,3
+solitaria,-2
+solitario,-2
+anhelo,-1
+telar,-1
+cernía,-1
+avecina,-1
+telares,-1
+suelta,-3
+pierde,-3
+perdedor,-3
+perdedor,-3
+pérdida,-3
+perdido,-3
+adorable,3
+amor,3
+amado,3
+bellezas,3
+precioso,3
+amoroso,2
+más bajo,-1
+leal,3
+lealtad,3
+suerte,3
+afortunadamente,3
+suerte,3
+lúgubre,-2
+loco,-1
+locos,-3
+acecho,-1
+acecho,-1
+se esconde,-1
+locos,-3
+enloquecedor,-3
+maquillada,-1
+locamente,-3
+locura,-3
+obligatoria,-1
+manipulado,-1
+manipular,-1
+manipulación,-1
+maravilla,3
+maravillosa,3
+maravillas,3
+obra maestra,4
+obras maestras,4
+materia,1
+asuntos,1
+madura,2
+significativo,2
+sin sentido,-2
+medalla,3
+la mediocridad,-3
+meditación,1
+melancolía,-2
+amenaza,-2
+amenazado,-2
+piedad,2
+alegre,3
+lío,-2
+en mal estado,-2
+echar a perder,-2
+metódica,2
+sin sentido,-2
+milagro,4
+alegría,3
+alegre,3
+mirthfully,3
+mal comportamiento,-2
+portado mal,-2
+porta mal,-2
+porta mal,-2
+travesura,-1
+males,-1
+desgraciado,-3
+la miseria,-2
+recelo,-2
+información errónea,-2
+mal informado,-2
+malinterpretado,-2
+engañosa,-3
+leído mal,-1
+información errónea,-2
+falsedad,-2
+señorita,-2
+perdido,-2
+que falta,-2
+error,-2
+equivocada,-2
+errores,-2
+confundir,-2
+malinterpreten,-2
+malentendido,-2
+malinterpreta,-2
+incomprendida,-2
+gemir,-2
+gemido,-2
+gemidos,-2
+gemidos,-2
+maqueta,-2
+burlado,-2
+burla,-2
+burla,-2
+mongering,-2
+monopolizar,-2
+monopolizado,-2
+monopoliza,-2
+monopolizando,-2
+temperamental,-1
+abatida,-1
+abatido,-1
+Morón,-3
+hijo de puta,-5
+puto,-5
+motivar,1
+motivado,2
+motivador,2
+motivación,1
+llorar,-2
+llorado,-2
+triste,-2
+luto,-2
+llora,-2
+malhumorado,-2
+asesinato,-2
+asesino,-2
+asesinar,-3
+asesina,-3
+asesinatos,-2
+mito,-1
+ingenua,-2
+desagradable,-3
+natural,1
+ingenuo,-2
+necesitados,-2
+negativo,-2
+negatividad,-2
+negligencia,-2
+descuidado,-2
+descuido,-2
+descuida,-2
+nervios,-1
+nervioso,-2
+nerviosismo,-2
+bonito,3
+ingenioso,2
+niggas,-5
+negro,-5
+no,-1
+no es divertido,-3
+noble,2
+ruidoso,-1
+sin sentido,-2
+entrometido,-2
+no es bueno,-2
+no trabajar,-3
+notorio,-2
+novela,2
+entumecido,-1
+nueces,-3
+obliterar,-2
+borrado,-2
+desagradable,-3
+obsceno,-2
+obsesionado,2
+obsoleta,-2
+obstáculo,-2
+obstáculos,-2
+obstinado,-2
+impar,-2
+ofender,-2
+ofendida,-2
+delincuente,-2
+infractor,-2
+ofende,-2
+fuera de línea,-1
+siniestra,3
+una vez en-la-vida,3
+oportunidades,2
+oportunidad,2
+oprimidos,-2
+opresivo,-2
+optimismo,2
+optimista,2
+optionless,-2
+protesta,-2
+ultraje,-3
+indignado,-3
+divulgación,2
+excepcional,5
+contento,4
+sobrecarga,-1
+vecinos,-1
+reaccionar de forma exagerada,-2
+una reacción exagerada,-2
+sobrerreacción,-2
+sobrereacciona,-2
+exagerar,-2
+sobreventa,-2
+simplificación excesiva,-2
+simplificada,-2
+simplifica en exceso,-2
+Simplificando,-2
+exageración,-2
+exageraciones,-2
+sobrepeso,-1
+oxímoron,-1
+dolor,-2
+de dolor,-2
+pánico,-3
+pánico,-3
+pánicos,-3
+paraíso,3
+paradoja,-1
+perdón,2
+indultado,2
+perdón,2
+indultos,2
+parlamentar,-1
+apasionado,2
+pasivo,-1
+pasivamente,-1
+patética,-2
+pagar,-1
+paz,2
+pacífica,2
+pacífica,2
+pena,-2
+pensativo,-1
+perfecto,3
+perfeccionado,2
+perfectamente,3
+perfecciona,2
+peligro,-2
+perjurio,-3
+autor,-2
+autores,-2
+perplejos,-2
+perseguir,-2
+perseguida,-2
+persigue,-2
+perseguir,-2
+perturbado,-2
+molestos,-2
+pesimismo,-2
+pesimista,-2
+petrificado,-2
+fóbico,-2
+pintoresco,2
+cacharro,-1
+piqué,-2
+picado,-2
+orina,-4
+enojado,-4
+meando,-3
+lastimero,-2
+compadecía,-1
+piedad,-2
+lúdica,2
+agradable,3
+por favor,1
+satisfechos,3
+placer,3
+contrapesado,-2
+veneno,-2
+envenenado,-2
+venenos,-2
+contaminar,-2
+contaminado,-2
+contamina,-2
+contaminadores,-2
+contamina,-2
+pobres,-2
+más pobre,-2
+popular,3
+positivo,2
+positivamente,2
+posesiva,-2
+posponer,-1
+pospuesto,-1
+pospone,-1
+aplazamiento,-1
+la pobreza,-1
+poderosa,2
+impotentes,-2
+alabanza,3
+elogiado,3
+alabanzas,3
+alabar,3
+rezar,1
+ora,1
+prblms,-2
+preparado,1
+presión,-1
+presionados,-2
+fingir,-1
+pretendiendo,-1
+pretende,-1
+bonito,1
+prevenir,-1
+impedido,-1
+prevenir,-1
+previene,-1
+pinchazo,-5
+prisión,-2
+prisionero,-2
+prisioneros,-2
+privilegiada,2
+proactivo,2
+problema,-2
+problemas,-2
+aprovechado,-2
+progreso,2
+prominente,2
+promesa,1
+prometido,1
+promesas,1
+promover,1
+promovido,1
+promueve,1
+promover,1
+propaganda,-2
+procesar,-1
+procesado,-2
+enjuicia,-1
+persecución,-1
+prospecto,1
+perspectivas,1
+próspero,3
+proteger,1
+protegida,1
+protege,1
+protestar,-2
+manifestantes,-2
+protestar,-2
+protestas,-2
+orgulloso,2
+orgullo,2
+provocar,-1
+provocado,-1
+provoca,-1
+provocador,-1
+pseudociencia,-3
+castigar,-2
+castigado,-2
+castiga,-2
+punitivo,-2
+agresivo,-1
+desconcertado,-2
+temblor,-2
+cuestionable,-2
+cuestionado,-1
+cuestionamiento,-1
+el racismo,-3
+racista,-3
+racistas,-3
+rabia,-2
+rabioso,-2
+lluvioso,-1
+diatriba,-3
+ranter,-3
+ranters,-3
+rantes,-3
+violación,-4
+violador,-4
+éxtasis,2
+raptados,2
+éxtasis,2
+entusiasta,4
+sarpullido,-2
+ratificado,2
+alcanzar,1
+alcanzado,1
+alcanza,1
+alcanzando,1
+tranquilizar,1
+sentirse seguro,1
+tranquiliza,1
+tranquilizador,2
+rebelión,-2
+recesión,-2
+imprudente,-2
+recomendar,2
+recomendado,2
+recomienda,2
+redimido,2
+negarse,-2
+negado,-2
+negarse,-2
+lamentar,-2
+lamentable,-2
+lamenta,-2
+lamentar,-2
+lamentando,-2
+rechazar,-1
+rechazado,-1
+rechazar,-1
+rechaza,-1
+regocijarán,4
+regocijado,4
+se goza,4
+regocijo,4
+relajado,2
+implacable,-1
+dependiente,2
+aliviado,2
+alivia,1
+aliviar,2
+paladeo,2
+notable,2
+remordimiento,-2
+repeler,-1
+rechazado,-2
+rescate,2
+rescatado,2
+rescates,2
+resentido,-2
+renunciar,-1
+renunciado,-1
+renuncia,-1
+resuelta,2
+resolver,2
+resuelto,2
+resuelve,2
+resolución,2
+respetado,2
+responsable,2
+receptivo,2
+reparador,2
+inquieto,-2
+restauración,1
+restaurada,1
+restaura,1
+restauración,1
+restringir,-2
+restringido,-2
+restringir,-2
+restricción,-2
+restringe,-2
+retenido,-1
+retard,-2
+retrasados,-2
+retirarse,-1
+venganza,-2
+vengativa,-2
+reverenciado,2
+revivir,2
+revive,2
+recompensa,2
+recompensado,2
+gratificante,2
+recompensas,2
+rica,2
+ridícula,-3
+aparejo,-1
+aparejado,-1
+dirección correcta,3
+rigurosa,3
+rigurosamente,3
+disturbios,-2
+disturbios,-2
+riesgo,-2
+riesgos,-2
+ladrón,-2
+túnica,-2
+robing,-2
+roba,-2
+robusto,2
+romance,2
+ruina,-2
+arruinado,-2
+arruinando,-2
+ruinas,-2
+sabotear,-2
+triste,-2
+entristecen,-2
+entristecido,-2
+por desgracia,-2
+segura,1
+de forma segura,1
+seguridad,1
+saliente,1
+ñoña,-1
+sarcástico,-2
+satisfecho,2
+guardar,2
+salvado,2
+estafa,-2
+estafas,-2
+escándalo,-3
+escandalosa,-3
+escándalos,-3
+cabeza de turco,-2
+cabezas de turco,-2
+susto,-2
+miedo,-2
+miedo,-2
+escéptica,-2
+regañar,-2
+cucharada,3
+desprecio,-2
+desdeñosa,-2
+gritar,-2
+gritado,-2
+gritando,-2
+gritos,-2
+atornillado,-2
+cagado,-3
+escoria,-4
+segura,2
+asegurado,2
+asegura,2
+sedición,-2
+sediciosa,-2
+seducir,-1
+segura de sí misma,2
+autoengañada,-2
+egoísta,-3
+el egoísmo,-3
+frase,-2
+condenado,-2
+frases,-2
+sentencia,-2
+sereno,2
+severa,-2
+atractivo,3
+inestable,-2
+avergonzado,-2
+acción,1
+compartida,1
+acciones,1
+destrozado,-2
+mierda,-4
+shithead,-4
+mierda,-3
+choque,-2
+shock,-2
+impactante,-2
+disparar,-1
+miope,-2
+miopía,-2
+escasez,-2
+musaraña,-4
+tímido,-1
+enfermo,-2
+suspiro,-2
+importancia,1
+significativo,1
+silenciamiento,-1
+tonto,-1
+sincera,2
+sinceramente,2
+sincera,2
+sinceridad,2
+pecadora,-3
+singleminded,-2
+escéptico,-2
+escéptica,-2
+escepticismo,-2
+escépticos,-2
+dar un portazo,-2
+frenazo,-2
+golpear,-2
+raya vertical,-2
+recortado,-2
+barras inclinadas,-2
+la roza,-2
+la esclavitud,-3
+insomnio,-2
+pulido,2
+más pulido,2
+diestros,2
+lento,-2
+puta,-5
+inteligente,1
+inteligente,2
+más inteligente,2
+frotis,-2
+sonrisa,2
+Sonreí,2
+sonrisas,2
+sonriente,2
+el smog,-2
+disimulado,-1
+desairar,-2
+desairado,-2
+snubbing,-2
+desaires,-2
+aleccionador,1
+solemne,-1
+sólido,2
+la solidaridad,2
+solución,1
+soluciones,1
+resolver,1
+resuelto,1
+resuelve,1
+la resolución,1
+sombría,-2
+algún tipo,0
+hijo de puta,-5
+calmar,3
+calmado,3
+calmante,3
+sofisticado,2
+dolor,-1
+tristeza,-2
+triste,-2
+Lo sentimos,-1
+correo no deseado,-2
+spammer,-3
+spammers,-3
+envío de correo basura,-2
+chispa,1
+chispa,3
+destellos,3
+espumoso,3
+especulativa,-2
+espíritu,1
+enérgica,2
+sin espíritu,-2
+rencoroso,-2
+espléndida,3
+vivaz,2
+abortada,-1
+arma blanca,-2
+acuchillado,-2
+estable,2
+puñaladas,-2
+estancar,-2
+estancado,-2
+cale,-2
+la resistencia,2
+estampida,-2
+sobresaltado,-2
+hambre,-2
+hambre,-2
+se muere de hambre,-2
+hambrientos,-2
+firmes,2
+robar,-2
+robos,-2
+estereotipo,-2
+estereotipado,-2
+sofocado,-1
+estimular,1
+estimulado,1
+estimula,1
+estimulante,2
+tacaños,-2
+robado,-2
+detener,-1
+detenido,-1
+parar,-1
+paradas,-1
+corpulento,2
+recta,1
+extraño,-1
+curiosamente,-1
+estrangulado,-2
+fuerza,2
+fortalecer,2
+fortalecido,2
+fortalecimiento,2
+fortalece,2
+estresado,-2
+estresante,-2
+factores de estrés,-2
+asolado,-2
+huelga,-1
+delanteros,-2
+huelgas,-1
+fuerte,2
+más fuerte,2
+más fuerte,2
+golpeado,-1
+luchar,-2
+luchado,-2
+luchas,-2
+luchando,-2
+terca,-2
+atascado,-2
+aturdido,-2
+impresionante,4
+estúpida,-2
+estúpidamente,-2
+suave,2
+sustancial,1
+sustancialmente,1
+subversivo,-2
+éxito,2
+éxito,3
+chupar,-3
+chupa,-3
+sufrir,-2
+sufrimiento,-2
+sufre,-2
+suicida,-2
+suicidio,-2
+demandar,-2
+el mal humor,-2
+sulky,-2
+hosco,-2
+sol,2
+estupendo,3
+excelente,5
+superior,2
+apoyo,2
+compatible,2
+partidario,1
+partidarios,1
+de soporte,1
+de apoyo,2
+soportes,2
+sobrevivido,2
+sobrevivir,2
+superviviente,2
+sospecha,-1
+sospechando,-1
+sospechosos,-1
+suspender,-1
+suspendido,-1
+sospechoso,-2
+jurar,-2
+toma de posesión,-2
+jura,-2
+dulce,2
+rápido,2
+rápidamente,2
+estafa,-3
+estafas,-3
+estafa,-3
+simpático,2
+simpatía,2
+tard,-2
+lágrimas,-2
+tierna,2
+tensa,-2
+tensión,-1
+terribles,-3
+terriblemente,-3
+fenomenal,4
+aterrado,-3
+terror,-3
+aterrorizar,-3
+aterrorizado,-3
+aterroriza,-3
+agradecimiento,2
+agradecido,2
+gracias,2
+espinoso,-2
+reflexivo,2
+sin pensamientos,-2
+amenaza,-2
+amenazar,-2
+amenazados,-2
+amenazante,-2
+amenaza,-2
+amenazas,-2
+encantados,5
+frustrar,-2
+frustrado,-2
+frustración,-2
+frustra,-2
+tímida,-2
+timorata,-2
+cansado,-2
+tetas,-2
+tolerante,2
+desdentado,-2
+la parte superior,2
+desgarrado,-2
+la tortura,-4
+torturado,-4
+torturas,-4
+torturar,-4
+totalitaria,-2
+totalitarismo,-2
+promocionado,-2
+reventa,-2
+revendedores,-2
+tragedia,-2
+trágica,-2
+tranquilo,2
+trampa,-1
+atrapado,-2
+trauma,-3
+traumático,-3
+farsa,-2
+traición,-3
+traicionero,-3
+tesoro,2
+tesoros,2
+temblor,-2
+trémula,-2
+engañado,-2
+engaño,-2
+triunfo,4
+triunfante,4
+problemas,-2
+con problemas,-2
+Problemas,-2
+verdadera,2
+confianza,1
+grande,2
+tumor,-2
+idiota,-5
+feo,-3
+inaceptable,-2
+poco apreciado,-2
+no aprobado,-2
+inconscientes,-2
+increíble,-1
+incrédulos,-1
+imparcial,2
+incierto,-1
+claro,-1
+incómodo,-2
+despreocupado,-2
+sin confirmar,-1
+convencido,-1
+sin acreditar,-1
+indecisos,-1
+subestimación,-1
+subestimado,-1
+subestima,-1
+subestimación,-1
+minar,-2
+minado,-2
+socava,-2
+socavación,-2
+que no merecen,-2
+indeseable,-2
+inquieta,-2
+el desempleo,-2
+desigual,-1
+sin igual,2
+poco ético,-2
+injusta,-2
+fuera de foco,-2
+incumplida,-2
+infeliz,-2
+insalubres,-2
+unificado,1
+impresionado,-2
+inteligente,-2
+unido,1
+injusta,-2
+digno de ser amado,-2
+sin amor,-2
+inigualable,1
+desmotivado,-2
+poco profesional,-2
+unresearched,-2
+insatisfecha,-2
+sin garantía,-2
+sin resolver,-1
+poco sofisticado,-2
+inestable,-2
+imparable,2
+sin soporte,-2
+seguro,-1
+sin tacha,2
+no deseado,-2
+indigno,-2
+estomacal,-2
+trastornos,-2
+perturbador,-2
+tenso,-2
+urgente,-1
+útil,2
+utilidad,2
+inútil,-2
+inutilidad,-2
+vaga,-2
+validar,1
+validado,1
+valida,1
+validar,1
+veredicto,-1
+veredictos,-1
+creados,1
+aflicción,-2
+irritante,-2
+vibrante,3
+vicioso,-2
+víctima,-3
+victimizar,-3
+víctima,-3
+victimiza,-3
+victimizadora,-3
+víctimas,-3
+vigilante,3
+vil,-3
+reivindicar,2
+vindicada,2
+reivindica,2
+reivindicativa,2
+violar,-2
+violados,-2
+viola,-2
+la violencia,-3
+violento,-3
+virtuoso,2
+virulenta,-2
+visionario,3
+visión,1
+visiones,1
+vitalidad,3
+vitamina,1
+mordaz,-3
+vivaz,3
+vociferante,-1
+vulnerabilidad,-2
+vulnerable,-2
+paro,-3
+paros,-2
+pendejo,-3
+desee,1
+guerra,-2
+caliente,1
+calidez,2
+advertir,-2
+advertido,-2
+advertencia,-3
+advertencias,-3
+advierte,-2
+perder,-1
+desperdiciado,-2
+perder,-2
+vacilante,-1
+débil,-2
+debilidad,-2
+riqueza,3
+rico,2
+cansado,-2
+llorar,-2
+llorando,-2
+raro,-2
+bienvenida,2
+bienvenida,2
+se felicita,2
+caprichosa,1
+cal,-3
+puta,-4
+malvados,-2
+viuda,-1
+voluntad,2
+victoria,4
+ganador,4
+ganador,4
+victorias,4
+deseos,1
+deseos,1
+desear,1
+retirada,-3
+woebegone,-2
+lamentable,-3
+maravilloso,4
+lana,4
+desgastado,-1
+preocupado,-3
+preocuparse,-3
+preocupante,-3
+peor,-3
+empeorar,-3
+empeorado,-3
+empeoramiento,-3
+empeora,-3
+adorado,3
+peor,-3
+vale la pena,2
+sin valor,-2
+digna,2
+colérica,-3
+pecio,-2
+mal,-2
+agraviado,-2
+sí,1
+anhelo,1
+yeees,2
+juvenil,2
+asqueroso,-2
+delicioso,3
+zelote,-2
+fanáticos,-2
+celoso,2
+periodistas,-1
+cobrando,-1

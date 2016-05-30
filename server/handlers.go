@@ -294,10 +294,9 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	detectedLang := lang
-	log.Println("lang , ", detectedLang)
-	if detectedLang != "pt" && detectedLang != "en" {
-		errMsg := "Error: SentimentHandler Language " + detectedLang + " not yet supported, use lang=en or lang=pt"
+	log.Println("lang , ", lang)
+	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it"  {
+		errMsg := "Error: SentimentHandler Language " + lang + " not yet supported, use lang={en|pt|es|it|fr} eg lang=en"
 		log.Println(errMsg)
 		jsonBytes, _ := json.Marshal(WebError{Error: errMsg})
 		w.WriteHeader(http.StatusNotFound)
@@ -315,6 +314,7 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 	//classify text
 	comment := model.Comment{}
 	comment.Content = string(text[0])
+	comment.Language = lang
 	comment.Sentiment = comment.GetSentiment()
 
 	if comment.Sentiment == "" {

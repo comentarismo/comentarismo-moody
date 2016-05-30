@@ -9,7 +9,7 @@ import (
 // Comment methods
 func (comment *Comment) GetSentiment() string {
 	if comment.Sentiment == "" {
-		comment.Sentiment = GetSentiment(comment.Content)
+		comment.Sentiment = GetSentiment(comment.Language,comment.Content)
 	}
 
 	return comment.Sentiment

@@ -15,6 +15,10 @@ func (p Provider) Name() string {
 	return "faux"
 }
 
+func (p *Provider) SetLang(lang string) error {
+	return nil
+}
+
 func (p Provider) Debug(debug bool) {}
 
 // Debug is used only for testing.

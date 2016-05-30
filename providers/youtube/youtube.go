@@ -34,7 +34,8 @@ func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 type Provider struct {
 	ClientKey   string `schema:"clientkey" gorethink:"clientkey,omitempty" json:"clientkey,omitempty"`
 	Secret      string `schema:"secret" gorethink:"secret,omitempty" json:"secret,omitempty"`
-	ID            string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	ID          string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Language    string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
 	Title         string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
 	VideoViews    uint64 `schema:"videoviews" gorethink:"videoviews,omitempty" json:"videoviews,omitempty"`
 	ChannelID     string `schema:"channelid" gorethink:"channelid,omitempty" json:"channelid,omitempty"`
@@ -52,6 +53,11 @@ func (p *Provider) Name() string {
 func (p *Provider) SetID(urlParts []string) error {
 	i := len(urlParts)-1
 	p.ID = urlParts[i]
+	return nil
+}
+
+func (p *Provider) SetLang(lang string) error {
+	p.Language = lang
 	return nil
 }
 
@@ -118,6 +124,7 @@ func (ytv *Provider) GetComments() model.CommentList {
 						Content:    c.Snippet.TextDisplay,
 						AuthorName: c.Snippet.AuthorDisplayName,
 						Likes:      c.Snippet.LikeCount,
+						Language:   ytv.Language,
 					}
 
 					comments = append(comments, thisComment)

@@ -27,6 +27,7 @@ type Provider struct {
 	ClientKey     string
 	Secret        string
 	ID            string // id
+	Language      string // lang
 	PageName      string
 	PageID        string
 	Type          string // type
@@ -47,6 +48,12 @@ func (p *Provider) SetID(urlParts [] string) error {
 	p.PageName = urlParts[len(urlParts) - 2]
 	return nil
 }
+
+func (p *Provider) SetLang(lang string) error {
+	p.Language = lang
+	return nil
+}
+
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
 	theReport.Type = "FacebookPost"

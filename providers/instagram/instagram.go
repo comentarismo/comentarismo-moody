@@ -27,6 +27,7 @@ type Provider struct {
 	ClientKey   string
 	Secret      string
 	ID            string // id
+	Language      string // lang
 	PageName      string
 	PageID        string
 	Type          string // type
@@ -48,6 +49,7 @@ func (p *Provider) SetID(urlParts [] string) error {
 	return nil
 }
 
+
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
 	theReport.Type = "InstagramPic"
 	theReport.ID = p.ID
@@ -57,7 +59,10 @@ func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList
 	theReport.Metadata = p
 }
 
-
+func (p *Provider) SetLang(lang string) error {
+	p.Language = lang
+	return nil
+}
 
 
 // Debug is a no-op for the facebook package.
