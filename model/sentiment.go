@@ -3,7 +3,6 @@ package model
 import (
 	"bytes"
 	"encoding/csv"
-	"fmt"
 	"log"
 	"os"
 	"comentarismo-moody/sentiment"
@@ -121,11 +120,11 @@ func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentimen
 }
 
 // LoadTrainingData input the training data in to the text classifier
-func LoadTrainingData(lang, path string) {
+func LoadTrainingData(lang, path string) (err error) {
 	csvfile, err := os.Open(path)
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Println("Error: LoadTrainingData, ",err)
+		return
 	}
 
 	defer csvfile.Close()
@@ -135,13 +134,13 @@ func LoadTrainingData(lang, path string) {
 
 	csvData, err := reader.ReadAll()
 	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+		log.Println("Error: LoadTrainingData, ",err)
+		return
 	}
 
 	InitSentiment(lang)
 
-	fmt.Println("Learning for lang "+lang+" started.")
+	log.Println("LoadTrainingData, Learning for lang "+lang+" started.")
 
 	//sets := []shield.Set{}
 	//for _, row := range csvData {
@@ -162,7 +161,9 @@ func LoadTrainingData(lang, path string) {
 		sentimentInstance.Learn(row[1], row[0])
 	}
 
-	fmt.Println("Learning for lang "+lang+" complete!")
+	log.Println("LoadTrainingData, Learning for lang "+lang+" complete!")
+
+	return
 }
 
 var sentimentList map[string]string

@@ -2,7 +2,6 @@ package model
 
 import (
 	"fmt"
-"log"
 )
 
 // Provider needs to be implemented for each 3rd party provider
@@ -45,7 +44,7 @@ func GetProvider(name string) (Provider, error) {
 	if provider == nil {
 		return nil, fmt.Errorf("no provider for %s exists", name)
 	}
-	log.Println(provider.Name())
+	//log.Println(provider.Name())
 	return provider, nil
 }
 

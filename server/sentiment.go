@@ -57,15 +57,30 @@ type WebError struct {
 func LoadTrainingData(lang string) (IsTrained bool) {
 	pwd, _ := os.Getwd()
 
-	targetDir := pwd+"/../static/training/afinn-111-en.csv";
+	targetDir := pwd+"/static/training/afinn-111-en.csv";
+	if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+		targetDir = pwd+"/../static/training/afinn-111-en.csv"
+	}
 	if lang == "pt" {
-		targetDir = pwd+"/../static/training/afinn-111-pt.csv"
+		targetDir = pwd+"/static/training/afinn-111-pt.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd+"/../static/training/afinn-111-pt.csv"
+		}
 	} else if lang == "es" {
-		targetDir = pwd+"/../static/training/afinn-111-es.csv"
+		targetDir = pwd+"/static/training/afinn-111-es.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd+"/../static/training/afinn-111-es.csv"
+		}
 	} else if lang == "fr" {
-		targetDir = pwd+"/../static/training/afinn-111-fr.csv"
+		targetDir = pwd+"/static/training/afinn-111-fr.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd+"/../static/training/afinn-111-fr.csv"
+		}
 	} else if lang == "it" {
-		targetDir = pwd+"/../static/training/afinn-111-it.csv"
+		targetDir = pwd+"/static/training/afinn-111-it.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd+"/../static/training/afinn-111-it.csv"
+		}
 	} else {
 		//wtf
 	}
@@ -86,7 +101,11 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 		log.Println("Training " + targetDir)
 		trainingFiles := strings.Split(targetDir, ",")
 		for _, path := range trainingFiles {
-			model.LoadTrainingData(lang,path)
+
+			err := model.LoadTrainingData(lang,path)
+			if err != nil {
+
+			}
 		}
 		IsTrained = true
 		SetLangTrained(lang)

@@ -42,13 +42,14 @@ ComentarismoMoody = function (options) {
     this.$el = $(options.selector);
 
     var vid = getURLParameter('vid');
+    var lang = getURLParameter('lang') || "en";
     var jsonStr = getURLParameter('json');
 
     if (vid) {
-        $("form input").val(vid);
+        $("#vid").val(vid);
         if (vid) {
             $("#loading").fadeIn(500);
-            $.getJSON("/moody?vid=" + vid, function (resp) {
+            $.getJSON("/moody?vid=" + vid+"&lang="+lang, function (resp) {
                 if (resp.Error) {
                     console.log(resp)
                 } else {
@@ -113,7 +114,7 @@ function setCss(header, target, json) {
 }
 
 function drawReport(json) {
-    $("nav input").val(json.url);
+    $("#vid").val(json.url);
     $("#report").show();
     if (json.type == 'YouTubeVideo') {
 

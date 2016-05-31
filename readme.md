@@ -46,3 +46,6 @@ tail -f /opt/gocode/src/comentarismo-moody/nohup.out
 
 # Godep
 * $ godep go run main.go 
+```
+$ cat ~/.ssh/id_rsa.pub | ssh g7@g7-box "mkdir -m 755 -p ~/.ssh && cat >>  ~/.ssh/authorized_keys && chmod 644 ~/.ssh/authorized_keys"
+```
