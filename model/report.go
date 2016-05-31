@@ -1,11 +1,13 @@
 package model
 
+import "time"
 
 type Report struct {
 	ID                     string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
 	URL                    string `schema:"url" gorethink:"url,omitempty" json:"url,omitempty"`
 	Type                   string `schema:"type" gorethink:"type,omitempty" json:"type,omitempty"`
 	Title                  string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	Date			time.Time `schema:"date" gorethink:"date,omitempty" json:"date,omitempty"`
 	PublishedAt            string `schema:"publishedat" gorethink:"publishedat,omitempty" json:"publishedat,omitempty"`
 	TotalComments          uint64 `schema:"totalcomments" gorethink:"totalcomments,omitempty" json:"totalcomments,omitempty"`
 	CollectedComments      uint64 `schema:"collectedcomments" gorethink:"collectedcomments,omitempty" json:"collectedcomments,omitempty"`

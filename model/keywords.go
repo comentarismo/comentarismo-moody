@@ -24,7 +24,7 @@ func GetKeywords(comments []*Comment) map[string]int {
 
 	sorted := sortedKeys(idx)
 
-	max := 10
+	max := 20
 	if len(sorted) < 10 {
 		max = len(sorted)
 	}
@@ -93,8 +93,10 @@ func sortedKeys(m map[string]int) []string {
 	sm.s = make([]string, len(m))
 	i := 0
 	for key := range m {
-		sm.s[i] = key
-		i++
+		if len(key) > 2 {
+			sm.s[i] = key
+			i++
+		}
 	}
 	sort.Sort(sm)
 	return sm.s

@@ -208,6 +208,9 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 	theReport.CollectedComments = comments.GetTotal()
 	theReport.CommentCoveragePercent = math.Ceil((float64(theReport.CollectedComments) / float64(theReport.TotalComments)) * float64(100))
 
+	//set date
+	theReport.Date = time.Now()
+
 	done := make(chan bool)
 
 	// Set Keywords
