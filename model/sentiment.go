@@ -184,14 +184,14 @@ func init(){
 	sentimentList["6"] = "Unknown"
 }
 // GetSentiment classifies a single string of text. Returns the tag it matched.
-func GetSentiment(lang, text string) string {
+func GetSentiment(lang, text string) (sentimentTop string, scores map[string]float64, logScores map[string]map[string]int64) {
 	InitSentiment(lang)
 
 	//sanitize the text
 	//text = strings.Replace(text, "?", " ", 1)
 	sentimentInstance := GetSentimentInstanceForLang(lang)
 
-	tag, err := sentimentInstance.Classify(text)
+	tag, scores, logScores, err := sentimentInstance.Classify(text)
 	if err != nil {
 		log.Println("Error: GetSentiment after Classify ",text,err)
 	} else if tag == "" {
@@ -204,5 +204,7 @@ func GetSentiment(lang, text string) string {
 	}
 	//log.Println("tag: ",tag)
 	//log.Println(text," classified as ", sentimentList[tag])
-	return sentimentList[tag]
+	sentimentTop = sentimentList[tag]
+
+	return
 }

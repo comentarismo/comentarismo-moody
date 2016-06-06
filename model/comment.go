@@ -8,11 +8,51 @@ import (
 
 // Comment methods
 func (comment *Comment) GetSentiment() string {
+	var scores map[string]float64
+	var logScores map[string]map[string]int64
+
 	if comment.Sentiment == "" {
-		comment.Sentiment = GetSentiment(comment.Language,comment.Content)
+		//comment.SentimentScores,
+		//comment.LogScores
+		comment.Sentiment, scores, logScores = GetSentiment(comment.Language,comment.Content)
+		scoresFinal := make(map[string]string,len(scores))
+		var keywords []string
+		for k,_ := range  scores {
+			//log.Println("scores ",k)
+			for k1,v1 := range logScores {
+				if k == k1 {
+					//log.Println("logScores ",k1,v1)
+					for k2,v2 := range v1 {
+						keywords = appendIfMissing(keywords,k2)
+						if v2 > 0 {
+							//log.Println("v2 ",v2)
+							//log.Println("scoresFinal[k2] ",scoresFinal[k2])
+							//log.Println("k ",k)
+							scoresFinal[k2] = k
+						}
+					}
+
+
+				}
+			}
+
+		}
+
+		comment.SentimentScores = scoresFinal
+		comment.Keywords = keywords
+
 	}
 
 	return comment.Sentiment
+}
+
+func appendIfMissing(slice []string, i string) []string {
+	for _, ele := range slice {
+		if ele == i {
+			return slice
+		}
+	}
+	return append(slice, i)
 }
 
 // CommentList methods

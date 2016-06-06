@@ -67,6 +67,8 @@ type Comment struct {
 	Content    string `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
 	AuthorName string `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
 	Sentiment  string `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	SentimentScores map[string]string `schema:"sentimentscores" gorethink:"sentimentscores,omitempty" json:"sentimentscores,omitempty"`
+	Keywords   []string `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
 	Likes      int64  `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
 	Language   string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
 }

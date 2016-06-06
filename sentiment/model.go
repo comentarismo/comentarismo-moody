@@ -25,10 +25,10 @@ type Sentiment interface {
 	Forget(class, text string) (err error)
 
 	// Score returns the scores for each class normalized from 0 to 1
-	Score(text string) (scores map[string]float64, err error)
+	Score(text string) (scores  map[string]float64, classFreqs map[string]map[string]int64, err error)
 
 	// Classify returns the class with the highest score
-	Classify(text string) (c string, err error)
+	Classify(text string) (c string, scores map[string]float64, logScores map[string]map[string]int64, err error)
 
 	// Reset clears the storage
 	Reset() error

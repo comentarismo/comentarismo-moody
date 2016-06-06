@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"gopkg.in/redis.v3"
 	"time"
-	"fmt"
 	r "github.com/dancannon/gorethink"
 
 	"comentarismo-moody/model"
+	"comentarismo-moody/lang"
 )
 
 func init() {
@@ -338,7 +338,7 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 	//marshal comment
 	jsonBytes, err := json.Marshal(&comment)
 	if err != nil {
-		fmt.Println("Error: SentimentHandler Marshal -> ", err)
+		log.Println("Error: SentimentHandler Marshal -> ", err)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
@@ -354,4 +354,41 @@ func AllowOrigin(w http.ResponseWriter, r *http.Request) {
 	if origin := r.Header.Get("Origin"); origin != "" {
 		w.Header().Set("Access-Control-Allow-Origin", origin)
 	}
+}
+
+
+func LanguageHandler(w http.ResponseWriter, req *http.Request) {
+	req.ParseForm()  //Parse url parameters passed, then parse the response packet for the POST body (request body)
+	//log.Println(req.Form) // print information on server side.
+	text := req.Form["text"]
+	if len(text) == 0 {
+		log.Println("Error: SentimentHandler text 404 not found")
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	//classify language for text
+	var returnLang lang.DetectLanguage
+	detectedLang, err := lang.Guess(text[0])
+	if err != nil {
+		returnLang.Error = err.Error()
+		log.Println("Error: SentimentHandler could detect lang for this text :| ", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}else {
+		returnLang.Language = detectedLang
+		returnLang.Date = time.Now()
+		returnLang.Text = text[0]
+		log.Println(returnLang)
+	}
+
+	//marshal comment
+	jsonBytes, err := json.Marshal(&returnLang)
+	if err != nil {
+		log.Println("Error: SentimentHandler Marshal -> ", err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(jsonBytes)
 }

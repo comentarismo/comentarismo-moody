@@ -77,7 +77,7 @@ func getKeys(m map[string]int64) []string {
 	return keys
 }
 
-func (s *TokenStore) Score(text string) (scores map[string]float64, err error) {
+func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs map[string]map[string]int64, err error) {
 	// Get total class word counts
 	totals, err := s.Store.TotalClassWordCounts()
 	if err != nil {
@@ -103,7 +103,7 @@ func (s *TokenStore) Score(text string) (scores map[string]float64, err error) {
 	}
 
 	// Get word frequencies for each class
-	classFreqs := make(map[string]map[string]int64)
+	classFreqs = make(map[string]map[string]int64)
 	for _, class := range classes {
 		freqs, err2 := s.Store.ClassWordCounts(class, words)
 		if err2 != nil {
@@ -116,6 +116,7 @@ func (s *TokenStore) Score(text string) (scores map[string]float64, err error) {
 
 	// Calculate log scores for each class
 	logScores := make(map[string]float64, len(classes))
+
 	for _, class := range classes {
 		freqs := classFreqs[class]
 		total := totals[class]
@@ -156,8 +157,8 @@ func (s *TokenStore) Score(text string) (scores map[string]float64, err error) {
 	return
 }
 
-func (s *TokenStore) Classify(text string) (class string, err error) {
-	scores, err := s.Score(text)
+func (s *TokenStore) Classify(text string) (class string, scores map[string]float64, logScores map[string]map[string]int64, err error) {
+	scores, logScores, err = s.Score(text)
 	if err != nil {
 		Debug("Error: shield.Classify-> ",err)
 		return

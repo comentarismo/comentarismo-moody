@@ -49,3 +49,9 @@ tail -f /opt/gocode/src/comentarismo-moody/nohup.out
 ```
 $ cat ~/.ssh/id_rsa.pub | ssh g7@g7-box "mkdir -m 755 -p ~/.ssh && cat >>  ~/.ssh/authorized_keys && chmod 644 ~/.ssh/authorized_keys"
 ```
+
+I like the way info is displayed, showing as well common words and it detects emoticons from the text
+I want that.
+
+
+https://www.npmjs.com/package/sentimentjs

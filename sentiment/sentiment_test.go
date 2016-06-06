@@ -83,7 +83,7 @@ func TestLearn(t *testing.T) {
 	for _, v2 := range testData {
 		c := strings.SplitN(v2, " ", 2)
 		k, v := c[0], c[1]
-		clz, err := sh.Classify(v)
+		clz, _,_, err := sh.Classify(v)
 		if err != nil {
 			t.Fatal(err, "key:", k, "value:", v)
 		}

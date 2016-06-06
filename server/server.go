@@ -147,6 +147,9 @@ func InitRouting() *pat.Router {
 
 	r.HandleFunc("/sentiment", SentimentHandler)
 
+	r.HandleFunc("/language", LanguageHandler)
+
+
 	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	r.PathPrefix("/static/").Handler(s)
 
