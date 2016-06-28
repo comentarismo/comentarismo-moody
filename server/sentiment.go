@@ -31,6 +31,9 @@ var (
 	IsTrainedPt = false
 	IsTrainedIt = false
 	IsTrainedFr = false
+	IsTrainedHr = false
+	IsTrainedRu = false
+
 
 )
 
@@ -81,8 +84,20 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
 			targetDir = pwd+"/../static/training/afinn-111-it.csv"
 		}
+	} else if lang == "hr" {
+		targetDir = pwd+"/static/training/afinn-111-hr.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd+"/../static/training/afinn-111-hr.csv"
+		}
+	} else if lang == "ru" {
+		targetDir = pwd+"/static/training/afinn-111-ru.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd+"/../static/training/afinn-111-ru.csv"
+		}
 	} else {
-		//wtf
+		//panic("Language is not supported, "+lang)
+		log.Println("Will use default lang en")
+		lang = "en"
 	}
 
 	//check with redis if we are already trained
@@ -129,6 +144,10 @@ func SetLangTrained(lang string) {
 		IsTrainedFr = true
 	} else if lang == "it" {
 		IsTrainedIt = true
+	} else if lang == "hr" {
+		IsTrainedHr = true
+	} else if lang == "ru" {
+		IsTrainedRu = true
 	}
 }
 
@@ -143,6 +162,10 @@ func IsLangTrained(lang string) ( isTrained bool ){
 		isTrained = IsTrainedFr
 	} else if lang == "it" {
 		isTrained = IsTrainedIt
+	} else if lang == "hr" {
+		isTrained = IsTrainedHr
+	} else if lang == "ru" {
+		isTrained = IsTrainedRu
 	}
 	return
 }

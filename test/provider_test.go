@@ -17,7 +17,6 @@ var (
 	SECRET string
 )
 
-
 func Test_UseProviders(t *testing.T) {
 	a := assert.New(t)
 

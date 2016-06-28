@@ -84,7 +84,7 @@ func (this *Provider) GetPageID() model.Provider {
 // YouTubeGetCommentsV2 pulls the comments for a given YouTube video
 func (ytv *Provider) GetComments() model.CommentList {
 	videoID := ytv.ID
-	log.Println("videoID: ",videoID)
+	log.Println("videoID,",videoID)
 	var comments = []*model.Comment{}
 
 	client := &http.Client{

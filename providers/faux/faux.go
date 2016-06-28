@@ -3,7 +3,7 @@
 package faux
 
 import (
-	model "comentarismo-moody/model"
+	"comentarismo-moody/model"
 )
 
 // Provider is used only for testing.
@@ -38,6 +38,7 @@ func (p Provider) SetReport(theReport *model.Report, comments model.CommentList)
 func (p Provider) GetMetadata() bool {
 	return false
 }
-func (p Provider) GetPageID() model.Provider {
-	return Provider{}
+
+func (this *Provider) GetPageID() model.Provider {
+	return this
 }

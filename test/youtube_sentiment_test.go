@@ -21,8 +21,8 @@ func Test_Youtube_Sentiment(t *testing.T) {
 		model.UseProviders(y)
 
 		postURL := "https://www.youtube.com/watch?v=hAu5_m26Tsc"
-		server.Training = "../static/training/afinn-111-en.csv"
-		theReport, err := server.RunReport(postURL)
+		//server.Training = "../static/training/afinn-111-en.csv"
+		theReport, err := server.RunReport(postURL,"en")
 		raw, err := json.Marshal(&theReport)
 
 		So(err,ShouldBeNil)

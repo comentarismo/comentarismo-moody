@@ -18,6 +18,8 @@ var sentimentInstancePt sentiment.Sentiment
 var sentimentInstanceEs sentiment.Sentiment
 var sentimentInstanceFr sentiment.Sentiment
 var sentimentInstanceIt sentiment.Sentiment
+var sentimentInstanceHr sentiment.Sentiment
+var sentimentInstanceRu sentiment.Sentiment
 
 // InitShield instantiates the text classifier engine
 func InitSentiment(lang string) {
@@ -86,6 +88,26 @@ func InitSentiment(lang string) {
 			tokenizer,
 			store,
 		)
+	}else if lang == "hr" && sentimentInstanceHr == nil {
+		//create alert msg
+		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		//create redis instance
+		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		//start sentiment instance for lang
+		sentimentInstanceHr = sentiment.New(
+			tokenizer,
+			store,
+		)
+	}else if lang == "ru" && sentimentInstanceRu == nil {
+		//create alert msg
+		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		//create redis instance
+		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		//start sentiment instance for lang
+		sentimentInstanceRu = sentiment.New(
+			tokenizer,
+			store,
+		)
 	}
 }
 
@@ -100,6 +122,10 @@ func GetTokenizerForLang(lang string) (tokenizer sentiment.Tokenizer) {
 		tokenizer = sentiment.NewFrTokenizer()
 	} else if lang == "it" && sentimentInstanceIt == nil {
 		tokenizer = sentiment.NewItTokenizer()
+	} else if lang == "hr" && sentimentInstanceHr == nil {
+		tokenizer = sentiment.NewHrTokenizer()
+	} else if lang == "ru" && sentimentInstanceRu == nil {
+		tokenizer = sentiment.NewRuTokenizer()
 	}
 	return
 }
@@ -115,6 +141,10 @@ func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentimen
 		currentSentimentInstance = sentimentInstanceFr
 	} else if lang == "it" {
 		currentSentimentInstance = sentimentInstanceIt
+	} else if lang == "hr" {
+		currentSentimentInstance = sentimentInstanceHr
+	} else if lang == "ru" {
+		currentSentimentInstance = sentimentInstanceRu
 	}
 	return
 }
