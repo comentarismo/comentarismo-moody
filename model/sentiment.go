@@ -214,7 +214,7 @@ func init(){
 	sentimentList["6"] = "Unknown"
 }
 // GetSentiment classifies a single string of text. Returns the tag it matched.
-func GetSentiment(lang, text string) (sentimentTop string, scores map[string]float64, logScores map[string]map[string]int64) {
+func GetSentiment(lang, text string) (sentimentTop,tag string, scores map[string]float64, logScores map[string]map[string]int64,) {
 	InitSentiment(lang)
 
 	//sanitize the text

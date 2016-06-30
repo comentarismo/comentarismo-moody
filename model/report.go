@@ -7,7 +7,7 @@ type Report struct {
 	URL                    string `schema:"url" gorethink:"url,omitempty" json:"url,omitempty"`
 	Type                   string `schema:"type" gorethink:"type,omitempty" json:"type,omitempty"`
 	Title                  string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	Date			time.Time `schema:"date" gorethink:"date,omitempty" json:"date,omitempty"`
+	Date                   time.Time `schema:"date" gorethink:"date,omitempty" json:"date,omitempty"`
 	PublishedAt            string `schema:"publishedat" gorethink:"publishedat,omitempty" json:"publishedat,omitempty"`
 	TotalComments          uint64 `schema:"totalcomments" gorethink:"totalcomments,omitempty" json:"totalcomments,omitempty"`
 	CollectedComments      uint64 `schema:"collectedcomments" gorethink:"collectedcomments,omitempty" json:"collectedcomments,omitempty"`
@@ -40,10 +40,10 @@ type YoutubeReport struct {
 }
 
 type Metadata struct {
-	ClientKey   string `schema:"clientkey" gorethink:"clientkey,omitempty" json:"clientkey,omitempty"`
-	Secret      string `schema:"secret" gorethink:"secret,omitempty" json:"secret,omitempty"`
-	ID          string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
-	Language    string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
+	ClientKey     string `schema:"clientkey" gorethink:"clientkey,omitempty" json:"clientkey,omitempty"`
+	Secret        string `schema:"secret" gorethink:"secret,omitempty" json:"secret,omitempty"`
+	ID            string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Language      string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
 	Title         string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
 	VideoViews    uint64 `schema:"videoviews" gorethink:"videoviews,omitempty" json:"videoviews,omitempty"`
 	ChannelID     string `schema:"channelid" gorethink:"channelid,omitempty" json:"channelid,omitempty"`
@@ -61,16 +61,17 @@ type SentimentTag struct {
 
 // Comment is the distilled comment dataset
 type Comment struct {
-	ID         string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
-	Published  string `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
-	Title      string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	Content    string `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
-	AuthorName string `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
-	Sentiment  string `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	ID              string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Published       string `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
+	Title           string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	Content         string `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
+	AuthorName      string `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
+	Sentiment       string `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	Tag             string `schema:"tag" gorethink:"tag,omitempty" json:"tag,omitempty"`
 	SentimentScores map[string]string `schema:"sentimentscores" gorethink:"sentimentscores,omitempty" json:"sentimentscores,omitempty"`
-	Keywords   []string `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
-	Likes      int64  `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
-	Language   string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
+	Keywords        []string `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
+	Likes           int64  `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
+	Language        string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
 }
 
 type CommentList struct {

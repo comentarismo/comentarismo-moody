@@ -14,7 +14,7 @@ func (comment *Comment) GetSentiment() string {
 	if comment.Sentiment == "" {
 		//comment.SentimentScores,
 		//comment.LogScores
-		comment.Sentiment, scores, logScores = GetSentiment(comment.Language,comment.Content)
+		comment.Sentiment, comment.Tag, scores, logScores = GetSentiment(comment.Language,comment.Content)
 		scoresFinal := make(map[string]string,len(scores))
 		var keywords []string
 		for k,_ := range  scores {
