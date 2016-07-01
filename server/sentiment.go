@@ -11,6 +11,7 @@ import (
 	"os"
 	"strings"
 	"errors"
+	"sync"
 )
 
 var (
@@ -56,8 +57,10 @@ type WebError struct {
 	Error string
 }
 
+var mu sync.Mutex
 
 func LoadTrainingData(lang string) (IsTrained bool) {
+	mu.Lock()
 	pwd, _ := os.Getwd()
 
 	targetDir := pwd+"/static/training/afinn-111-en.csv";
@@ -110,9 +113,12 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 	//	IsTrained = true
 	//}
 
+
 	IsTrained = IsLangTrained(lang)
 
 	if IsTrained == false {
+
+
 		log.Println("Training " + targetDir)
 		trainingFiles := strings.Split(targetDir, ",")
 		for _, path := range trainingFiles {
@@ -129,6 +135,7 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 		//Client.Set("IsTrained", "true", time.Hour * 24)
 
 	}
+	mu.Unlock()
 
 	return
 }

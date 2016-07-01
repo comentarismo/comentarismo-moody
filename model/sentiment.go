@@ -168,9 +168,9 @@ func LoadTrainingData(lang, path string) (err error) {
 		return
 	}
 
+	log.Println("LoadTrainingData, Learning for lang "+lang+" started.")
 	InitSentiment(lang)
 
-	log.Println("LoadTrainingData, Learning for lang "+lang+" started.")
 
 	//sets := []shield.Set{}
 	//for _, row := range csvData {

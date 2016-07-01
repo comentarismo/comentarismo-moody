@@ -299,13 +299,6 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	notTrained := LoadTrainingData(lang)
-	if !notTrained {
-		log.Println("Unable to train the engine :| No dougnuts for you today o__0")
-		w.WriteHeader(http.StatusInternalServerError)
-		return
-	}
-
 	log.Println("lang , ", lang)
 	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it" && lang != "hr" && lang != "ru"  {
 		errMsg := "Error: SentimentHandler Language " + lang + " not yet supported, use lang={en|pt|es|it|fr|hr|ru} eg lang=en"
@@ -313,6 +306,13 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 		jsonBytes, _ := json.Marshal(WebError{Error: errMsg})
 		w.WriteHeader(http.StatusNotFound)
 		w.Write(jsonBytes)
+		return
+	}
+
+	notTrained := LoadTrainingData(lang)
+	if !notTrained {
+		log.Println("Unable to train the engine :| No dougnuts for you today o__0")
+		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 

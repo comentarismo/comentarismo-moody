@@ -88,7 +88,7 @@ func init() {
 	if REDIS_PASSWORD == "" {
 	}
 
-	log.Println("Loading Redis standalone ", REDIS_HOST + ":" + REDIS_PORT )
+	log.Println("Loading Redis standalone ", REDIS_HOST + ":" + REDIS_PORT)
 
 	Client = redis.NewClient(&redis.Options{
 		Addr:     REDIS_HOST + ":" + REDIS_PORT,
@@ -107,6 +107,7 @@ func init() {
 //NewServer return pointer to new created server object
 func NewServer(Port string) *http.Server {
 	router = InitRouting()
+	//TrainEngine()
 	return &http.Server{
 		Addr:    ":" + Port,
 		Handler: router,
@@ -149,7 +150,6 @@ func InitRouting() *pat.Router {
 
 	r.HandleFunc("/language", LanguageHandler)
 
-
 	s := http.StripPrefix("/static/", http.FileServer(http.Dir("./static/")))
 	r.PathPrefix("/static/").Handler(s)
 
@@ -159,4 +159,18 @@ func InitRouting() *pat.Router {
 	log.Println("Listening on :" + Host + "...")
 
 	return r
+}
+
+func TrainEngine() {
+	//langs := []string{"en","pt","es","fr","it","hr","ru"}
+	langs := []string{"en"}
+
+	for _, lang := range langs {
+
+		notTrained := LoadTrainingData(lang)
+		if !notTrained {
+			log.Println("Unable to train the engine for lang"+lang+" :| No dougnuts for you today o__0")
+			continue
+		}
+	}
 }

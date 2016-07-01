@@ -4,12 +4,14 @@ import (
 	"math"
 	"log"
 	"os"
+	"sync"
 )
 
 const defaultProb float64 = 1e-11
 var SENTIMENT_DEBUG = os.Getenv("SENTIMENT_DEBUG")
 
 type TokenStore struct {
+	mu  sync.Mutex
 	tokenizer Tokenizer
 	Store     Store
 }
@@ -44,7 +46,9 @@ func (sh *TokenStore) increment(class, text string, sign int64) (err error) {
 }
 
 func (sh *TokenStore) bulkIncrement(sets []Set, sign int64) (err error) {
+	sh.mu.Lock()
 	if len(sets) == 0 {
+		sh.mu.Unlock()
 		panic("invalid data set")
 	}
 	m := make(map[string]map[string]int64)
@@ -63,10 +67,16 @@ func (sh *TokenStore) bulkIncrement(sets []Set, sign int64) (err error) {
 	}
 	for class, _ := range m {
 		if err = sh.Store.AddClass(class); err != nil {
+			Debug("bulkIncrement, sh.Store.AddClass, ",err)
+			sh.mu.Unlock()
 			return
 		}
 	}
-	return sh.Store.IncrementClassWordCounts(m)
+
+	err = sh.Store.IncrementClassWordCounts(m)
+	sh.mu.Unlock()
+
+	return
 }
 
 func getKeys(m map[string]int64) []string {
@@ -78,9 +88,12 @@ func getKeys(m map[string]int64) []string {
 }
 
 func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs map[string]map[string]int64, err error) {
+	s.mu.Lock()
+
 	// Get total class word counts
 	totals, err := s.Store.TotalClassWordCounts()
 	if err != nil {
+		s.mu.Unlock()
 		return
 	}
 
@@ -99,6 +112,7 @@ func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs 
 
 	if( len(wordFreqs) ==0 || len(words) == 0){
 		Debug("Error: We are not able to get wordFreqs or words, in order to prevent wrong number of arguments for 'hmget' command we will return now! ",len(words))
+		s.mu.Unlock()
 		return
 	}
 
@@ -109,10 +123,14 @@ func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs 
 		if err2 != nil {
 			err = err2
 			Debug("Error: shield.Score after ClassWordCounts -> ",err2)
+			s.mu.Unlock()
 			return
 		}
 		classFreqs[class] = freqs
 	}
+
+	s.mu.Unlock()
+
 
 	// Calculate log scores for each class
 	logScores := make(map[string]float64, len(classes))
