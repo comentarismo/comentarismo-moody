@@ -99,7 +99,7 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 		}
 	} else {
 		//panic("Language is not supported, "+lang)
-		log.Println("Will use default lang en")
+		//log.Println("Will use default lang en")
 		lang = "en"
 	}
 

@@ -299,7 +299,7 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	log.Println("lang , ", lang)
+	//log.Println("lang , ", lang)
 	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it" && lang != "hr" && lang != "ru"  {
 		errMsg := "Error: SentimentHandler Language " + lang + " not yet supported, use lang={en|pt|es|it|fr|hr|ru} eg lang=en"
 		log.Println(errMsg)
