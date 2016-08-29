@@ -1,6 +1,7 @@
 {
 	"ImportPath": "comentarismo-moody",
-	"GoVersion": "go1.6.2",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
@@ -82,11 +83,23 @@
 			"Rev": "cbbbe2bc0f2efdd2afb318d93f1eadb19350e4a3"
 		},
 		{
+			"ImportPath": "golang.org/x/net/context/ctxhttp",
+			"Rev": "cbbbe2bc0f2efdd2afb318d93f1eadb19350e4a3"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "a646d33e2ee3172a661fc09bca23bb4889a41bc8"
+		},
+		{
 			"ImportPath": "google.golang.org/api/gensupport",
 			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
 		},
 		{
 			"ImportPath": "google.golang.org/api/googleapi",
+			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
+		},
+		{
+			"ImportPath": "google.golang.org/api/googleapi/internal/uritemplates",
 			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
 		},
 		{
@@ -118,6 +131,11 @@
 		},
 		{
 			"ImportPath": "gopkg.in/redis.v3",
+			"Comment": "v3.2.23",
+			"Rev": "ba44d4d158d4f08b4271966798f81e1d1d9b3ba3"
+		},
+		{
+			"ImportPath": "gopkg.in/redis.v3/internal/consistenthash",
 			"Comment": "v3.2.23",
 			"Rev": "ba44d4d158d4f08b4271966798f81e1d1d9b3ba3"
 		}

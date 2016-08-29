@@ -1,0 +1,304 @@
+2016-06-28T19:13:06.617619000 0.028583s notice: Listening for intracluster connections on port 29015
+2016-06-28T19:13:06.619534000 0.030493s info: Attempting connection to 1 peer...
+2016-06-28T19:13:06.759132000 0.170092s warn: Received invalid clustering header from 91.121.75.229:28015, closing connection -- something might be connecting to the wrong port.
+2016-06-28T19:13:06.866735000 0.277694s warn: Received invalid clustering header from 91.121.75.229:28015, closing connection -- something might be connecting to the wrong port.
+2016-06-28T19:13:07.163918000 0.574901s warn: Received invalid clustering header from 91.121.75.229:28015, closing connection -- something might be connecting to the wrong port.
+2016-06-28T19:13:07.673407000 1.084389s warn: Received invalid clustering header from 91.121.75.229:28015, closing connection -- something might be connecting to the wrong port.
+2016-06-28T19:13:08.292126000 1.703132s warn: Received invalid clustering header from 91.121.75.229:28015, closing connection -- something might be connecting to the wrong port.
+2016-06-28T19:13:09.304525000 2.715555s warn: Received invalid clustering header from 91.121.75.229:28015, closing connection -- something might be connecting to the wrong port.
+2016-06-28T19:13:27.900409000 0.009375s notice: Listening for intracluster connections on port 29015
+2016-06-28T19:13:27.900640000 0.009602s info: Attempting connection to 1 peer...
+2016-06-28T19:13:27.982884000 0.091846s warn: Received excessive string size in header from peer 91.121.75.229:29015, closing connection
+2016-06-28T19:13:28.147796000 0.256781s warn: Received excessive string size in header from peer 91.121.75.229:29015, closing connection
+2016-06-28T19:13:28.441679000 0.550664s warn: Received excessive string size in header from peer 91.121.75.229:29015, closing connection
+2016-06-28T19:13:28.897681000 1.006666s warn: Received excessive string size in header from peer 91.121.75.229:29015, closing connection
+2016-06-28T19:13:29.579995000 1.689004s warn: Received excessive string size in header from peer 91.121.75.229:29015, closing connection
+2016-06-28T19:13:30.577882000 2.686915s warn: Received excessive string size in header from peer 91.121.75.229:29015, closing connection
+2016-06-28T19:15:47.902280000 0.035531s notice: Listening for intracluster connections on port 29015
+2016-06-28T19:15:47.903520000 0.036754s info: Attempting connection to 1 peer...
+2016-06-28T19:15:47.972131000 0.105366s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-28T19:15:47.974123000 0.107357s notice: Listening for client driver connections on port 28015
+2016-06-28T19:15:47.974140000 0.107374s notice: Listening for administrative HTTP connections on port 8080
+2016-06-28T19:15:47.974145000 0.107379s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-06-28T19:15:47.974153000 0.107386s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-06-28T19:15:47.974180000 0.107414s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-06-28T19:15:47.974190000 0.107424s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-06-28T19:15:47.974199000 0.107432s notice: Proxy ready, proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23
+2016-06-28T19:15:48.036736000 0.169971s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-28T19:15:48.063491000 0.196725s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T02:19:14.712126000 18212.080075s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T02:19:14.713200000 18212.081148s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T02:19:15.053233000 18212.421206s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T02:19:25.769655000 18223.137865s error: Heartbeat timeout, killing connection to peer 91.121.91.72:29015
+2016-06-29T02:19:25.773469000 18223.141680s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T02:19:25.831343000 18223.199552s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T02:19:26.145729000 18223.513963s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T04:07:44.548327000 18245.517616s error: Heartbeat timeout, killing connection to peer 91.121.91.72:29015
+2016-06-29T04:07:44.548597000 18245.517885s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T04:07:44.599429000 18245.568716s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T04:07:44.677318000 18245.646605s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T04:07:45.457607000 18246.426920s error: Heartbeat timeout, killing connection to peer 91.121.75.229:29015
+2016-06-29T04:07:45.459771000 18246.429083s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T04:07:45.460574000 18246.429886s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T04:07:45.524639000 18246.493951s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T05:56:01.986946000 18266.497625s error: Heartbeat timeout, killing connection to peer 91.121.75.229:29015
+2016-06-29T05:56:01.988353000 18266.499032s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T05:56:02.039566000 18266.550244s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T05:56:02.100358000 18266.611037s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T05:56:03.140483000 18267.651185s error: Heartbeat timeout, killing connection to peer 91.121.91.72:29015
+2016-06-29T05:56:03.141256000 18267.651958s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T05:56:03.192161000 18267.702863s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T05:56:03.277018000 18267.787719s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T09:08:27.808464000 18297.792583s error: Heartbeat timeout, killing connection to peer 91.121.91.72:29015
+2016-06-29T09:08:27.808756000 18297.792875s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T09:08:27.859339000 18297.843458s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T09:08:27.934618000 18297.918737s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T09:08:28.632120000 18298.616263s error: Heartbeat timeout, killing connection to peer 91.121.75.229:29015
+2016-06-29T09:08:28.634870000 18298.619014s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T09:08:28.686136000 18298.670279s info: Rejected a connection from server proxy-0243e44b-8b05-4bb4-9e54-e2a561b2cb23 since one is open already.
+2016-06-29T09:08:28.749093000 18298.733236s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T13:08:09.923113000 32682.232650s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-06-29T13:08:09.923204000 32682.232741s notice: Shutting down client connections...
+2016-06-29T13:08:09.923344000 32682.232881s notice: All client connections closed.
+2016-06-29T13:08:09.923386000 32682.232923s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-06-29T13:08:09.927658000 32682.237195s notice: Storage engine shut down.
+2016-06-29T13:08:09.928787000 32682.238325s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-29T13:08:09.928802000 32682.238339s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T13:08:35.005089000 0.014090s notice: Listening for intracluster connections on port 29015
+2016-06-29T13:08:35.005263000 0.014259s info: Attempting connection to 1 peer...
+2016-06-29T13:08:35.069874000 0.078870s info: Rejected a connection from server proxy-d0eeb982-2f39-4b08-be83-0f0759177802 since one is open already.
+2016-06-29T13:08:35.071281000 0.080278s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-29T13:08:35.072012000 0.081009s notice: Listening for client driver connections on port 28015
+2016-06-29T13:08:35.072036000 0.081033s notice: Listening for administrative HTTP connections on port 8080
+2016-06-29T13:08:35.072042000 0.081038s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-06-29T13:08:35.072047000 0.081043s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-06-29T13:08:35.072051000 0.081048s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-06-29T13:08:35.072059000 0.081055s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-06-29T13:08:35.072066000 0.081063s notice: Proxy ready, proxy-d0eeb982-2f39-4b08-be83-0f0759177802
+2016-06-29T13:08:35.155199000 0.164197s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T09:56:57.671192000 74904.463365s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-06-30T09:56:57.671311000 74904.463484s notice: Shutting down client connections...
+2016-06-30T09:56:57.682562000 74904.474734s notice: All client connections closed.
+2016-06-30T09:56:57.682570000 74904.474742s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-06-30T09:56:57.686237000 74904.478410s notice: Storage engine shut down.
+2016-06-30T09:56:57.688478000 74904.480652s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T09:56:57.688690000 74904.480863s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T10:24:44.193996000 0.012068s notice: Listening for intracluster connections on port 29015
+2016-06-30T10:24:44.194165000 0.012233s info: Attempting connection to 1 peer...
+2016-06-30T10:24:44.257760000 0.075828s info: Rejected a connection from server proxy-8a82c99b-61b4-4bfc-80a3-c0291957a373 since one is open already.
+2016-06-30T10:24:44.259435000 0.077503s notice: Listening for client driver connections on port 28015
+2016-06-30T10:24:44.259461000 0.077528s notice: Listening for administrative HTTP connections on port 8080
+2016-06-30T10:24:44.259466000 0.077534s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-06-30T10:24:44.259471000 0.077539s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-06-30T10:24:44.259479000 0.077547s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-06-30T10:24:44.259485000 0.077553s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-06-30T10:24:44.259493000 0.077561s notice: Proxy ready, proxy-8a82c99b-61b4-4bfc-80a3-c0291957a373
+2016-06-30T10:24:44.273096000 0.091165s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T10:24:44.344347000 0.162416s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T10:28:50.082879000 245.906779s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-06-30T10:28:50.082963000 245.906863s notice: Shutting down client connections...
+2016-06-30T10:28:50.083540000 245.907440s notice: All client connections closed.
+2016-06-30T10:28:50.083550000 245.907450s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-06-30T10:28:50.098127000 245.922027s notice: Storage engine shut down.
+2016-06-30T10:28:50.100011000 245.923912s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T10:28:50.100862000 245.924763s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T12:19:24.974711000 0.038526s notice: Listening for intracluster connections on port 29015
+2016-06-30T12:19:24.976066000 0.039874s info: Attempting connection to 1 peer...
+2016-06-30T12:19:25.028962000 0.092770s info: Rejected a connection from server proxy-0187602b-0959-4398-bf51-7bfa3e8ec285 since one is open already.
+2016-06-30T12:19:25.031016000 0.094824s notice: Listening for client driver connections on port 28015
+2016-06-30T12:19:25.031037000 0.094845s notice: Listening for administrative HTTP connections on port 8080
+2016-06-30T12:19:25.031043000 0.094851s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-06-30T12:19:25.031048000 0.094856s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-06-30T12:19:25.031057000 0.094865s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-06-30T12:19:25.031063000 0.094872s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-06-30T12:19:25.031072000 0.094880s notice: Proxy ready, proxy-0187602b-0959-4398-bf51-7bfa3e8ec285
+2016-06-30T12:19:25.048126000 0.111934s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T12:19:25.107335000 0.171144s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T12:19:25.639388000 0.703197s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-06-30T12:19:25.639479000 0.703287s notice: Shutting down client connections...
+2016-06-30T12:19:25.639620000 0.703429s notice: All client connections closed.
+2016-06-30T12:19:25.639628000 0.703436s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-06-30T12:19:25.639885000 0.703694s notice: Storage engine shut down.
+2016-06-30T12:19:25.641126000 0.704935s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T12:19:25.641140000 0.704948s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T12:46:47.282781000 0.037944s notice: Listening for intracluster connections on port 29015
+2016-06-30T12:46:47.283970000 0.039126s info: Attempting connection to 1 peer...
+2016-06-30T12:46:47.348379000 0.103535s info: Rejected a connection from server proxy-9504dfde-a5c7-4ba5-bdeb-4dca0aaab597 since one is open already.
+2016-06-30T12:46:47.350797000 0.105953s notice: Listening for client driver connections on port 28015
+2016-06-30T12:46:47.350813000 0.105969s notice: Listening for administrative HTTP connections on port 8080
+2016-06-30T12:46:47.350817000 0.105972s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-06-30T12:46:47.350820000 0.105975s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-06-30T12:46:47.350825000 0.105980s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-06-30T12:46:47.350832000 0.105987s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-06-30T12:46:47.350837000 0.105993s notice: Proxy ready, proxy-9504dfde-a5c7-4ba5-bdeb-4dca0aaab597
+2016-06-30T12:46:47.364057000 0.119214s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T12:46:47.432760000 0.187916s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T18:26:47.187491000 20400.428256s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-06-30T18:26:47.193197000 20400.433962s notice: Shutting down client connections...
+2016-06-30T18:26:47.193761000 20400.434526s notice: All client connections closed.
+2016-06-30T18:26:47.193776000 20400.434540s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-06-30T18:26:47.198998000 20400.439764s notice: Storage engine shut down.
+2016-06-30T18:26:47.200295000 20400.441060s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T18:26:47.200308000 20400.441073s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-06-30T18:28:28.304060000 0.033993s notice: Listening for intracluster connections on port 29015
+2016-06-30T18:28:28.304245000 0.034173s info: Attempting connection to 1 peer...
+2016-06-30T18:28:28.372834000 0.102763s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-06-30T18:28:28.373834000 0.103763s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-06-30T18:28:28.375905000 0.105834s notice: Listening for client driver connections on port 28015
+2016-06-30T18:28:28.375926000 0.105854s notice: Listening for administrative HTTP connections on port 8080
+2016-06-30T18:28:28.375932000 0.105860s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-06-30T18:28:28.375937000 0.105865s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-06-30T18:28:28.375942000 0.105870s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-06-30T18:28:28.375947000 0.105876s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-06-30T18:28:28.375956000 0.105884s notice: Proxy ready, proxy-23022f49-09a2-439c-8f4b-ea595797364e
+2016-06-30T18:28:28.450606000 0.180559s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-01T11:08:42.289168000 60015.443735s error: Heartbeat timeout, killing connection to peer 91.121.91.72:29015
+2016-07-01T11:08:42.295979000 60015.450545s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-01T11:08:42.348222000 60015.502789s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:43.154060000 60016.308650s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:43.336927000 60016.491516s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:43.982831000 60017.137421s error: Heartbeat timeout, killing connection to peer 91.121.75.229:29015
+2016-07-01T11:08:43.998150000 60017.152740s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-01T11:08:43.998994000 60017.153583s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:45.334128000 60018.488766s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:45.998666000 60019.153303s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:55.110023000 60028.264898s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:56.810414000 60029.965313s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:57.110949000 60030.265870s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:08:58.812197000 60031.967143s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:09:01.564050000 60034.719067s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:09:03.564167000 60036.719231s info: Rejected a connection from server proxy-23022f49-09a2-439c-8f4b-ea595797364e since one is open already.
+2016-07-01T11:09:06.027428000 60039.182564s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-07-01T11:09:06.027499000 60039.182634s notice: Shutting down client connections...
+2016-07-01T11:09:06.028859000 60039.183994s notice: All client connections closed.
+2016-07-01T11:09:06.028872000 60039.184007s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-07-01T11:09:06.031804000 60039.186939s notice: Storage engine shut down.
+2016-07-01T11:09:06.916212000 0.041015s notice: Listening for intracluster connections on port 29015
+2016-07-01T11:09:06.916401000 0.041197s info: Attempting connection to 1 peer...
+2016-07-01T11:13:19.650378000 252.781174s info: Rejected a connection from server proxy-9779f177-e671-4f2c-9832-a93d2daed6c1 since one is open already.
+2016-07-01T11:13:19.652017000 252.782813s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-01T11:13:19.657101000 252.787897s notice: Listening for client driver connections on port 28015
+2016-07-01T11:13:19.657121000 252.787917s notice: Listening for administrative HTTP connections on port 8080
+2016-07-01T11:13:19.657127000 252.787923s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-07-01T11:13:19.657133000 252.787929s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-07-01T11:13:19.657138000 252.787934s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-07-01T11:13:19.657143000 252.787939s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-07-01T11:13:19.657148000 252.787944s notice: Proxy ready, proxy-9779f177-e671-4f2c-9832-a93d2daed6c1
+2016-07-01T11:13:19.728879000 252.859676s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-01T21:09:58.890561000 36052.871127s error: Heartbeat timeout, killing connection to peer 91.121.75.229:29015
+2016-07-01T21:09:58.897351000 36052.877916s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-01T21:09:58.898371000 36052.878936s info: Rejected a connection from server proxy-9779f177-e671-4f2c-9832-a93d2daed6c1 since one is open already.
+2016-07-01T21:09:59.127163000 36053.107729s info: Rejected a connection from server proxy-9779f177-e671-4f2c-9832-a93d2daed6c1 since one is open already.
+2016-07-01T21:09:59.138054000 36053.118620s info: Rejected a connection from server proxy-9779f177-e671-4f2c-9832-a93d2daed6c1 since one is open already.
+2016-07-01T21:09:59.202312000 36053.182902s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-02T14:51:06.897278000 99722.390246s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-07-02T14:51:06.925641000 99722.418610s notice: Shutting down client connections...
+2016-07-02T14:51:06.928768000 99722.421737s notice: All client connections closed.
+2016-07-02T14:51:06.942145000 99722.435114s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-07-02T14:51:06.953415000 99722.446407s notice: Storage engine shut down.
+2016-07-02T14:51:06.956476000 99722.449468s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-02T14:51:06.958038000 99722.451030s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-02T16:28:46.492243000 0.061387s notice: Listening for intracluster connections on port 29015
+2016-07-02T16:28:46.493371000 0.062510s info: Attempting connection to 1 peer...
+2016-07-02T16:28:46.587033000 0.156173s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T16:28:46.587209000 0.156349s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-02T16:28:46.590275000 0.159415s notice: Listening for client driver connections on port 28015
+2016-07-02T16:28:46.590302000 0.159442s notice: Listening for administrative HTTP connections on port 8080
+2016-07-02T16:28:46.590308000 0.159447s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-07-02T16:28:46.590313000 0.159452s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-07-02T16:28:46.590321000 0.159460s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-07-02T16:28:46.590328000 0.159467s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-07-02T16:28:46.590335000 0.159474s notice: Proxy ready, proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b
+2016-07-02T16:28:46.672927000 0.242067s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-02T22:36:44.746882000 22078.840458s error: Heartbeat timeout, killing connection to peer 91.121.75.229:29015
+2016-07-02T22:36:44.750941000 22078.844517s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-02T22:36:44.751500000 22078.845076s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:45.141283000 22079.234859s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:45.173056000 22079.266632s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:45.809989000 22079.903589s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:46.371068000 22080.464691s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:46.686633000 22080.780255s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:46.686979000 22080.780602s info: Rejected a connection from server proxy-3f7a1649-ceb8-4bf7-bff9-bd3553ea458b since one is open already.
+2016-07-02T22:36:46.951216000 22081.044838s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:24.382645000 63519.459153s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-07-03T10:07:24.382736000 63519.459244s notice: Shutting down client connections...
+2016-07-03T10:07:24.382890000 63519.459398s notice: All client connections closed.
+2016-07-03T10:07:24.382919000 63519.459427s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-07-03T10:07:24.383195000 63519.459703s notice: Storage engine shut down.
+2016-07-03T10:07:24.384441000 63519.460950s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:24.384463000 63519.460971s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-03T10:07:25.775717000 0.017019s notice: Listening for intracluster connections on port 29015
+2016-07-03T10:07:25.776210000 0.017482s info: Attempting connection to 1 peer...
+2016-07-03T10:07:25.838422000 0.079695s info: Rejected a connection from server proxy-187949d8-52e7-4585-9364-183cb9d75663 since one is open already.
+2016-07-03T10:07:25.838802000 0.080075s info: Rejected a connection from server proxy-187949d8-52e7-4585-9364-183cb9d75663 since one is open already.
+2016-07-03T10:07:25.840605000 0.081879s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:25.842601000 0.083873s info: Rejected a connection from server proxy-187949d8-52e7-4585-9364-183cb9d75663 since one is open already.
+2016-07-03T10:07:25.842851000 0.084123s notice: Listening for client driver connections on port 28015
+2016-07-03T10:07:25.842864000 0.084137s notice: Listening for administrative HTTP connections on port 8080
+2016-07-03T10:07:25.842870000 0.084142s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-07-03T10:07:25.842874000 0.084147s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-07-03T10:07:25.842879000 0.084152s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-07-03T10:07:25.842885000 0.084157s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-07-03T10:07:25.842890000 0.084163s notice: Proxy ready, proxy-187949d8-52e7-4585-9364-183cb9d75663
+2016-07-03T10:07:25.912310000 0.153583s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-03T10:07:25.913489000 0.154762s info: Rejected a connection from server proxy-187949d8-52e7-4585-9364-183cb9d75663 since one is open already.
+2016-07-03T10:07:25.914858000 0.156130s info: Rejected a connection from server proxy-187949d8-52e7-4585-9364-183cb9d75663 since one is open already.
+2016-07-03T10:07:30.686182000 4.927573s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-07-03T10:07:30.686268000 4.927659s notice: Shutting down client connections...
+2016-07-03T10:07:30.686452000 4.927843s notice: All client connections closed.
+2016-07-03T10:07:30.686464000 4.927855s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-07-03T10:07:30.686843000 4.928233s notice: Storage engine shut down.
+2016-07-03T10:07:30.687470000 4.928861s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-03T10:07:30.688012000 4.929403s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:33.830717000 0.013800s notice: Listening for intracluster connections on port 29015
+2016-07-03T10:07:33.830931000 0.014007s info: Attempting connection to 1 peer...
+2016-07-03T10:07:33.893829000 0.076906s info: Rejected a connection from server proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7 since one is open already.
+2016-07-03T10:07:33.893851000 0.076928s info: Rejected a connection from server proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7 since one is open already.
+2016-07-03T10:07:33.893860000 0.076937s info: Rejected a connection from server proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7 since one is open already.
+2016-07-03T10:07:33.895600000 0.078677s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:33.896286000 0.079363s info: Rejected a connection from server proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7 since one is open already.
+2016-07-03T10:07:33.897615000 0.080692s notice: Listening for client driver connections on port 28015
+2016-07-03T10:07:33.897625000 0.080702s notice: Listening for administrative HTTP connections on port 8080
+2016-07-03T10:07:33.897629000 0.080705s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-07-03T10:07:33.897632000 0.080709s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-07-03T10:07:33.897635000 0.080712s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-07-03T10:07:33.897638000 0.080715s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-07-03T10:07:33.897641000 0.080718s notice: Proxy ready, proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7
+2016-07-03T10:07:33.973017000 0.156094s info: Rejected a connection from server proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7 since one is open already.
+2016-07-03T10:07:33.974279000 0.157356s info: Rejected a connection from server proxy-be2854a2-a8de-4e1a-85c2-8f1a506128a7 since one is open already.
+2016-07-03T10:07:33.990519000 0.173596s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-03T10:07:34.875232000 1.058332s error: accept() failed: Too many open files in system.
+2016-07-03T10:07:35.540608000 1.723732s error: accept() failed: Too many open files in system.
+2016-07-03T10:07:39.441080000 5.624299s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-07-03T10:07:39.441157000 5.624375s notice: Shutting down client connections...
+2016-07-03T10:07:39.441434000 5.624652s notice: All client connections closed.
+2016-07-03T10:07:39.441445000 5.624663s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-07-03T10:07:39.442122000 5.625341s notice: Storage engine shut down.
+2016-07-03T10:07:39.443227000 5.626446s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-03T10:07:39.443238000 5.626456s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:49.547576000 0.011467s notice: Listening for intracluster connections on port 29015
+2016-07-03T10:07:49.547768000 0.011654s info: Attempting connection to 1 peer...
+2016-07-03T10:07:49.607350000 0.071236s info: Rejected a connection from server proxy-8dc95a4f-2455-49ef-9cce-89376eddde83 since one is open already.
+2016-07-03T10:07:49.607531000 0.071418s info: Rejected a connection from server proxy-8dc95a4f-2455-49ef-9cce-89376eddde83 since one is open already.
+2016-07-03T10:07:49.609308000 0.073195s notice: Listening for client driver connections on port 28015
+2016-07-03T10:07:49.609331000 0.073217s notice: Listening for administrative HTTP connections on port 8080
+2016-07-03T10:07:49.609339000 0.073225s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2016-07-03T10:07:49.609347000 0.073233s notice: Listening on driver addresses: 127.0.0.1, ::1
+2016-07-03T10:07:49.609353000 0.073239s notice: Listening on http addresses: 127.0.0.1, ::1
+2016-07-03T10:07:49.609360000 0.073246s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2016-07-03T10:07:49.609367000 0.073254s notice: Proxy ready, proxy-8dc95a4f-2455-49ef-9cce-89376eddde83
+2016-07-03T10:07:49.609456000 0.073342s info: Rejected a connection from server proxy-8dc95a4f-2455-49ef-9cce-89376eddde83 since one is open already.
+2016-07-03T10:07:49.622295000 0.086182s notice: Connected to server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:07:49.664471000 0.128358s info: Rejected a connection from server proxy-8dc95a4f-2455-49ef-9cce-89376eddde83 since one is open already.
+2016-07-03T10:07:49.665841000 0.129727s info: Rejected a connection from server proxy-8dc95a4f-2455-49ef-9cce-89376eddde83 since one is open already.
+2016-07-03T10:07:49.681402000 0.145289s notice: Connected to server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
+2016-07-03T10:08:48.199295000 58.664559s error: accept() failed: Too many open files in system.
+2016-07-03T10:08:50.312640000 60.777976s error: accept() failed: Too many open files in system.
+2016-07-03T10:08:50.359799000 60.825134s error: accept() failed: Too many open files in system.
+2016-07-03T10:09:03.323493000 73.789137s notice: Server got SIGINT from pid 575, uid 501; shutting down...
+2016-07-03T10:09:03.323612000 73.789255s notice: Shutting down client connections...
+2016-07-03T10:09:03.323716000 73.789359s notice: All client connections closed.
+2016-07-03T10:09:03.323723000 73.789366s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2016-07-03T10:09:03.324060000 73.789703s notice: Storage engine shut down.
+2016-07-03T10:09:03.325371000 73.791015s notice: Disconnected from server "ns351151_ip_91_121_75_eu_w71" d8b164ba-ef22-478c-a0e4-839899760229
+2016-07-03T10:09:03.325535000 73.791178s notice: Disconnected from server "ns3037183_ip_91_121_91_eu_fuk" a9d59148-d314-45c5-99bc-a59edbe59dbe
