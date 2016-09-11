@@ -265,6 +265,7 @@ func CreateSimpleReport(theReport model.Report) (returnReport model.Report) {
 	returnReport.URL = theReport.URL
 	returnReport.Type = theReport.Type
 	returnReport.Title = theReport.Title
+	returnReport.Date = theReport.Date
 	returnReport.PublishedAt = theReport.PublishedAt
 	returnReport.TotalComments = theReport.TotalComments
 	returnReport.CollectedComments = theReport.CollectedComments
