@@ -15,7 +15,7 @@
 # Endpoints
 
 ## Moody - Sentiment Analysis on any Youtube link
-http://localhost:3000/moody?vid=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DgKI78VOh4Aw
+http://localhost:3003/moody?vid=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DgKI78VOh4Aw
 
 * Optional parameter lang=pt for portuguese videos
 
@@ -35,8 +35,8 @@ Usage: /etc/init.d/redis {start|stop|status|restart|condrestart|try-restart}
 
 # Run server
 ```
-REDIS_HOST=localhost REDIS_PORT=6379 db=ns351151.ip-91-121-75.eu:28015 nohup ./main &.
-REDIS_HOST=localhost REDIS_PORT=6379 db=91.121.75.229:28015 nohup ./main &.
+REDIS_HOST=localhost REDIS_PORT=6379 RETHINKDB_HOST=ns351151.ip-91-121-75.eu RETHINKDB_PORT=28015 nohup ./main &.
+REDIS_HOST=localhost REDIS_PORT=6379 RETHINKDB_HOST=91.121.75.229 RETHINKDB_PORT=28015 nohup ./main &.
 ```
 
 # Tail logs

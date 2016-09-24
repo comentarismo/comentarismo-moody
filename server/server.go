@@ -31,9 +31,12 @@ var REDIS_PASSWORD = os.Getenv("REDIS_PASSWORD")
 
 var Host = os.Getenv("host")
 
-//Port eg: 3000
+//Port eg: 3003
 var Port = os.Getenv("PORT")
-var DB = os.Getenv("db")
+
+var RETHINKDB_HOST = os.Getenv("RETHINKDB_HOST")
+var RETHINKDB_PORT = os.Getenv("RETHINKDB_PORT")
+var DB = "";
 
 //Table eg: 3001
 var Table = os.Getenv("table")
@@ -44,9 +47,15 @@ var maxidle = os.Getenv("maxidle")
 func init() {
 	//var err error
 
-	if DB == "" {
-		DB = "g7-box:28015"
+	if RETHINKDB_HOST == "" {
+		RETHINKDB_HOST = "g7-box"
 	}
+
+	if RETHINKDB_PORT == "" {
+		RETHINKDB_PORT = "28015"
+	}
+
+	DB = RETHINKDB_HOST+":"+RETHINKDB_PORT
 
 	if Table == "" {
 		Table = "test"
@@ -74,7 +83,7 @@ func init() {
 	}
 
 	if Port == "" {
-		Port = "3000"
+		Port = "3003"
 	}
 	if Host == "" {
 		Host = "http://localhost" + ":" + Port
