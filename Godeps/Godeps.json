@@ -5,13 +5,13 @@
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
-			"Comment": "v0.10.0-16-gcd7d1bb",
-			"Rev": "cd7d1bbe41066b6c1f19780f895901052150a575"
+			"Comment": "v0.10.0-38-g3ec0642",
+			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
 		},
 		{
-			"ImportPath": "github.com/cenkalti/backoff",
-			"Comment": "v1.0.0-1-gc29158a",
-			"Rev": "c29158af31815ccc31ca29c86c121bc39e00d3d8"
+			"ImportPath": "github.com/cenk/backoff",
+			"Comment": "v1.0.0-15-gb02f2bb",
+			"Rev": "b02f2bbce11d7ea6b97f282ef1771b0fe2f65ef3"
 		},
 		{
 			"ImportPath": "github.com/dancannon/gorethink",
