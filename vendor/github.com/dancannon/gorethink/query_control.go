@@ -157,10 +157,23 @@ func Expr(val interface{}) Term {
 	}
 }
 
+// JSOpts contains the optional arguments for the JS term
+type JSOpts struct {
+	Timeout interface{} `gorethink:"timeout,omitempty"`
+}
+
+func (o JSOpts) toMap() map[string]interface{} {
+	return optArgsToMap(o)
+}
+
 // JS creates a JavaScript expression which is evaluated by the database when
 // running the query.
-func JS(jssrc interface{}) Term {
-	return constructRootTerm("Js", p.Term_JAVASCRIPT, []interface{}{jssrc}, map[string]interface{}{})
+func JS(jssrc interface{}, optArgs ...JSOpts) Term {
+	opts := map[string]interface{}{}
+	if len(optArgs) >= 1 {
+		opts = optArgs[0].toMap()
+	}
+	return constructRootTerm("Js", p.Term_JAVASCRIPT, []interface{}{jssrc}, opts)
 }
 
 // HTTPOpts contains the optional arguments for the HTTP term
@@ -184,7 +197,7 @@ type HTTPOpts struct {
 	PageLimit interface{} `gorethink:"page_limit,omitempty"`
 }
 
-func (o *HTTPOpts) toMap() map[string]interface{} {
+func (o HTTPOpts) toMap() map[string]interface{} {
 	return optArgsToMap(o)
 }
 
@@ -238,9 +251,15 @@ func Binary(data interface{}) Term {
 		b = data
 	default:
 		typ := reflect.TypeOf(data)
-		if (typ.Kind() == reflect.Slice || typ.Kind() == reflect.Array) &&
-			typ.Elem().Kind() == reflect.Uint8 {
+		if typ.Kind() == reflect.Slice && typ.Elem().Kind() == reflect.Uint8 {
 			return Binary(reflect.ValueOf(data).Bytes())
+		} else if typ.Kind() == reflect.Array && typ.Elem().Kind() == reflect.Uint8 {
+			v := reflect.ValueOf(data)
+			b = make([]byte, v.Len())
+			for i := 0; i < v.Len(); i++ {
+				b[i] = v.Index(i).Interface().(byte)
+			}
+			return Binary(b)
 		}
 		panic("Unsupported binary type")
 	}
@@ -328,6 +347,11 @@ func (t Term) CoerceTo(args ...interface{}) Term {
 }
 
 // TypeOf gets the type of a value.
+func TypeOf(args ...interface{}) Term {
+	return constructRootTerm("TypeOf", p.Term_TYPE_OF, args, map[string]interface{}{})
+}
+
+// TypeOf gets the type of a value.
 func (t Term) TypeOf(args ...interface{}) Term {
 	return constructMethodTerm(t, "TypeOf", p.Term_TYPE_OF, args, map[string]interface{}{})
 }
@@ -342,8 +366,8 @@ func (t Term) Info(args ...interface{}) Term {
 	return constructMethodTerm(t, "Info", p.Term_INFO, args, map[string]interface{}{})
 }
 
-// Return a UUID (universally unique identifier), a string that can be used as a
-// unique ID. If a string is passed to uuid as an argument, the UUID will be
+// UUID returns a UUID (universally unique identifier), a string that can be used
+// as a unique ID. If a string is passed to uuid as an argument, the UUID will be
 // deterministic, derived from the string’s SHA-1 hash.
 func UUID(args ...interface{}) Term {
 	return constructRootTerm("UUID", p.Term_UUID, args, map[string]interface{}{})

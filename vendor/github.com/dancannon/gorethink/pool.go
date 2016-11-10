@@ -9,12 +9,8 @@ import (
 	"gopkg.in/fatih/pool.v2"
 )
 
-const maxBadConnRetries = 3
-
 var (
 	errPoolClosed = errors.New("gorethink: pool is closed")
-	errConnClosed = errors.New("gorethink: conn is closed")
-	errConnBusy   = errors.New("gorethink: conn is busy")
 )
 
 // A Pool is used to store a pool of connections to a single RethinkDB server
@@ -24,20 +20,25 @@ type Pool struct {
 
 	pool pool.Pool
 
-	mu      sync.RWMutex // protects following fields
-	closed  bool
-	maxIdle int
-	maxOpen int
+	mu     sync.RWMutex // protects following fields
+	closed bool
 }
 
 // NewPool creates a new connection pool for the given host
 func NewPool(host Host, opts *ConnectOpts) (*Pool, error) {
+	initialCap := opts.InitialCap
+	if initialCap <= 0 {
+		// Fallback to MaxIdle if InitialCap is zero, this should be removed
+		// when MaxIdle is removed
+		initialCap = opts.MaxIdle
+	}
+
 	maxOpen := opts.MaxOpen
-	if maxOpen == 0 {
+	if maxOpen <= 0 {
 		maxOpen = 2
 	}
 
-	p, err := pool.NewChannelPool(opts.MaxIdle, maxOpen, func() (net.Conn, error) {
+	p, err := pool.NewChannelPool(initialCap, maxOpen, func() (net.Conn, error) {
 		conn, err := NewConnection(host.String(), opts)
 		if err != nil {
 			return nil, err
@@ -110,13 +111,15 @@ func (p *Pool) conn() (*Connection, *pool.PoolConn, error) {
 	return conn, pc, nil
 }
 
+// SetInitialPoolCap sets the initial capacity of the connection pool.
+//
+// Deprecated: This value should only be set when connecting
+func (p *Pool) SetInitialPoolCap(n int) {
+	return
+}
+
 // SetMaxIdleConns sets the maximum number of connections in the idle
 // connection pool.
-//
-// If MaxOpenConns is greater than 0 but less than the new MaxIdleConns
-// then the new MaxIdleConns will be reduced to match the MaxOpenConns limit
-//
-// If n <= 0, no idle connections are retained.
 //
 // Deprecated: This value should only be set when connecting
 func (p *Pool) SetMaxIdleConns(n int) {
@@ -124,13 +127,6 @@ func (p *Pool) SetMaxIdleConns(n int) {
 }
 
 // SetMaxOpenConns sets the maximum number of open connections to the database.
-//
-// If MaxIdleConns is greater than 0 and the new MaxOpenConns is less than
-// MaxIdleConns, then MaxIdleConns will be reduced to match the new
-// MaxOpenConns limit
-//
-// If n <= 0, then there is no limit on the number of open connections.
-// The default is 0 (unlimited).
 //
 // Deprecated: This value should only be set when connecting
 func (p *Pool) SetMaxOpenConns(n int) {
@@ -141,25 +137,16 @@ func (p *Pool) SetMaxOpenConns(n int) {
 
 // Exec executes a query without waiting for any response.
 func (p *Pool) Exec(q Query) error {
-	var err error
+	c, pc, err := p.conn()
+	if err != nil {
+		return err
+	}
+	defer pc.Close()
 
-	for i := 0; i < maxBadConnRetries; i++ {
-		var c *Connection
-		var pc *pool.PoolConn
+	_, _, err = c.Query(q)
 
-		c, pc, err = p.conn()
-		if err != nil {
-			continue
-		}
-		defer pc.Close()
-
-		_, _, err = c.Query(q)
-
-		if c.isBad() {
-			pc.MarkUnusable()
-		} else {
-			break
-		}
+	if c.isBad() {
+		pc.MarkUnusable()
 	}
 
 	return err
@@ -167,25 +154,17 @@ func (p *Pool) Exec(q Query) error {
 
 // Query executes a query and waits for the response
 func (p *Pool) Query(q Query) (*Cursor, error) {
-	var cursor *Cursor
-	var err error
+	c, pc, err := p.conn()
+	if err != nil {
+		return nil, err
+	}
 
-	for i := 0; i < maxBadConnRetries; i++ {
-		var c *Connection
-		var pc *pool.PoolConn
+	_, cursor, err := c.Query(q)
 
-		c, pc, err = p.conn()
-		if err != nil {
-			continue
-		}
-
-		_, cursor, err = c.Query(q)
-
-		if err == nil {
-			cursor.releaseConn = releaseConn(c, pc)
-		}
-
-		break
+	if err == nil {
+		cursor.releaseConn = releaseConn(c, pc)
+	} else if c.isBad() {
+		pc.MarkUnusable()
 	}
 
 	return cursor, err
@@ -194,25 +173,17 @@ func (p *Pool) Query(q Query) (*Cursor, error) {
 // Server returns the server name and server UUID being used by a connection.
 func (p *Pool) Server() (ServerResponse, error) {
 	var response ServerResponse
-	var err error
 
-	for i := 0; i < maxBadConnRetries; i++ {
-		var c *Connection
-		var pc *pool.PoolConn
+	c, pc, err := p.conn()
+	if err != nil {
+		return response, err
+	}
+	defer pc.Close()
 
-		c, pc, err = p.conn()
-		if err != nil {
-			continue
-		}
-		defer pc.Close()
+	response, err = c.Server()
 
-		response, err = c.Server()
-
-		if c.isBad() {
-			pc.MarkUnusable()
-		} else {
-			break
-		}
+	if c.isBad() {
+		pc.MarkUnusable()
 	}
 
 	return response, err

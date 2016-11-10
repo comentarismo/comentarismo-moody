@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/cenkalti/backoff"
+	"github.com/cenk/backoff"
 	"github.com/hailocab/go-hostpool"
 )
 
@@ -39,8 +39,12 @@ func NewCluster(hosts []Host, opts *ConnectOpts) (*Cluster, error) {
 		opts:  opts,
 	}
 
-	//Check that hosts in the ClusterConfig is not empty
-	c.connectNodes(c.getSeeds())
+	// Attempt to connect to each host and discover any additional hosts if host
+	// discovery is enabled
+	if err := c.connectNodes(c.getSeeds()); err != nil {
+		return nil, err
+	}
+
 	if !c.IsConnected() {
 		return nil, ErrNoConnectionsStarted
 	}
@@ -54,38 +58,76 @@ func NewCluster(hosts []Host, opts *ConnectOpts) (*Cluster, error) {
 
 // Query executes a ReQL query using the cluster to connect to the database
 func (c *Cluster) Query(q Query) (cursor *Cursor, err error) {
-	node, hpr, err := c.GetNextNode()
-	if err != nil {
-		return nil, err
+	for i := 0; i < c.numRetries(); i++ {
+		var node *Node
+		var hpr hostpool.HostPoolResponse
+
+		node, hpr, err = c.GetNextNode()
+		if err != nil {
+			return nil, err
+		}
+
+		cursor, err = node.Query(q)
+		hpr.Mark(err)
+
+		if !shouldRetryQuery(q, err) {
+			break
+		}
 	}
 
-	cursor, err = node.Query(q)
-	hpr.Mark(err)
 	return cursor, err
 }
 
 // Exec executes a ReQL query using the cluster to connect to the database
 func (c *Cluster) Exec(q Query) (err error) {
-	node, hpr, err := c.GetNextNode()
-	if err != nil {
-		return err
+	for i := 0; i < c.numRetries(); i++ {
+		var node *Node
+		var hpr hostpool.HostPoolResponse
+
+		node, hpr, err = c.GetNextNode()
+		if err != nil {
+			return err
+		}
+
+		err = node.Exec(q)
+		hpr.Mark(err)
+
+		if !shouldRetryQuery(q, err) {
+			break
+		}
 	}
 
-	err = node.Exec(q)
-	hpr.Mark(err)
 	return err
 }
 
 // Server returns the server name and server UUID being used by a connection.
 func (c *Cluster) Server() (response ServerResponse, err error) {
-	node, hpr, err := c.GetNextNode()
-	if err != nil {
-		return ServerResponse{}, err
+	for i := 0; i < c.numRetries(); i++ {
+		var node *Node
+		var hpr hostpool.HostPoolResponse
+
+		node, hpr, err = c.GetNextNode()
+		if err != nil {
+			return ServerResponse{}, err
+		}
+
+		response, err = node.Server()
+		hpr.Mark(err)
+
+		// This query should not fail so retry if any error is detected
+		if err == nil {
+			break
+		}
 	}
 
-	response, err = node.Server()
-	hpr.Mark(err)
 	return response, err
+}
+
+// SetInitialPoolCap sets the initial capacity of the connection pool.
+func (c *Cluster) SetInitialPoolCap(n int) {
+	for _, node := range c.GetNodes() {
+		node.SetInitialPoolCap(n)
+	}
 }
 
 // SetMaxIdleConns sets the maximum number of connections in the idle
@@ -206,17 +248,20 @@ func (c *Cluster) listenForNodeChanges() error {
 	return err
 }
 
-func (c *Cluster) connectNodes(hosts []Host) {
+func (c *Cluster) connectNodes(hosts []Host) error {
 	// Add existing nodes to map
 	nodeSet := map[string]*Node{}
 	for _, node := range c.GetNodes() {
 		nodeSet[node.ID] = node
 	}
 
+	var attemptErr error
+
 	// Attempt to connect to each seed host
 	for _, host := range hosts {
 		conn, err := NewConnection(host.String(), c.opts)
 		if err != nil {
+			attemptErr = err
 			Log.Warnf("Error creating connection: %s", err.Error())
 			continue
 		}
@@ -235,6 +280,7 @@ func (c *Cluster) connectNodes(hosts []Host) {
 
 			_, cursor, err := conn.Query(q)
 			if err != nil {
+				attemptErr = err
 				Log.Warnf("Error fetching cluster status: %s", err)
 				continue
 			}
@@ -242,6 +288,7 @@ func (c *Cluster) connectNodes(hosts []Host) {
 			var results []nodeStatus
 			err = cursor.All(&results)
 			if err != nil {
+				attemptErr = err
 				continue
 			}
 
@@ -256,12 +303,14 @@ func (c *Cluster) connectNodes(hosts []Host) {
 						nodeSet[node.ID] = node
 					}
 				} else {
+					attemptErr = err
 					Log.Warnf("Error connecting to node: %s", err)
 				}
 			}
 		} else {
 			svrRsp, err := conn.Server()
 			if err != nil {
+				attemptErr = err
 				Log.Warnf("Error fetching server ID: %s", err)
 				continue
 			}
@@ -273,20 +322,30 @@ func (c *Cluster) connectNodes(hosts []Host) {
 						"id":   node.ID,
 						"host": node.Host.String(),
 					}).Debug("Connected to node")
+
 					nodeSet[node.ID] = node
 				}
 			} else {
+				attemptErr = err
 				Log.Warnf("Error connecting to node: %s", err)
 			}
 		}
+	}
+
+	// If no nodes were contactable then return the last error, this does not
+	// include driver errors such as if there was an issue building the
+	// query
+	if len(nodeSet) == 0 {
+		return attemptErr
 	}
 
 	nodes := []*Node{}
 	for _, node := range nodeSet {
 		nodes = append(nodes, node)
 	}
-
 	c.setNodes(nodes)
+
+	return nil
 }
 
 func (c *Cluster) connectNodeWithStatus(s nodeStatus) (*Node, error) {
@@ -451,4 +510,12 @@ func (c *Cluster) removeNode(nodeID string) {
 
 func (c *Cluster) nextNodeIndex() int64 {
 	return atomic.AddInt64(&c.nodeIndex, 1)
+}
+
+func (c *Cluster) numRetries() int {
+	if n := c.opts.NumRetries; n > 0 {
+		return n
+	}
+
+	return 3
 }

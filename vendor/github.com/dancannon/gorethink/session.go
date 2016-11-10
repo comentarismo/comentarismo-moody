@@ -21,22 +21,64 @@ type Session struct {
 
 // ConnectOpts is used to specify optional arguments when connecting to a cluster.
 type ConnectOpts struct {
-	Address      string        `gorethink:"address,omitempty"`
-	Addresses    []string      `gorethink:"addresses,omitempty"`
-	Database     string        `gorethink:"database,omitempty"`
-	Username     string        `gorethink:"username,omitempty"`
-	Password     string        `gorethink:"password,omitempty"`
-	AuthKey      string        `gorethink:"authkey,omitempty"` // Deprecated
-	Timeout      time.Duration `gorethink:"timeout,omitempty"`
+	// Address holds the address of the server initially used when creating the
+	// session. Only used if Addresses is empty
+	Address string `gorethink:"address,omitempty"`
+	// Addresses holds the addresses of the servers initially used when creating
+	// the session.
+	Addresses []string `gorethink:"addresses,omitempty"`
+	// Database is the default database name used when executing queries, this
+	// value is only used if the query does not contain any DB term
+	Database string `gorethink:"database,omitempty"`
+	// Username holds the username used for authentication, if blank (and the v1
+	// handshake protocol is being used) then the admin user is used
+	Username string `gorethink:"username,omitempty"`
+	// Password holds the password used for authentication (only used when using
+	// the v1 handshake protocol)
+	Password string `gorethink:"password,omitempty"`
+	// AuthKey is used for authentication when using the v0.4 handshake protocol
+	// This field is no deprecated
+	AuthKey string `gorethink:"authkey,omitempty"`
+	// Timeout is the time the driver waits when creating new connections, to
+	// configure the timeout used when executing queries use WriteTimeout and
+	// ReadTimeout
+	Timeout time.Duration `gorethink:"timeout,omitempty"`
+	// WriteTimeout is the amount of time the driver will wait when sending the
+	// query to the server
 	WriteTimeout time.Duration `gorethink:"write_timeout,omitempty"`
-	ReadTimeout  time.Duration `gorethink:"read_timeout,omitempty"`
-	// The duration in which a connection should send a keep-alive.
-	KeepAlivePeriod  time.Duration    `gorethink:"keep_alive_timeout,omitempty"`
-	TLSConfig        *tls.Config      `gorethink:"tlsconfig,omitempty"`
+	// ReadTimeout is the amount of time the driver will wait for a response from
+	// the server when executing queries.
+	ReadTimeout time.Duration `gorethink:"read_timeout,omitempty"`
+	// KeepAlivePeriod is the keep alive period used by the connection, by default
+	// this is 30s. It is not possible to disable keep alive messages
+	KeepAlivePeriod time.Duration `gorethink:"keep_alive_timeout,omitempty"`
+	// TLSConfig holds the TLS configuration and can be used when connecting
+	// to a RethinkDB server protected by SSL
+	TLSConfig *tls.Config `gorethink:"tlsconfig,omitempty"`
+	// HandshakeVersion is used to specify which handshake version should be
+	// used, this currently defaults to v1 which is used by RethinkDB 2.3 and
+	// later. If you are using an older version then you can set the handshake
+	// version to 0.4
 	HandshakeVersion HandshakeVersion `gorethink:"handshake_version,omitempty"`
+	// UseJSONNumber indicates whether the cursors running in this session should
+	// use json.Number instead of float64 while unmarshaling documents with
+	// interface{}. The default is `false`.
+	UseJSONNumber bool
+	// NumRetries is the number of times a query is retried if a connection
+	// error is detected, queries are not retried if RethinkDB returns a
+	// runtime error.
+	NumRetries int
 
-	MaxIdle int `gorethink:"max_idle,omitempty"`
-	// By default a maximum of 2 connections are opened per host.
+	// InitialCap is used by the internal connection pool and is used to
+	// configure how many connections are created for each host when the
+	// session is created. If zero then no connections are created until
+	// the first query is executed.
+	InitialCap int `gorethink:"initial_cap,omitempty"`
+	// MaxOpen is used by the internal connection pool and is used to configure
+	// the maximum number of connections held in the pool. If all available
+	// connections are being used then the driver will open new connections as
+	// needed however they will not be returned to the pool. By default the
+	// maximum number of connections is 2
 	MaxOpen int `gorethink:"max_open,omitempty"`
 
 	// Below options are for cluster discovery, please note there is a high
@@ -46,22 +88,18 @@ type ConnectOpts struct {
 	// will attempt to discover any new nodes added to the cluster and then
 	// start sending queries to these new nodes.
 	DiscoverHosts bool `gorethink:"discover_hosts,omitempty"`
-	// NodeRefreshInterval is used to determine how often the driver should
-	// refresh the status of a node.
-	//
-	// Deprecated: This function is no longer used due to changes in the
-	// way hosts are selected.
-	NodeRefreshInterval time.Duration `gorethink:"node_refresh_interval,omitempty"`
 	// HostDecayDuration is used by the go-hostpool package to calculate a weighted
 	// score when selecting a host. By default a value of 5 minutes is used.
 	HostDecayDuration time.Duration
 
-	// Indicates whether the cursors running in this session should use json.Number instead of float64 while
-	// unmarshaling documents with interface{}. The default is `false`.
-	UseJSONNumber bool
+	// Deprecated: This function is no longer used due to changes in the
+	// way hosts are selected.
+	NodeRefreshInterval time.Duration `gorethink:"node_refresh_interval,omitempty"`
+	// Deprecated: Use InitialCap instead
+	MaxIdle int `gorethink:"max_idle,omitempty"`
 }
 
-func (o *ConnectOpts) toMap() map[string]interface{} {
+func (o ConnectOpts) toMap() map[string]interface{} {
 	return optArgsToMap(o)
 }
 
@@ -121,12 +159,15 @@ type CloseOpts struct {
 	NoReplyWait bool `gorethink:"noreplyWait,omitempty"`
 }
 
-func (o *CloseOpts) toMap() map[string]interface{} {
+func (o CloseOpts) toMap() map[string]interface{} {
 	return optArgsToMap(o)
 }
 
 // IsConnected returns true if session has a valid connection.
 func (s *Session) IsConnected() bool {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
 	if s.cluster == nil || s.closed {
 		return false
 	}
@@ -179,6 +220,15 @@ func (s *Session) Close(optArgs ...CloseOpts) error {
 	return nil
 }
 
+// SetInitialPoolCap sets the initial capacity of the connection pool.
+func (s *Session) SetInitialPoolCap(n int) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	s.opts.InitialCap = n
+	s.cluster.SetInitialPoolCap(n)
+}
+
 // SetMaxIdleConns sets the maximum number of connections in the idle
 // connection pool.
 func (s *Session) SetMaxIdleConns(n int) {
@@ -216,10 +266,18 @@ func (s *Session) NoReplyWait() error {
 
 // Use changes the default database used
 func (s *Session) Use(database string) {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+
+	s.opts.Database = database
+}
+
+// Database returns the selected database set by Use
+func (s *Session) Database() string {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 
-	s.opts.Database = database
+	return s.opts.Database
 }
 
 // Query executes a ReQL query using the session to connect to the database

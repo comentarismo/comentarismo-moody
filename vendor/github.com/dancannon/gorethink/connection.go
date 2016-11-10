@@ -13,7 +13,8 @@ import (
 )
 
 const (
-	respHeaderLen = 12
+	respHeaderLen          = 12
+	defaultKeepAlivePeriod = time.Second * 30
 )
 
 // Response represents the raw response from a query, most of the time you
@@ -52,8 +53,14 @@ func NewConnection(address string, opts *ConnectOpts) (*Connection, error) {
 		opts:    opts,
 		cursors: make(map[int64]*Cursor),
 	}
+
+	keepAlivePeriod := defaultKeepAlivePeriod
+	if opts.KeepAlivePeriod > 0 {
+		keepAlivePeriod = opts.KeepAlivePeriod
+	}
+
 	// Connect to Server
-	nd := net.Dialer{Timeout: c.opts.Timeout, KeepAlive: opts.KeepAlivePeriod}
+	nd := net.Dialer{Timeout: c.opts.Timeout, KeepAlive: keepAlivePeriod}
 	if c.opts.TLSConfig == nil {
 		c.Conn, err = nd.Dial("tcp", address)
 	} else {
@@ -114,7 +121,7 @@ func (c *Connection) Query(q Query) (*Response, *Cursor, error) {
 	if q.Type == p.Query_START || q.Type == p.Query_NOREPLY_WAIT {
 		if c.opts.Database != "" {
 			var err error
-			q.Opts["db"], err = DB(c.opts.Database).build()
+			q.Opts["db"], err = DB(c.opts.Database).Build()
 			if err != nil {
 				c.mu.Unlock()
 				return nil, nil, RQLDriverError{rqlError(err.Error())}
@@ -180,7 +187,7 @@ func (c *Connection) Server() (ServerResponse, error) {
 // sendQuery marshals the Query and sends the JSON to the server.
 func (c *Connection) sendQuery(q Query) error {
 	// Build query
-	b, err := json.Marshal(q.build())
+	b, err := json.Marshal(q.Build())
 	if err != nil {
 		return RQLDriverError{rqlError("Error building query")}
 	}

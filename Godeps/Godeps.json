@@ -15,8 +15,8 @@
 		},
 		{
 			"ImportPath": "github.com/dancannon/gorethink",
-			"Comment": "v2.0.2",
-			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+			"Comment": "v2.2.2-2-g751feef",
+			"Rev": "751feefd791306510daf1ce703e872277c2f097e"
 		},
 		{
 			"ImportPath": "github.com/facebookgo/clock",
@@ -112,18 +112,18 @@
 		},
 		{
 			"ImportPath": "gopkg.in/dancannon/gorethink.v2/encoding",
-			"Comment": "v2.0.2",
-			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+			"Comment": "v2.2.2",
+			"Rev": "016a1d3b4d15951ab2e39bd3596718ba94d298ba"
 		},
 		{
 			"ImportPath": "gopkg.in/dancannon/gorethink.v2/ql2",
-			"Comment": "v2.0.2",
-			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+			"Comment": "v2.2.2",
+			"Rev": "016a1d3b4d15951ab2e39bd3596718ba94d298ba"
 		},
 		{
 			"ImportPath": "gopkg.in/dancannon/gorethink.v2/types",
-			"Comment": "v2.0.2",
-			"Rev": "3742792da4bc279ccd6d807f24687009cbeda860"
+			"Comment": "v2.2.2",
+			"Rev": "016a1d3b4d15951ab2e39bd3596718ba94d298ba"
 		},
 		{
 			"ImportPath": "gopkg.in/fatih/pool.v2",
