@@ -28,7 +28,7 @@ flock --exclusive --nonblock 221 ||
 	echo "${pidf} already exists. so we will restart it for you ... ";
 	kill `pidof $APP_NAME`
 }
-#echo $$>&221
+echo $$>&221
 echo "${pidf} is not running, I am going to start an instance!!!";
 
 godep go build -o ${GOPATH}/${WORKDIR}/$APP_NAME ${GOPATH}/${WORKDIR}/${GO_PROCESS}
