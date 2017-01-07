@@ -42,10 +42,5 @@ vendor-save:
 	@echo "--> Installing build dependencies"
 	@godep save
 
-vendor-restore:
-	@echo "--> Installing build dependencies"
-	@godep save
-
-
 .PHONY: all test
 
