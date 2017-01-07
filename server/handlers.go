@@ -3,14 +3,14 @@ package server
 import (
 	//util "comentarismo-moody/util"
 	"encoding/json"
+	r "github.com/dancannon/gorethink"
+	"gopkg.in/redis.v3"
 	"log"
 	"net/http"
-	"gopkg.in/redis.v3"
 	"time"
-	r "github.com/dancannon/gorethink"
 
-	"comentarismo-moody/model"
 	"comentarismo-moody/lang"
+	"comentarismo-moody/model"
 )
 
 func init() {
@@ -25,9 +25,9 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 	lang := req.URL.Query().Get("lang")
 	if lang == "" {
 		lang = "en"
-		log.Println("MoodyHandler, request will default to lang -> ",lang)
-	}else {
-		log.Println("MoodyHandler, request will use lang -> ",lang)
+		log.Println("MoodyHandler, request will default to lang -> ", lang)
+	} else {
+		log.Println("MoodyHandler, request will use lang -> ", lang)
 	}
 	//validate inputs
 	if postURL == "" {
@@ -40,7 +40,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("MoodyHandler, ", postURL, refresh)
 	var jsonBytes []byte
 
-	if (refresh == "") {
+	if refresh == "" {
 		//get from redis if available
 		//serve from redis
 		valid := true
@@ -70,14 +70,14 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		provider, err := model.GetProvider(domain)
 		if err != nil {
-			log.Println("MoodyHandler, Could not GetProvider. report_" + postURL + " does not exists ", err)
+			log.Println("MoodyHandler, Could not GetProvider. report_"+postURL+" does not exists ", err)
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
 
 		err = provider.SetID(urlParts)
 		if err != nil {
-			log.Println("MoodyHandler, Could not SetID. report_" + postURL + " does not exists ", err)
+			log.Println("MoodyHandler, Could not SetID. report_"+postURL+" does not exists ", err)
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
@@ -89,27 +89,27 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		commentsReport := model.Report{}
 
-		log.Println("MoodyHandler, r.Table(sentiment_report).Get("+theReport.ID+")")
+		log.Println("MoodyHandler, r.Table(sentiment_report).Get(" + theReport.ID + ")")
 		/** BEGIN recover the simple sentiment report **/
 		res, err := r.Table("sentiment_report").Get(theReport.ID).Run(Session)
 
 		//if found rethinkdb sentiment_report, query all comments and save cache redis
 		if err != nil || res == nil {
-			log.Println("MoodyHandler, Could not get report_" + postURL + " does not exists rethinkdb ", err)
+			log.Println("MoodyHandler, Could not get report_"+postURL+" does not exists rethinkdb ", err)
 			valid = false
 		} else if res.IsNil() {
-			log.Println("MoodyHandler, Could not SetID. report_" + postURL + " does not exists rethinkdb ", err)
+			log.Println("MoodyHandler, Could not SetID. report_"+postURL+" does not exists rethinkdb ", err)
 			valid = false
 		} else {
 			err = res.One(&simpleReport)
 			if err != nil {
-				log.Println("Error: MoodyHandler, res.One(&simpleReport), ",err)
+				log.Println("Error: MoodyHandler, res.One(&simpleReport), ", err)
 			}
-			if (simpleReport.ID == "" || simpleReport.TotalComments == 0) {
-				log.Println("MoodyHandler, ",simpleReport)
+			if simpleReport.ID == "" || simpleReport.TotalComments == 0 {
+				log.Println("MoodyHandler, ", simpleReport)
 				valid = false
 				log.Println("MoodyHandler, Could NOT GET ID. report_" + postURL + " does not exists rethinkdb")
-			}else {
+			} else {
 				log.Println("MoodyHandler, OK GET ID. report_" + postURL + " exists rethinkdb ")
 
 			}
@@ -120,13 +120,13 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		/** BEGIN recover the comments sentiment report **/
 		if valid {
 			log.Println("MoodyHandler, load sentiment_report ok, going to load all comments now, this may break :| ")
-			log.Println("MoodyHandler, r.Table(sentiment).Get("+theReport.ID+").Pluck(sentimentlist, topcomments)")
+			log.Println("MoodyHandler, r.Table(sentiment).Get(" + theReport.ID + ").Pluck(sentimentlist, topcomments)")
 			res2, err := r.Table("sentiment").Get(theReport.ID).Pluck("sentimentlist", "topcomments").Run(Session)
 			if err != nil || res2 == nil {
-				log.Println("MoodyHandler, Could not get report_" + postURL + " does not exists rethinkdb ", err)
+				log.Println("MoodyHandler, Could not get report_"+postURL+" does not exists rethinkdb ", err)
 				valid = false
 			} else if res2.IsNil() {
-				log.Println("MoodyHandler, Could not SetID. report_" + postURL + " does not exists rethinkdb ", err)
+				log.Println("MoodyHandler, Could not SetID. report_"+postURL+" does not exists rethinkdb ", err)
 				valid = false
 			} else {
 				defer res2.Close()
@@ -134,7 +134,6 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 			}
 		}
 		/** END recover the comments sentiment report **/
-
 
 		if valid {
 
@@ -158,12 +157,12 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 					log.Println("MoodyHandler, loading from rethinkdb went ok :D ")
 
-					Client.Set("report_" + postURL, jsonBytes, time.Hour * 1)
+					Client.Set("report_"+postURL, jsonBytes, time.Hour*1)
 					log.Println("MoodyHandler, save to redis ok")
 
 					w.Header().Set("Content-Type", "application/json")
 					w.Write(jsonBytes)
-					return;
+					return
 				}
 			} else {
 				log.Println("Error: MoodyHandler, OMG we could not get this SentimentList to work :| No dougnuts for you today o__0 ")
@@ -176,9 +175,9 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 	log.Println("MoodyHandler, Will generate a new report -->", postURL)
 
-	theReport, err := RunReport(postURL,lang)
+	theReport, err := RunReport(postURL, lang)
 	if err != nil {
-		log.Println("Error: MoodyHandler, RunReport() ",err)
+		log.Println("Error: MoodyHandler, RunReport() ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		jsonBytes, _ := json.Marshal(WebError{Error: "RunReport failed :| -> "})
 		w.Write(jsonBytes)
@@ -205,7 +204,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		defer res.Close()
 		item := model.Report{}
 		res.One(&item)
-		if (item.ID == "") {
+		if item.ID == "" {
 			update = false
 		}
 		log.Println("MoodyHandler, lets update sentiment report")
@@ -253,7 +252,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	//save to redis
-	Client.Set("report_" + postURL, jsonBytes, time.Hour * 1)
+	Client.Set("report_"+postURL, jsonBytes, time.Hour*1)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(jsonBytes)
 
@@ -288,7 +287,7 @@ func CreateCommentsReport(theReport model.Report) (returnReport model.Report) {
 }
 
 func SentimentHandler(w http.ResponseWriter, req *http.Request) {
-	req.ParseForm()  //Parse url parameters passed, then parse the response packet for the POST body (request body)
+	req.ParseForm() //Parse url parameters passed, then parse the response packet for the POST body (request body)
 	//log.Println(req.Form) // print information on server side.
 	lang := req.URL.Query().Get("lang")
 
@@ -301,7 +300,7 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	//log.Println("lang , ", lang)
-	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it" && lang != "hr" && lang != "ru"  {
+	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it" && lang != "hr" && lang != "ru" {
 		errMsg := "Error: SentimentHandler Language " + lang + " not yet supported, use lang={en|pt|es|it|fr|hr|ru} eg lang=en"
 		log.Println(errMsg)
 		jsonBytes, _ := json.Marshal(WebError{Error: errMsg})
@@ -357,9 +356,8 @@ func AllowOrigin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func LanguageHandler(w http.ResponseWriter, req *http.Request) {
-	req.ParseForm()  //Parse url parameters passed, then parse the response packet for the POST body (request body)
+	req.ParseForm() //Parse url parameters passed, then parse the response packet for the POST body (request body)
 	//log.Println(req.Form) // print information on server side.
 	text := req.Form["text"]
 	if len(text) == 0 {
@@ -376,7 +374,7 @@ func LanguageHandler(w http.ResponseWriter, req *http.Request) {
 		log.Println("Error: SentimentHandler could detect lang for this text :| ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
-	}else {
+	} else {
 		returnLang.Language = detectedLang
 		returnLang.Date = time.Now()
 		returnLang.Text = text[0]

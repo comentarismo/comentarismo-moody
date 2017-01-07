@@ -3,28 +3,28 @@ package server
 import (
 	"comentarismo-moody/model"
 	"encoding/json"
+	"errors"
 	"log"
 	"math"
+	"os"
 	"regexp"
 	"strconv"
-	"time"
-	"os"
 	"strings"
-	"errors"
 	"sync"
+	"time"
 )
 
 var (
-	FACEBOOK_KEY = os.Getenv("FACEBOOK_KEY")
+	FACEBOOK_KEY    = os.Getenv("FACEBOOK_KEY")
 	FACEBOOK_SECRET = os.Getenv("FACEBOOK_SECRET")
 
-	YOUTUBE_KEY = os.Getenv("YOUTUBE_KEY")
+	YOUTUBE_KEY    = os.Getenv("YOUTUBE_KEY")
 	YOUTUBE_SECRET = os.Getenv("YOUTUBE_SECRET")
 
-	INSTAGRAM_KEY = os.Getenv("INSTAGRAM_KEY")
+	INSTAGRAM_KEY    = os.Getenv("INSTAGRAM_KEY")
 	INSTAGRAM_SECRET = os.Getenv("INSTAGRAM_SECRET")
 
-	VINEVIDEO_KEY = os.Getenv("VINEVIDEO_KEY")
+	VINEVIDEO_KEY    = os.Getenv("VINEVIDEO_KEY")
 	VINEVIDEO_SECRET = os.Getenv("VINEVIDEO_SECRET")
 
 	IsTrainedEn = false
@@ -34,13 +34,11 @@ var (
 	IsTrainedFr = false
 	IsTrainedHr = false
 	IsTrainedRu = false
-
-
 )
 
 func init() {
 
-	if(YOUTUBE_KEY == ""){
+	if YOUTUBE_KEY == "" {
 		YOUTUBE_KEY = "AIzaSyBameiyxxJw0W27lydpPuPRocfvGza9gXM"
 	}
 
@@ -63,39 +61,39 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 	mu.Lock()
 	pwd, _ := os.Getwd()
 
-	targetDir := pwd+"/static/training/afinn-111-en.csv";
+	targetDir := pwd + "/static/training/afinn-111-en.csv"
 	if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-		targetDir = pwd+"/../static/training/afinn-111-en.csv"
+		targetDir = pwd + "/../static/training/afinn-111-en.csv"
 	}
 	if lang == "pt" {
-		targetDir = pwd+"/static/training/afinn-111-pt.csv"
+		targetDir = pwd + "/static/training/afinn-111-pt.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-			targetDir = pwd+"/../static/training/afinn-111-pt.csv"
+			targetDir = pwd + "/../static/training/afinn-111-pt.csv"
 		}
 	} else if lang == "es" {
-		targetDir = pwd+"/static/training/afinn-111-es.csv"
+		targetDir = pwd + "/static/training/afinn-111-es.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-			targetDir = pwd+"/../static/training/afinn-111-es.csv"
+			targetDir = pwd + "/../static/training/afinn-111-es.csv"
 		}
 	} else if lang == "fr" {
-		targetDir = pwd+"/static/training/afinn-111-fr.csv"
+		targetDir = pwd + "/static/training/afinn-111-fr.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-			targetDir = pwd+"/../static/training/afinn-111-fr.csv"
+			targetDir = pwd + "/../static/training/afinn-111-fr.csv"
 		}
 	} else if lang == "it" {
-		targetDir = pwd+"/static/training/afinn-111-it.csv"
+		targetDir = pwd + "/static/training/afinn-111-it.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-			targetDir = pwd+"/../static/training/afinn-111-it.csv"
+			targetDir = pwd + "/../static/training/afinn-111-it.csv"
 		}
 	} else if lang == "hr" {
-		targetDir = pwd+"/static/training/afinn-111-hr.csv"
+		targetDir = pwd + "/static/training/afinn-111-hr.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-			targetDir = pwd+"/../static/training/afinn-111-hr.csv"
+			targetDir = pwd + "/../static/training/afinn-111-hr.csv"
 		}
 	} else if lang == "ru" {
-		targetDir = pwd+"/static/training/afinn-111-ru.csv"
+		targetDir = pwd + "/static/training/afinn-111-ru.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
-			targetDir = pwd+"/../static/training/afinn-111-ru.csv"
+			targetDir = pwd + "/../static/training/afinn-111-ru.csv"
 		}
 	} else {
 		//panic("Language is not supported, "+lang)
@@ -113,17 +111,15 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 	//	IsTrained = true
 	//}
 
-
 	IsTrained = IsLangTrained(lang)
 
 	if IsTrained == false {
-
 
 		log.Println("Training " + targetDir)
 		trainingFiles := strings.Split(targetDir, ",")
 		for _, path := range trainingFiles {
 
-			err := model.LoadTrainingData(lang,path)
+			err := model.LoadTrainingData(lang, path)
 			if err != nil {
 
 			}
@@ -158,7 +154,7 @@ func SetLangTrained(lang string) {
 	}
 }
 
-func IsLangTrained(lang string) ( isTrained bool ){
+func IsLangTrained(lang string) (isTrained bool) {
 	if lang == "en" {
 		isTrained = IsTrainedEn
 	} else if lang == "pt" {
@@ -177,17 +173,17 @@ func IsLangTrained(lang string) ( isTrained bool ){
 	return
 }
 
-func RunReport(postURL,lang string)  (model.Report, error) {
+func RunReport(postURL, lang string) (model.Report, error) {
 	// Parse URL
 	notTrained := LoadTrainingData(lang)
 	if !notTrained {
 		log.Println("Unable to train the engine for this url.")
-		return 	model.Report{},errors.New("Unable to train the engine for this url.")
+		return model.Report{}, errors.New("Unable to train the engine for this url.")
 
 	}
 	domain, urlParts := parseURL(postURL)
 	if domain == "" || len(urlParts) == 0 {
-		return 	model.Report{},errors.New("Unable to parse post url.")
+		return model.Report{}, errors.New("Unable to parse post url.")
 	}
 
 	// Create Report
@@ -199,21 +195,21 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 	provider, err := model.GetProvider(domain)
 	if err != nil {
 		log.Println(err)
-		return 	model.Report{},errors.New("Could not GetProvider.")
+		return model.Report{}, errors.New("Could not GetProvider.")
 	}
 
 	err = provider.SetID(urlParts)
 	if err != nil {
 		//log.Println(err)
 		log.Println("Could not SetID.")
-		return 	model.Report{},errors.New("Could not SetID.")
+		return model.Report{}, errors.New("Could not SetID.")
 	}
 
 	err = provider.SetLang(lang)
 	if err != nil {
 		//log.Println(err)
 		log.Println("Could not LANG on provider.")
-		return 	model.Report{},errors.New("Could not LANG on provider.")
+		return model.Report{}, errors.New("Could not LANG on provider.")
 	}
 
 	//Fetch the metadata
@@ -221,7 +217,7 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 
 	if !flag {
 		log.Println("Could not fetch metadata.")
-		return 	model.Report{},errors.New("Could not fetch metadata.")
+		return model.Report{}, errors.New("Could not fetch metadata.")
 	}
 
 	// Fetch the comments
@@ -230,7 +226,7 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 	//// If we don't get an comments back, wait for the metadata call to return and send an error.
 	if comments.IsEmpty() {
 		log.Println("No comments found for this post.")
-		return 	model.Report{},errors.New("No comments found for this post.")
+		return model.Report{}, errors.New("No comments found for this post.")
 	}
 	provider.SetReport(&theReport, comments)
 
@@ -270,12 +266,12 @@ func RunReport(postURL,lang string)  (model.Report, error) {
 	delta := time.Now().Sub(t)
 	theReport.CommentAvgPerDay = float64(theReport.TotalComments) / (float64(delta.Hours()) / float64(24))
 
-	log.Println("OK Going to return report for ", domain," TotalComments: ",theReport.TotalComments)
+	log.Println("OK Going to return report for ", domain, " TotalComments: ", theReport.TotalComments)
 
-	log.Println("SentimentList len ",len(theReport.SentimentList))
+	log.Println("SentimentList len ", len(theReport.SentimentList))
 
 	// Output Report
-	return theReport,nil
+	return theReport, nil
 }
 
 func jsonError(msg string) []byte {

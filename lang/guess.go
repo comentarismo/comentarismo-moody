@@ -1,11 +1,11 @@
 package lang
 
 import (
+	"comentarismo-moody/lang/models"
 	"errors"
 	"regexp"
 	"strings"
 	"unicode/utf8"
-	"comentarismo-moody/lang/models"
 )
 
 var (
@@ -326,9 +326,9 @@ func GuessName(text string) string {
 // Identify the language.
 func GuessLanguage(words []string, scripts []string) string {
 	if KeyExists("Hangul Syllables", scripts) ||
-	KeyExists("Hangul Jamo", scripts) ||
-	KeyExists("Hangul Compatibility Jamo", scripts) ||
-	KeyExists("Hangul", scripts) {
+		KeyExists("Hangul Jamo", scripts) ||
+		KeyExists("Hangul Compatibility Jamo", scripts) ||
+		KeyExists("Hangul", scripts) {
 		return "ko"
 	}
 
@@ -341,9 +341,9 @@ func GuessLanguage(words []string, scripts []string) string {
 	}
 
 	if KeyExists("CJK Unified Ideographs", scripts) ||
-	KeyExists("Bopomofo", scripts) ||
-	KeyExists("Bopomofo Extended", scripts) ||
-	KeyExists("KangXi Radicals", scripts) {
+		KeyExists("Bopomofo", scripts) ||
+		KeyExists("Bopomofo Extended", scripts) ||
+		KeyExists("KangXi Radicals", scripts) {
 		return "zh"
 	}
 
@@ -352,8 +352,8 @@ func GuessLanguage(words []string, scripts []string) string {
 	}
 
 	if KeyExists("Arabic", scripts) ||
-	KeyExists("Arabic Presentation Forms-A", scripts) ||
-	KeyExists("Arabic Presentation Forms-B", scripts) {
+		KeyExists("Arabic Presentation Forms-A", scripts) ||
+		KeyExists("Arabic Presentation Forms-B", scripts) {
 		return GetFromModel(words, codesArabic)
 	}
 

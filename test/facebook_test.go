@@ -3,9 +3,9 @@ package test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"comentarismo-moody/providers/facebook"
 	"comentarismo-moody/model"
+	"comentarismo-moody/providers/facebook"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Facebook_New(t *testing.T) {
@@ -23,7 +23,6 @@ func Test_Facebook_Implements_Provider(t *testing.T) {
 
 	a.Implements((*model.Provider)(nil), facebookProvider())
 }
-
 
 func facebookProvider() *facebook.Provider {
 	if KEY == "" {

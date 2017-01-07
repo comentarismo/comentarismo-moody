@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-type enTokenizer struct {}
+type enTokenizer struct{}
 
 func NewTokenizer() Tokenizer {
 	return &enTokenizer{}

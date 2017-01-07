@@ -9,22 +9,22 @@ import (
 	youtube "google.golang.org/api/youtube/v3"
 
 	"comentarismo-moody/model"
-	"time"
-	"strconv"
 	"log"
+	"strconv"
+	"time"
 )
 
-
-func init(){
+func init() {
 
 }
+
 // New creates a new Youtube provider, and sets up important connection details.
 // You should always call `youtube.New` to get a new Provider. Never try to create
 // one manually.
 func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 	p := &Provider{
-		ClientKey:   clientKey,
-		Secret:      secret,
+		ClientKey: clientKey,
+		Secret:    secret,
 	}
 	return p
 }
@@ -32,17 +32,18 @@ func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 // Provider is the implementation of `Provider` for accessing Youtube.
 //Provider.Secret is not used for youtube but is here just in case
 type Provider struct {
-	ClientKey   string `schema:"clientkey" gorethink:"clientkey,omitempty" json:"clientkey,omitempty"`
-	Secret      string `schema:"secret" gorethink:"secret,omitempty" json:"secret,omitempty"`
-	ID          string `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
-	Language    string `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
-	Title         string `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	VideoViews    uint64 `schema:"videoviews" gorethink:"videoviews,omitempty" json:"videoviews,omitempty"`
-	ChannelID     string `schema:"channelid" gorethink:"channelid,omitempty" json:"channelid,omitempty"`
-	ChannelTitle  string `schema:"channeltitle" gorethink:"channeltitle,omitempty" json:"channeltitle,omitempty"`
-	TotalComments uint64 `schema:"totalcomments" gorethink:"totalcomments,omitempty" json:"totalcomments,omitempty"`
-	Thumbnail     string `schema:"thumbnail" gorethink:"thumbnail,omitempty" json:"thumbnail,omitempty"`
-	PublishedAt   string `schema:"publishedat" gorethink:"publishedat,omitempty" json:"publishedat,omitempty"`
+	ClientKey     string    `schema:"clientkey" gorethink:"clientkey,omitempty" json:"clientkey,omitempty"`
+	Secret        string    `schema:"secret" gorethink:"secret,omitempty" json:"secret,omitempty"`
+	ID            string    `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Language      string    `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
+	Title         string    `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	VideoViews    uint64    `schema:"videoviews" gorethink:"videoviews,omitempty" json:"videoviews,omitempty"`
+	ChannelID     string    `schema:"channelid" gorethink:"channelid,omitempty" json:"channelid,omitempty"`
+	ChannelTitle  string    `schema:"channeltitle" gorethink:"channeltitle,omitempty" json:"channeltitle,omitempty"`
+	TotalComments uint64    `schema:"totalcomments" gorethink:"totalcomments,omitempty" json:"totalcomments,omitempty"`
+	Thumbnail     string    `schema:"thumbnail" gorethink:"thumbnail,omitempty" json:"thumbnail,omitempty"`
+	PublishedAt   string    `schema:"publishedat" gorethink:"publishedat,omitempty" json:"publishedat,omitempty"`
+	UpdatedAt     time.Time `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
 }
 
 // Name is the name used to retrieve this provider later.
@@ -51,7 +52,7 @@ func (p *Provider) Name() string {
 }
 
 func (p *Provider) SetID(urlParts []string) error {
-	i := len(urlParts)-1
+	i := len(urlParts) - 1
 	p.ID = urlParts[i]
 	return nil
 }
@@ -68,11 +69,10 @@ func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList
 	theReport.PublishedAt = p.PublishedAt
 	theReport.TotalComments = p.TotalComments
 	theReport.Metadata = p
+	theReport.UpdatedAt = time.Now()
 	//clear key and secret fields
 	theReport.TopComments = comments.GetMostLiked(10)
 }
-
-
 
 // Debug is a no-op for the package.
 func (p *Provider) Debug(debug bool) {}
@@ -84,7 +84,7 @@ func (this *Provider) GetPageID() model.Provider {
 // YouTubeGetCommentsV2 pulls the comments for a given YouTube video
 func (ytv *Provider) GetComments() model.CommentList {
 	videoID := ytv.ID
-	log.Println("videoID,",videoID)
+	log.Println("videoID,", videoID)
 	var comments = []*model.Comment{}
 
 	client := &http.Client{
@@ -161,7 +161,7 @@ func (ytv *Provider) GetMetadata() bool {
 		panic(err)
 	}
 
-	if(resp == nil){
+	if resp == nil {
 		log.Println("karai")
 	}
 
@@ -183,4 +183,3 @@ func (ytv *Provider) GetMetadata() bool {
 
 	return false
 }
-

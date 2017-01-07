@@ -1,10 +1,10 @@
 package sentiment_test
 
 import (
-	"testing"
 	"comentarismo-moody/sentiment"
 	"github.com/stretchr/testify/assert"
 	"log"
+	"testing"
 )
 
 func TestRuTokenize(t *testing.T) {
@@ -13,17 +13,17 @@ func TestRuTokenize(t *testing.T) {
 	m := tokenizer.Tokenize(text)
 	log.Printf("%v", m)
 
-//map[чш:1 зм:1 зр:1 тр:2 нны:1 пл:1 рц:1 льных:1 ды:1]
+	//map[чш:1 зм:1 зр:1 тр:2 нны:1 пл:1 рц:1 льных:1 ды:1]
 	testWords := map[string]int64{
-		"чш":1,
-		"зм":1,
-		"зр":1,
-		"тр":2,
-		"нны":1,
-		"пл":1,
-		"рц":1,
-		"льных":1,
-		"ды":1,
+		"чш":    1,
+		"зм":    1,
+		"зр":    1,
+		"тр":    2,
+		"нны":   1,
+		"пл":    1,
+		"рц":    1,
+		"льных": 1,
+		"ды":    1,
 	}
 
 	//log.Println(m)

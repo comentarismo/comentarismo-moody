@@ -1,10 +1,10 @@
 package sentiment_test
 
 import (
-	"testing"
 	"comentarismo-moody/sentiment"
-	"log"
 	"github.com/stretchr/testify/assert"
+	"log"
+	"testing"
 )
 
 func TestPtTokenize(t *testing.T) {
@@ -14,15 +14,15 @@ func TestPtTokenize(t *testing.T) {
 	log.Printf("%v", m)
 
 	testWords := map[string]int64{
-		"liz":1,
-		"vida":1,
-		"gad":1,
-		"marcad":1,
+		"liz":    1,
+		"vida":   1,
+		"gad":    1,
+		"marcad": 1,
 	}
 
-	for testWord, testWordValue  := range testWords {
+	for testWord, testWordValue := range testWords {
 		valid := false
-		for foundWord, foundWordValue  := range m {
+		for foundWord, foundWordValue := range m {
 			if testWord == foundWord {
 				//testWordValue
 				//log.Println(testWord,testWordValue,foundWord,foundWordValue)
@@ -31,7 +31,7 @@ func TestPtTokenize(t *testing.T) {
 			}
 		}
 		if !valid {
-			t.Fatal("Word expected never found --> ",testWord)
+			t.Fatal("Word expected never found --> ", testWord)
 		}
 	}
 

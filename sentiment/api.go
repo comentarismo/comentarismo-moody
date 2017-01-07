@@ -31,7 +31,7 @@ func (rs *RedisModel) conn() (conn redis.Conn, err error) {
 		if rs.password != "" {
 			_, authErr := redis.String(c.Do("AUTH", rs.password))
 			if authErr != nil {
-				Debug("Error: conn() AUTH -> ",authErr)
+				Debug("Error: conn() AUTH -> ", authErr)
 				err = authErr
 				return
 			}
@@ -44,12 +44,12 @@ func (rs *RedisModel) conn() (conn redis.Conn, err error) {
 func (rs *RedisModel) Classes() (a []string, err error) {
 	c, err := rs.conn()
 	if err != nil {
-		Debug("Error: Classes rs.conn() -> ",err)
+		Debug("Error: Classes rs.conn() -> ", err)
 		return
 	}
 	classes, err := redis.Strings(c.Do("SMEMBERS", rs.classesKey))
 	if err != nil {
-		Debug("Error: Classes redis.Strings(c.Do(SMEMBERS)) -> ",err)
+		Debug("Error: Classes redis.Strings(c.Do(SMEMBERS)) -> ", err)
 		return
 	}
 	for _, v := range classes {
@@ -61,7 +61,7 @@ func (rs *RedisModel) Classes() (a []string, err error) {
 func (rs *RedisModel) AddClass(class string) (err error) {
 	c, err := rs.conn()
 	if err != nil {
-		Debug("Error: AddClass rs.conn() -> ",err)
+		Debug("Error: AddClass rs.conn() -> ", err)
 		return
 	}
 	if class == "" {
@@ -69,7 +69,7 @@ func (rs *RedisModel) AddClass(class string) (err error) {
 	}
 	_, err = c.Do("SADD", rs.classesKey, class)
 	if err != nil {
-		Debug("Error: AddClass c.Do(SADD) -> ",err)
+		Debug("Error: AddClass c.Do(SADD) -> ", err)
 		return
 	}
 	return err
@@ -78,25 +78,25 @@ func (rs *RedisModel) AddClass(class string) (err error) {
 func (rs *RedisModel) ClassWordCounts(class string, words []string) (mc map[string]int64, err error) {
 	c, err := rs.conn()
 	if err != nil {
-		Debug("Error: ClassWordCounts rs.conn() -> ",err)
+		Debug("Error: ClassWordCounts rs.conn() -> ", err)
 		return
 	}
 	//begin transaction
 	c.Send("MULTI")
 
 	key := rs.classKey + ":" + class
-	Debug("ClassWordCounts key ->",key)
+	Debug("ClassWordCounts key ->", key)
 	args := make([]interface{}, 0, len(words)+1)
 	args = append(args, key)
 	for _, v := range words {
 		args = append(args, v)
 	}
-	Debug("ClassWordCounts args ->",args)
+	Debug("ClassWordCounts args ->", args)
 
 	c.Send("HMGET", args...)
 	values, err := redis.Values(c.Do("EXEC"))
 	if err != nil {
-		Debug("Error: ClassWordCounts redis.Values(c.Do(EXEC)) -> ",err)
+		Debug("Error: ClassWordCounts redis.Values(c.Do(EXEC)) -> ", err)
 		return
 	}
 
@@ -116,14 +116,14 @@ func (rs *RedisModel) ClassWordCounts(class string, words []string) (mc map[stri
 		//// Scan copies from values to the values pointed at by count.
 		values, err = redis.Scan(values, &count)
 		if err != nil {
-			Debug("Error: ClassWordCounts redis.Scan -> ",err)
+			Debug("Error: ClassWordCounts redis.Scan -> ", err)
 			return
 		}
 		mc[words[i]] = count
 		i++
 	}
 
-	Debug("ClassWordCounts mc -> ",mc)
+	Debug("ClassWordCounts mc -> ", mc)
 
 	return
 }
@@ -131,7 +131,7 @@ func (rs *RedisModel) ClassWordCounts(class string, words []string) (mc map[stri
 func (rs *RedisModel) IncrementClassWordCounts(m map[string]map[string]int64) (err error) {
 	c, err := rs.conn()
 	if err != nil {
-		Debug("Error: IncrementClassWordCounts() rs.conn() -> ",err)
+		Debug("Error: IncrementClassWordCounts() rs.conn() -> ", err)
 		return
 	}
 	type tuple struct {
@@ -172,14 +172,14 @@ func (rs *RedisModel) IncrementClassWordCounts(m map[string]map[string]int64) (e
 		hmget := make([]interface{}, 0, len(paths))
 		hmget = append(hmget, key)
 		for _, path := range paths {
-			Debug("mget -> ",path.word)
+			Debug("mget -> ", path.word)
 			hmget = append(hmget, path.word)
 		}
-		Debug("IncrementClassWordCounts mget all -> ",hmget)
+		Debug("IncrementClassWordCounts mget all -> ", hmget)
 
 		values, err2 := redis.Strings(c.Do("HMGET", hmget...))
 		if err2 != nil {
-			Debug("Error: IncrementClassWordCounts redis.Strings(c.Do(HMGET)) -> ",err2)
+			Debug("Error: IncrementClassWordCounts redis.Strings(c.Do(HMGET)) -> ", err2)
 			return
 		}
 
@@ -188,7 +188,7 @@ func (rs *RedisModel) IncrementClassWordCounts(m map[string]map[string]int64) (e
 			path := paths[i]
 			x, err2 := strconv.ParseInt(v, 10, 64)
 			if err2 != nil {
-				Debug("Error: IncrementClassWordCounts() strconv.ParseInt -> ",err2)
+				Debug("Error: IncrementClassWordCounts() strconv.ParseInt -> ", err2)
 				panic(err2)
 			}
 			if x != 0 {
@@ -202,23 +202,22 @@ func (rs *RedisModel) IncrementClassWordCounts(m map[string]map[string]int64) (e
 		}
 		_, err2 = c.Do("EXEC")
 		if err2 != nil {
-			Debug("Error: IncrementClassWordCounts() c.Do(EXEC) -> ",err2)
+			Debug("Error: IncrementClassWordCounts() c.Do(EXEC) -> ", err2)
 			return err2
 		}
 	}
 	return
 }
 
-
 func (rs *RedisModel) TotalClassWordCounts() (m map[string]int64, err error) {
 	c, err := rs.conn()
 	if err != nil {
-		Debug("Error: TotalClassWordCounts() rs.conn() -> ",err)
+		Debug("Error: TotalClassWordCounts() rs.conn() -> ", err)
 		return
 	}
 	values, err := redis.Values(c.Do("HGETALL", rs.sumKey))
 	if err != nil {
-		Debug("Error: TotalClassWordCounts() redis.Values(c.Do(HGETALL)) -> ",err)
+		Debug("Error: TotalClassWordCounts() redis.Values(c.Do(HGETALL)) -> ", err)
 		return
 	}
 	m = make(map[string]int64)
@@ -227,14 +226,13 @@ func (rs *RedisModel) TotalClassWordCounts() (m map[string]int64, err error) {
 		var count int64
 		values, err = redis.Scan(values, &class, &count)
 		if err != nil {
-			Debug("Error: TotalClassWordCounts() redis.Scan -> ",err)
+			Debug("Error: TotalClassWordCounts() redis.Scan -> ", err)
 			return
 		}
 		m[class] = count
 	}
 	return
 }
-
 
 func (rs *RedisModel) Reset() (err error) {
 	c, err := rs.conn()
@@ -243,7 +241,7 @@ func (rs *RedisModel) Reset() (err error) {
 	}
 	a, err := redis.Strings(c.Do("KEYS", "sentiment:*"))
 	if err != nil {
-		Debug("Error: Reset() redis.Strings(c.Do(KEYS)) -> ",err)
+		Debug("Error: Reset() redis.Strings(c.Do(KEYS)) -> ", err)
 		return
 	}
 	c.Send("MULTI")
@@ -252,7 +250,7 @@ func (rs *RedisModel) Reset() (err error) {
 	}
 	_, err = c.Do("EXEC")
 	if err != nil {
-		Debug("Error: Reset() c.Do(EXEC) -> ",err)
+		Debug("Error: Reset() c.Do(EXEC) -> ", err)
 	}
 	return
 }

@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"net/url"
 
+	"bytes"
 	model "comentarismo-moody/model"
 	"errors"
 	"strconv"
-	"bytes"
 )
 
 // New creates a new Vinevideo provider, and sets up important connection details.
@@ -18,16 +18,16 @@ import (
 // one manually.
 func New(clientKey, secret, callbackURL string, scopes ...string) *Provider {
 	p := &Provider{
-		ClientKey:   clientKey,
-		Secret:      secret,
+		ClientKey: clientKey,
+		Secret:    secret,
 	}
 	return p
 }
 
 // Provider is the implementation of `Provider` for accessing Vinevideo.
 type Provider struct {
-	ClientKey   string
-	Secret      string
+	ClientKey     string
+	Secret        string
 	ID            string // id
 	Language      string // lang
 	PageName      string
@@ -60,13 +60,14 @@ func InitVine(ClientKey, Secret string) bool {
 
 	return false
 }
+
 // Name is the name used to retrieve this provider later.
 func (p *Provider) Name() string {
 	return "vinevideo"
 }
 
 //	thePost = &model.VineVideo{ShortCode: urlParts[len(urlParts)-1]}
-func (p *Provider) SetID(urlParts [] string) error {
+func (p *Provider) SetID(urlParts []string) error {
 	p.ID = urlParts[len(urlParts)-1]
 	return nil
 }
@@ -84,12 +85,8 @@ func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList
 	theReport.Metadata = p
 }
 
-
-
-
 // Debug is a no-op for the vinevideo package.
 func (p *Provider) Debug(debug bool) {}
-
 
 func (this *Provider) GetMetadata() bool {
 	if InitVine(this.ClientKey, this.Secret) == false {
@@ -203,7 +200,6 @@ func authVine(username string, password string) (*VineSession, error) {
 	}
 }
 
-
 func (this *VineSession) VineRequest(path string) (*http.Response, error) {
 	u, err := url.Parse(path)
 	if err != nil {
@@ -230,121 +226,121 @@ func (this *VineSession) VineRequest(path string) (*http.Response, error) {
 type VinePostResp struct {
 	Code string `json:"code"`
 	Data struct {
-		     Count     int    `json:"count"`
-		     Anchorstr string `json:"anchorStr"`
-		     Records   []struct {
-			     Liked             int         `json:"liked"`
-			     VideodashUrl      string      `json:"videoDashUrl"`
-			     Foursquarevenueid string      `json:"foursquareVenueId"`
-			     UserID            int64       `json:"userId"`
-			     Private           int         `json:"private"`
-			     VideowebmUrl      interface{} `json:"videoWebmUrl"`
-			     Loops             struct {
-						       Count    float64 `json:"count"`
-						       Velocity float64 `json:"velocity"`
-						       Onfire   int     `json:"onFire"`
-					       } `json:"loops"`
-			     ThumbnailUrl    string `json:"thumbnailUrl"`
-			     Explicitcontent int    `json:"explicitContent"`
-			     Blocked         int    `json:"blocked"`
-			     Verified        int    `json:"verified"`
-			     AvatarUrl       string `json:"avatarUrl"`
-			     Comments        struct {
-						       Count     uint64 `json:"count"`
-						       Anchorstr string `json:"anchorStr"`
-						       Records   []struct {
-							       Username          string        `json:"username"`
-							       Comment           string        `json:"comment"`
-							       Verified          int           `json:"verified"`
-							       VanityUrls        []interface{} `json:"vanityUrls"`
-							       Created           string        `json:"created"`
-							       Userid            int64         `json:"userId"`
-							       Profilebackground string        `json:"profileBackground"`
-							       Entities          []interface{} `json:"entities"`
-							       User              struct {
-											 Username          string        `json:"username"`
-											 Verified          int           `json:"verified"`
-											 Description       string        `json:"description"`
-											 Twitterverified   int           `json:"twitterVerified"`
-											 Avatarurl         string        `json:"avatarUrl"`
-											 Notporn           int           `json:"notPorn"`
-											 Userid            int64         `json:"userId"`
-											 Profilebackground string        `json:"profileBackground"`
-											 Hidefrompopular   int           `json:"hideFromPopular"`
-											 Private           int           `json:"private"`
-											 Location          interface{}   `json:"location"`
-											 Unflaggable       int           `json:"unflaggable"`
-											 Vanityurls        []interface{} `json:"vanityUrls"`
-										 } `json:"user"`
-							       Commentid int64 `json:"commentId"`
-							       Postid    int64 `json:"postId"`
-						       } `json:"records"`
-						       Previouspage interface{} `json:"previousPage"`
-						       Backanchor   string      `json:"backAnchor"`
-						       Anchor       int64       `json:"anchor"`
-						       Nextpage     int         `json:"nextPage"`
-						       Size         int         `json:"size"`
-					       } `json:"comments"`
-			     Entities []struct {
-				     Link  string `json:"link"`
-				     Range []int  `json:"range"`
-				     Type  string `json:"type"`
-				     ID    int64  `json:"id"`
-				     Title string `json:"title"`
-			     } `json:"entities"`
-			     Videolowurl       string        `json:"videoLowURL"`
-			     Vanityurls        []string      `json:"vanityUrls"`
-			     Username          string        `json:"username"`
-			     Description       string        `json:"description"`
-			     Tags              []interface{} `json:"tags"`
-			     Permalinkurl      string        `json:"permalinkUrl"`
-			     Promoted          int           `json:"promoted"`
-			     PostID            int64         `json:"postId"`
-			     Profilebackground string        `json:"profileBackground"`
-			     Videourl          string        `json:"videoUrl"`
-			     Followrequested   int           `json:"followRequested"`
-			     Created           string        `json:"created"`
-			     Hassimilarposts   int           `json:"hasSimilarPosts"`
-			     Shareurl          string        `json:"shareUrl"`
-			     Myrepostid        int           `json:"myRepostId"`
-			     Following         int           `json:"following"`
-			     Reposts           struct {
-						       Count        int           `json:"count"`
-						       Anchorstr    string        `json:"anchorStr"`
-						       Records      []interface{} `json:"records"`
-						       Previouspage interface{}   `json:"previousPage"`
-						       Backanchor   string        `json:"backAnchor"`
-						       Anchor       interface{}   `json:"anchor"`
-						       Nextpage     interface{}   `json:"nextPage"`
-						       Size         int           `json:"size"`
-					       } `json:"reposts"`
-			     Likes struct {
-						       Count     uint64 `json:"count"`
-						       Anchorstr string `json:"anchorStr"`
-						       Records   []struct {
-							       Username   string        `json:"username"`
-							       Verified   int           `json:"verified"`
-							       Vanityurls []interface{} `json:"vanityUrls"`
-							       Created    string        `json:"created"`
-							       Userid     int64         `json:"userId"`
-							       User       struct {
-										  Private int `json:"private"`
-									  } `json:"user"`
-							       Likeid int64 `json:"likeId"`
-						       } `json:"records"`
-						       Previouspage interface{} `json:"previousPage"`
-						       Backanchor   string      `json:"backAnchor"`
-						       Anchor       int64       `json:"anchor"`
-						       Nextpage     int         `json:"nextPage"`
-						       Size         int         `json:"size"`
-					       } `json:"likes"`
-		     } `json:"records"`
-		     Previouspage interface{} `json:"previousPage"`
-		     Backanchor   string      `json:"backAnchor"`
-		     Anchor       interface{} `json:"anchor"`
-		     Nextpage     interface{} `json:"nextPage"`
-		     Size         int         `json:"size"`
-	     } `json:"data"`
+		Count     int    `json:"count"`
+		Anchorstr string `json:"anchorStr"`
+		Records   []struct {
+			Liked             int         `json:"liked"`
+			VideodashUrl      string      `json:"videoDashUrl"`
+			Foursquarevenueid string      `json:"foursquareVenueId"`
+			UserID            int64       `json:"userId"`
+			Private           int         `json:"private"`
+			VideowebmUrl      interface{} `json:"videoWebmUrl"`
+			Loops             struct {
+				Count    float64 `json:"count"`
+				Velocity float64 `json:"velocity"`
+				Onfire   int     `json:"onFire"`
+			} `json:"loops"`
+			ThumbnailUrl    string `json:"thumbnailUrl"`
+			Explicitcontent int    `json:"explicitContent"`
+			Blocked         int    `json:"blocked"`
+			Verified        int    `json:"verified"`
+			AvatarUrl       string `json:"avatarUrl"`
+			Comments        struct {
+				Count     uint64 `json:"count"`
+				Anchorstr string `json:"anchorStr"`
+				Records   []struct {
+					Username          string        `json:"username"`
+					Comment           string        `json:"comment"`
+					Verified          int           `json:"verified"`
+					VanityUrls        []interface{} `json:"vanityUrls"`
+					Created           string        `json:"created"`
+					Userid            int64         `json:"userId"`
+					Profilebackground string        `json:"profileBackground"`
+					Entities          []interface{} `json:"entities"`
+					User              struct {
+						Username          string        `json:"username"`
+						Verified          int           `json:"verified"`
+						Description       string        `json:"description"`
+						Twitterverified   int           `json:"twitterVerified"`
+						Avatarurl         string        `json:"avatarUrl"`
+						Notporn           int           `json:"notPorn"`
+						Userid            int64         `json:"userId"`
+						Profilebackground string        `json:"profileBackground"`
+						Hidefrompopular   int           `json:"hideFromPopular"`
+						Private           int           `json:"private"`
+						Location          interface{}   `json:"location"`
+						Unflaggable       int           `json:"unflaggable"`
+						Vanityurls        []interface{} `json:"vanityUrls"`
+					} `json:"user"`
+					Commentid int64 `json:"commentId"`
+					Postid    int64 `json:"postId"`
+				} `json:"records"`
+				Previouspage interface{} `json:"previousPage"`
+				Backanchor   string      `json:"backAnchor"`
+				Anchor       int64       `json:"anchor"`
+				Nextpage     int         `json:"nextPage"`
+				Size         int         `json:"size"`
+			} `json:"comments"`
+			Entities []struct {
+				Link  string `json:"link"`
+				Range []int  `json:"range"`
+				Type  string `json:"type"`
+				ID    int64  `json:"id"`
+				Title string `json:"title"`
+			} `json:"entities"`
+			Videolowurl       string        `json:"videoLowURL"`
+			Vanityurls        []string      `json:"vanityUrls"`
+			Username          string        `json:"username"`
+			Description       string        `json:"description"`
+			Tags              []interface{} `json:"tags"`
+			Permalinkurl      string        `json:"permalinkUrl"`
+			Promoted          int           `json:"promoted"`
+			PostID            int64         `json:"postId"`
+			Profilebackground string        `json:"profileBackground"`
+			Videourl          string        `json:"videoUrl"`
+			Followrequested   int           `json:"followRequested"`
+			Created           string        `json:"created"`
+			Hassimilarposts   int           `json:"hasSimilarPosts"`
+			Shareurl          string        `json:"shareUrl"`
+			Myrepostid        int           `json:"myRepostId"`
+			Following         int           `json:"following"`
+			Reposts           struct {
+				Count        int           `json:"count"`
+				Anchorstr    string        `json:"anchorStr"`
+				Records      []interface{} `json:"records"`
+				Previouspage interface{}   `json:"previousPage"`
+				Backanchor   string        `json:"backAnchor"`
+				Anchor       interface{}   `json:"anchor"`
+				Nextpage     interface{}   `json:"nextPage"`
+				Size         int           `json:"size"`
+			} `json:"reposts"`
+			Likes struct {
+				Count     uint64 `json:"count"`
+				Anchorstr string `json:"anchorStr"`
+				Records   []struct {
+					Username   string        `json:"username"`
+					Verified   int           `json:"verified"`
+					Vanityurls []interface{} `json:"vanityUrls"`
+					Created    string        `json:"created"`
+					Userid     int64         `json:"userId"`
+					User       struct {
+						Private int `json:"private"`
+					} `json:"user"`
+					Likeid int64 `json:"likeId"`
+				} `json:"records"`
+				Previouspage interface{} `json:"previousPage"`
+				Backanchor   string      `json:"backAnchor"`
+				Anchor       int64       `json:"anchor"`
+				Nextpage     int         `json:"nextPage"`
+				Size         int         `json:"size"`
+			} `json:"likes"`
+		} `json:"records"`
+		Previouspage interface{} `json:"previousPage"`
+		Backanchor   string      `json:"backAnchor"`
+		Anchor       interface{} `json:"anchor"`
+		Nextpage     interface{} `json:"nextPage"`
+		Size         int         `json:"size"`
+	} `json:"data"`
 	Success bool   `json:"success"`
 	Error   string `json:"error"`
 }
@@ -352,70 +348,69 @@ type VinePostResp struct {
 type VineAuthResp struct {
 	Code string `json:"code"`
 	Data struct {
-		     Username    string      `json:"username"`
-		     AvatarURL   string      `json:"avatarUrl"`
-		     clientFlags interface{} `json:"clientFlags"`
-		     UserID      int64       `json:"userId"`
-		     Edition     string      `json:"edition"`
-		     Key         string      `json:"key"`
-	     } `json:"data"`
+		Username    string      `json:"username"`
+		AvatarURL   string      `json:"avatarUrl"`
+		clientFlags interface{} `json:"clientFlags"`
+		UserID      int64       `json:"userId"`
+		Edition     string      `json:"edition"`
+		Key         string      `json:"key"`
+	} `json:"data"`
 }
 
 type VineCommentResp struct {
 	Code string `json:"code"`
 	Data struct {
-		     Anchor       int    `json:"anchor"`
-		     AnchorStr    string `json:"anchorStr"`
-		     BackAnchor   string `json:"backAnchor"`
-		     Count        int    `json:"count"`
-		     NextPage     int    `json:"nextPage"`
-		     PreviousPage int    `json:"previousPage"`
-		     Records      []struct {
-			     AvatarURL    string `json:"avatarUrl"`
-			     Comment      string `json:"comment"`
-			     CommentID    uint64 `json:"commentId"`
-			     CommentIDStr string `json:"commentIdStr"`
-			     Created      string `json:"created"`
-			     Entities     []struct {
-				     ID         int           `json:"id"`
-				     IDStr      string        `json:"idStr"`
-				     Link       string        `json:"link"`
-				     Range      []int         `json:"range"`
-				     Title      string        `json:"title"`
-				     Type       string        `json:"type"`
-				     VanityUrls []interface{} `json:"vanityUrls"`
-			     } `json:"entities"`
-			     Flags_platformHi int         `json:"flags|platform_hi"`
-			     Flags_platformLo int         `json:"flags|platform_lo"`
-			     Location         string      `json:"location"`
-			     PostID           int         `json:"postId"`
-			     PostIDStr        string      `json:"postIdStr"`
-			     SourceID         int         `json:"sourceId"`
-			     SourceIDStr      string      `json:"sourceIdStr"`
-			     SourceType       interface{} `json:"sourceType"`
-			     TwitterVerified  int         `json:"twitterVerified"`
-			     User             struct {
-						  AvatarURL         string        `json:"avatarUrl"`
-						  Description       string        `json:"description"`
-						  Location          string        `json:"location"`
-						  Private           int           `json:"private"`
-						  ProfileBackground string        `json:"profileBackground"`
-						  TwitterVerified   int           `json:"twitterVerified"`
-						  UserID            int           `json:"userId"`
-						  UserIDStr         string        `json:"userIdStr"`
-						  Username          string        `json:"username"`
-						  VanityUrls        []interface{} `json:"vanityUrls"`
-						  Verified          int           `json:"verified"`
-					  } `json:"user"`
-			     UserID     int           `json:"userId"`
-			     UserIDStr  string        `json:"userIdStr"`
-			     Username   string        `json:"username"`
-			     VanityUrls []interface{} `json:"vanityUrls"`
-			     Verified   int           `json:"verified"`
-		     } `json:"records"`
-		     Size int `json:"size"`
-	     } `json:"data"`
+		Anchor       int    `json:"anchor"`
+		AnchorStr    string `json:"anchorStr"`
+		BackAnchor   string `json:"backAnchor"`
+		Count        int    `json:"count"`
+		NextPage     int    `json:"nextPage"`
+		PreviousPage int    `json:"previousPage"`
+		Records      []struct {
+			AvatarURL    string `json:"avatarUrl"`
+			Comment      string `json:"comment"`
+			CommentID    uint64 `json:"commentId"`
+			CommentIDStr string `json:"commentIdStr"`
+			Created      string `json:"created"`
+			Entities     []struct {
+				ID         int           `json:"id"`
+				IDStr      string        `json:"idStr"`
+				Link       string        `json:"link"`
+				Range      []int         `json:"range"`
+				Title      string        `json:"title"`
+				Type       string        `json:"type"`
+				VanityUrls []interface{} `json:"vanityUrls"`
+			} `json:"entities"`
+			Flags_platformHi int         `json:"flags|platform_hi"`
+			Flags_platformLo int         `json:"flags|platform_lo"`
+			Location         string      `json:"location"`
+			PostID           int         `json:"postId"`
+			PostIDStr        string      `json:"postIdStr"`
+			SourceID         int         `json:"sourceId"`
+			SourceIDStr      string      `json:"sourceIdStr"`
+			SourceType       interface{} `json:"sourceType"`
+			TwitterVerified  int         `json:"twitterVerified"`
+			User             struct {
+				AvatarURL         string        `json:"avatarUrl"`
+				Description       string        `json:"description"`
+				Location          string        `json:"location"`
+				Private           int           `json:"private"`
+				ProfileBackground string        `json:"profileBackground"`
+				TwitterVerified   int           `json:"twitterVerified"`
+				UserID            int           `json:"userId"`
+				UserIDStr         string        `json:"userIdStr"`
+				Username          string        `json:"username"`
+				VanityUrls        []interface{} `json:"vanityUrls"`
+				Verified          int           `json:"verified"`
+			} `json:"user"`
+			UserID     int           `json:"userId"`
+			UserIDStr  string        `json:"userIdStr"`
+			Username   string        `json:"username"`
+			VanityUrls []interface{} `json:"vanityUrls"`
+			Verified   int           `json:"verified"`
+		} `json:"records"`
+		Size int `json:"size"`
+	} `json:"data"`
 	Error   string `json:"error"`
 	Success bool   `json:"success"`
 }
-

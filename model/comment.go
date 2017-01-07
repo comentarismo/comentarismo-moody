@@ -14,16 +14,16 @@ func (comment *Comment) GetSentiment() string {
 	if comment.Sentiment == "" {
 		//comment.SentimentScores,
 		//comment.LogScores
-		comment.Sentiment, comment.Tag, scores, logScores = GetSentiment(comment.Language,comment.Content)
-		scoresFinal := make(map[string]string,len(scores))
+		comment.Sentiment, comment.Tag, scores, logScores = GetSentiment(comment.Language, comment.Content)
+		scoresFinal := make(map[string]string, len(scores))
 		var keywords []string
-		for k,_ := range  scores {
+		for k := range scores {
 			//log.Println("scores ",k)
-			for k1,v1 := range logScores {
+			for k1, v1 := range logScores {
 				if k == k1 {
 					//log.Println("logScores ",k1,v1)
-					for k2,v2 := range v1 {
-						keywords = appendIfMissing(keywords,k2)
+					for k2, v2 := range v1 {
+						keywords = appendIfMissing(keywords, k2)
 						if v2 > 0 {
 							//log.Println("v2 ",v2)
 							//log.Println("scoresFinal[k2] ",scoresFinal[k2])
@@ -31,7 +31,6 @@ func (comment *Comment) GetSentiment() string {
 							scoresFinal[k2] = k
 						}
 					}
-
 
 				}
 			}
@@ -72,7 +71,7 @@ func (commentList *CommentList) GetKeywords() map[string]int {
 	return GetKeywords(commentList.Comments)
 }
 
-func  (commentList *CommentList) GetSentimentList() map[string][]*Comment{
+func (commentList *CommentList) GetSentimentList() map[string][]*Comment {
 	tags := map[string][]*Comment{}
 
 	for _, comment := range commentList.Comments {

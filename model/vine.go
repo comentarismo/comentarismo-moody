@@ -6,8 +6,8 @@ import (
 	"errors"
 	"net/http"
 	"net/url"
-	"strconv"
 	"os"
+	"strconv"
 )
 
 // Vine Config...

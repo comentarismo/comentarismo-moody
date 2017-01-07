@@ -1,11 +1,11 @@
 package server_test
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/drewolson/testflight"
-	"testing"
-	"log"
 	"comentarismo-moody/server"
+	"github.com/drewolson/testflight"
+	"github.com/stretchr/testify/assert"
+	"log"
+	"testing"
 )
 
 func TestMoodyEsGet(t *testing.T) {
@@ -17,6 +17,6 @@ func TestMoodyEsGet(t *testing.T) {
 
 		log.Println(len(response.Body))
 		assert.Equal(t, 200, response.StatusCode)
-		assert.True(t,len(response.Body) > 0)
+		assert.True(t, len(response.Body) > 0)
 	})
 }

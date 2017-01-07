@@ -1,17 +1,18 @@
 package sentiment
 
 import (
-	"math"
 	"log"
+	"math"
 	"os"
 	"sync"
 )
 
 const defaultProb float64 = 1e-11
+
 var SENTIMENT_DEBUG = os.Getenv("SENTIMENT_DEBUG")
 
 type TokenStore struct {
-	mu  sync.Mutex
+	mu        sync.Mutex
 	tokenizer Tokenizer
 	Store     Store
 }
@@ -42,7 +43,7 @@ func (sh *TokenStore) increment(class, text string, sign int64) (err error) {
 	if len(text) == 0 {
 		panic("invalid text")
 	}
-	return sh.bulkIncrement([]Set{Set{Class: class, Text: text}}, sign)
+	return sh.bulkIncrement([]Set{{Class: class, Text: text}}, sign)
 }
 
 func (sh *TokenStore) bulkIncrement(sets []Set, sign int64) (err error) {
@@ -54,7 +55,7 @@ func (sh *TokenStore) bulkIncrement(sets []Set, sign int64) (err error) {
 	m := make(map[string]map[string]int64)
 	for _, set := range sets {
 		tokens := sh.tokenizer.Tokenize(set.Text)
-		for k, _ := range tokens {
+		for k := range tokens {
 			tokens[k] *= sign
 		}
 		if w, ok := m[set.Class]; ok {
@@ -65,9 +66,9 @@ func (sh *TokenStore) bulkIncrement(sets []Set, sign int64) (err error) {
 			m[set.Class] = tokens
 		}
 	}
-	for class, _ := range m {
+	for class := range m {
 		if err = sh.Store.AddClass(class); err != nil {
-			Debug("bulkIncrement, sh.Store.AddClass, ",err)
+			Debug("bulkIncrement, sh.Store.AddClass, ", err)
 			sh.mu.Unlock()
 			return
 		}
@@ -81,13 +82,13 @@ func (sh *TokenStore) bulkIncrement(sets []Set, sign int64) (err error) {
 
 func getKeys(m map[string]int64) []string {
 	keys := make([]string, 0, len(m))
-	for k, _ := range m {
+	for k := range m {
 		keys = append(keys, k)
 	}
 	return keys
 }
 
-func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs map[string]map[string]int64, err error) {
+func (s *TokenStore) Score(text string) (scores map[string]float64, classFreqs map[string]map[string]int64, err error) {
 	s.mu.Lock()
 
 	// Get total class word counts
@@ -104,14 +105,14 @@ func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs 
 	wordFreqs := s.tokenizer.Tokenize(text)
 	words := getKeys(wordFreqs)
 
-	Debug("sentiment.Score, text ",text)
-	Debug("sentiment.Score, wordFreqs ",wordFreqs)
-	Debug("sentiment.Score, wordFreqs len ",len(wordFreqs))
-	Debug("sentiment.Score, words",words)
-	Debug("sentiment.Score, words len ",len(words))
+	Debug("sentiment.Score, text ", text)
+	Debug("sentiment.Score, wordFreqs ", wordFreqs)
+	Debug("sentiment.Score, wordFreqs len ", len(wordFreqs))
+	Debug("sentiment.Score, words", words)
+	Debug("sentiment.Score, words len ", len(words))
 
-	if( len(wordFreqs) ==0 || len(words) == 0){
-		Debug("Error: We are not able to get wordFreqs or words, in order to prevent wrong number of arguments for 'hmget' command we will return now! ",len(words))
+	if len(wordFreqs) == 0 || len(words) == 0 {
+		Debug("Error: We are not able to get wordFreqs or words, in order to prevent wrong number of arguments for 'hmget' command we will return now! ", len(words))
 		s.mu.Unlock()
 		return
 	}
@@ -122,7 +123,7 @@ func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs 
 		freqs, err2 := s.Store.ClassWordCounts(class, words)
 		if err2 != nil {
 			err = err2
-			Debug("Error: shield.Score after ClassWordCounts -> ",err2)
+			Debug("Error: shield.Score after ClassWordCounts -> ", err2)
 			s.mu.Unlock()
 			return
 		}
@@ -130,7 +131,6 @@ func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs 
 	}
 
 	s.mu.Unlock()
-
 
 	// Calculate log scores for each class
 	logScores := make(map[string]float64, len(classes))
@@ -178,7 +178,7 @@ func (s *TokenStore) Score(text string) (scores  map[string]float64, classFreqs 
 func (s *TokenStore) Classify(text string) (class string, scores map[string]float64, logScores map[string]map[string]int64, err error) {
 	scores, logScores, err = s.Score(text)
 	if err != nil {
-		Debug("Error: shield.Classify-> ",err)
+		Debug("Error: shield.Classify-> ", err)
 		return
 	}
 
@@ -189,7 +189,7 @@ func (s *TokenStore) Classify(text string) (class string, scores map[string]floa
 			class, score = k, v
 		}
 	}
-	Debug("class, score -> ",class, score)
+	Debug("class, score -> ", class, score)
 	return
 }
 
@@ -197,8 +197,8 @@ func (sh *TokenStore) Reset() error {
 	return sh.Store.Reset()
 }
 
-func Debug(v ...interface{}){
-	if SENTIMENT_DEBUG == "true"{
+func Debug(v ...interface{}) {
+	if SENTIMENT_DEBUG == "true" {
 		log.Println(v)
 	}
 }

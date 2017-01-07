@@ -1,10 +1,10 @@
 package sentiment_test
 
 import (
-	"testing"
 	"comentarismo-moody/sentiment"
 	"github.com/stretchr/testify/assert"
 	"log"
+	"testing"
 )
 
 func TestHrTokenize(t *testing.T) {
@@ -15,11 +15,11 @@ func TestHrTokenize(t *testing.T) {
 
 	//map[ak:1 ck:1 vr:1 chw:1 dm:1]
 	testWords := map[string]int64{
-		"ak":1,
-		"ck":1,
-		"vr":1,
-		"chw":1,
-		"dm":1,
+		"ak":  1,
+		"ck":  1,
+		"vr":  1,
+		"chw": 1,
+		"dm":  1,
 	}
 
 	//log.Println(m)

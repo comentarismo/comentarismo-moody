@@ -2,10 +2,10 @@ package model
 
 import (
 	"bytes"
+	"comentarismo-moody/sentiment"
 	"encoding/csv"
 	"log"
 	"os"
-	"comentarismo-moody/sentiment"
 )
 
 var REDIS_HOST = os.Getenv("REDIS_HOST")
@@ -22,7 +22,7 @@ var sentimentInstanceHr sentiment.Sentiment
 var sentimentInstanceRu sentiment.Sentiment
 
 // InitShield instantiates the text classifier engine
-func InitSentiment(lang string) {
+func InitSentiment(lang string) (store sentiment.Store) {
 	if REDIS_HOST == "" {
 		REDIS_HOST = "g7-box"
 	}
@@ -36,13 +36,11 @@ func InitSentiment(lang string) {
 	var tokenizer sentiment.Tokenizer
 	tokenizer = GetTokenizerForLang(lang)
 
-
-
 	if lang == "en" && sentimentInstanceEn == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstanceEn = sentiment.New(
 			tokenizer,
@@ -50,9 +48,9 @@ func InitSentiment(lang string) {
 		)
 	} else if lang == "pt" && sentimentInstancePt == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstancePt = sentiment.New(
 			tokenizer,
@@ -60,9 +58,9 @@ func InitSentiment(lang string) {
 		)
 	} else if lang == "es" && sentimentInstanceEs == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstanceEs = sentiment.New(
 			tokenizer,
@@ -70,9 +68,9 @@ func InitSentiment(lang string) {
 		)
 	} else if lang == "fr" && sentimentInstanceFr == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstanceFr = sentiment.New(
 			tokenizer,
@@ -80,35 +78,37 @@ func InitSentiment(lang string) {
 		)
 	} else if lang == "it" && sentimentInstanceIt == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstanceIt = sentiment.New(
 			tokenizer,
 			store,
 		)
-	}else if lang == "hr" && sentimentInstanceHr == nil {
+	} else if lang == "hr" && sentimentInstanceHr == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstanceHr = sentiment.New(
 			tokenizer,
 			store,
 		)
-	}else if lang == "ru" && sentimentInstanceRu == nil {
+	} else if lang == "ru" && sentimentInstanceRu == nil {
 		//create alert msg
-		log.Println("Starting redis "+lang+" text classifier engine, ",REDIS_HOST+":"+REDIS_PORT)
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
 		//create redis instance
-		store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
 		//start sentiment instance for lang
 		sentimentInstanceRu = sentiment.New(
 			tokenizer,
 			store,
 		)
 	}
+
+	return
 }
 
 func GetTokenizerForLang(lang string) (tokenizer sentiment.Tokenizer) {
@@ -130,7 +130,7 @@ func GetTokenizerForLang(lang string) (tokenizer sentiment.Tokenizer) {
 	return
 }
 
-func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentiment.Sentiment){
+func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentiment.Sentiment) {
 	if lang == "en" {
 		currentSentimentInstance = sentimentInstanceEn
 	} else if lang == "pt" {
@@ -153,7 +153,7 @@ func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentimen
 func LoadTrainingData(lang, path string) (err error) {
 	csvfile, err := os.Open(path)
 	if err != nil {
-		log.Println("Error: LoadTrainingData, ",err)
+		log.Println("Error: LoadTrainingData, ", err)
 		return
 	}
 
@@ -164,13 +164,12 @@ func LoadTrainingData(lang, path string) (err error) {
 
 	csvData, err := reader.ReadAll()
 	if err != nil {
-		log.Println("Error: LoadTrainingData, ",err)
+		log.Println("Error: LoadTrainingData, ", err)
 		return
 	}
 
-	log.Println("LoadTrainingData, Learning for lang "+lang+" started.")
+	log.Println("LoadTrainingData, Learning for lang " + lang + " started.")
 	InitSentiment(lang)
-
 
 	//sets := []shield.Set{}
 	//for _, row := range csvData {
@@ -191,14 +190,14 @@ func LoadTrainingData(lang, path string) (err error) {
 		sentimentInstance.Learn(row[1], row[0])
 	}
 
-	log.Println("LoadTrainingData, Learning for lang "+lang+" complete!")
+	log.Println("LoadTrainingData, Learning for lang " + lang + " complete!")
 
 	return
 }
 
 var sentimentList map[string]string
 
-func init(){
+func init() {
 	sentimentList = make(map[string]string)
 	sentimentList["-5"] = "Terrible!"
 	sentimentList["-4"] = "Sucks"
@@ -213,8 +212,9 @@ func init(){
 	sentimentList["5"] = "Awesome!"
 	sentimentList["6"] = "Unknown"
 }
+
 // GetSentiment classifies a single string of text. Returns the tag it matched.
-func GetSentiment(lang, text string) (sentimentTop,tag string, scores map[string]float64, logScores map[string]map[string]int64,) {
+func GetSentiment(lang, text string) (sentimentTop, tag string, scores map[string]float64, logScores map[string]map[string]int64) {
 	InitSentiment(lang)
 
 	//sanitize the text
@@ -223,13 +223,13 @@ func GetSentiment(lang, text string) (sentimentTop,tag string, scores map[string
 
 	tag, scores, logScores, err := sentimentInstance.Classify(text)
 	if err != nil {
-		log.Println("Error: GetSentiment after Classify ",text,err)
+		log.Println("Error: GetSentiment after Classify ", text, err)
 	} else if tag == "" {
 		tag = "6"
 	}
 
 	if sentimentList[tag] == "" {
-		log.Println("Error: TAG -> ",tag)
+		log.Println("Error: TAG -> ", tag)
 		panic("Sentiment could not be defined, it maybe that the engine has old test data and is impacting the classify algorithm. hint: use FLUSHALL to cleanup database ")
 	}
 	//log.Println("tag: ",tag)

@@ -1,14 +1,14 @@
 package sentiment_test
 
 import (
+	"comentarismo-moody/sentiment"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"log"
 	"os"
 	"strings"
 	"testing"
-	"github.com/stretchr/testify/assert"
-	"comentarismo-moody/sentiment"
 )
 
 var REDIS_HOST = os.Getenv("REDIS_HOST")
@@ -51,7 +51,7 @@ func newSentiment() sentiment.Sentiment {
 	}
 
 	logger := log.New(os.Stderr, "", log.LstdFlags)
-	store := sentiment.NewRedisStore(REDIS_HOST + ":" + REDIS_PORT, REDIS_PASSWORD, logger, "redis")
+	store := sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, logger, "redis")
 	tokenizer := sentiment.NewTokenizer()
 
 	sh := sentiment.New(tokenizer, store)
@@ -83,7 +83,7 @@ func TestLearn(t *testing.T) {
 	for _, v2 := range testData {
 		c := strings.SplitN(v2, " ", 2)
 		k, v := c[0], c[1]
-		clz, _,_, err := sh.Classify(v)
+		clz, _, _, err := sh.Classify(v)
 		if err != nil {
 			t.Fatal(err, "key:", k, "value:", v)
 		}
@@ -97,7 +97,7 @@ func TestLearn(t *testing.T) {
 	// Test hit/miss ratio
 	// TODO: Tweak this, where possible
 	minHitRatio := 0.73
-	hitRatio := (float64(hit) / float64(hit + miss))
+	hitRatio := (float64(hit) / float64(hit+miss))
 	if hitRatio < minHitRatio {
 		t.Fatalf("%d hits, %d misses (expected ratio %.2f, is %.2f)", hit, miss, minHitRatio, hitRatio)
 	}
@@ -116,7 +116,7 @@ func TestDecrement(t *testing.T) {
 	sh.Forget("a", "hello")
 
 	s := sh.(*sentiment.TokenStore)
-	testWords := []string {
+	testWords := []string{
 		"hello",
 		"sunshine",
 		"tree",
@@ -128,23 +128,23 @@ func TestDecrement(t *testing.T) {
 	}
 
 	testWordsAssert := map[string]int64{
-		"hello":0,
-		"sunshine":1,
-		"tree":0,
-		"water":1,
+		"hello":    0,
+		"sunshine": 1,
+		"tree":     0,
+		"water":    1,
 	}
 
-	for testWord,v  := range testWordsAssert {
+	for testWord, v := range testWordsAssert {
 		valid := false
-		for foundWord, v2  := range m {
+		for foundWord, v2 := range m {
 			if testWord == foundWord {
-				log.Println(testWord,v,foundWord,v2)
+				log.Println(testWord, v, foundWord, v2)
 				assert.Equal(t, v, v2)
 				valid = true
 			}
 		}
 		if !valid {
-			t.Fatal("Word expected never found --> ",testWord)
+			t.Fatal("Word expected never found --> ", testWord)
 		}
 	}
 
@@ -155,19 +155,19 @@ func TestDecrement(t *testing.T) {
 
 	m2, err := s.Store.ClassWordCounts("b", testWords)
 	if err != nil {
-		t.Fatal("ClassWordCounts",err)
+		t.Fatal("ClassWordCounts", err)
 	}
 
 	testWordsAssert = map[string]int64{
-		"iamb!":0,
-		"hello":0,
+		"iamb!": 0,
+		"hello": 0,
 	}
 
-	for testWord, v  := range testWordsAssert {
+	for testWord, v := range testWordsAssert {
 		valid := false
-		for foundWord, v2  := range m2 {
+		for foundWord, v2 := range m2 {
 			if testWord == foundWord {
-				log.Println(testWord,v,foundWord,v2)
+				log.Println(testWord, v, foundWord, v2)
 				assert.Equal(t, v, v2)
 
 				valid = true
@@ -175,21 +175,21 @@ func TestDecrement(t *testing.T) {
 			}
 		}
 		if !valid {
-			t.Fatal("Word expected never found --> ",testWord)
+			t.Fatal("Word expected never found --> ", testWord)
 		}
 	}
 
 	wc, err := s.Store.TotalClassWordCounts()
 	if err != nil {
-		t.Fatal("Error: TotalClassWordCounts",err)
+		t.Fatal("Error: TotalClassWordCounts", err)
 	}
 	if x := len(wc); x != 2 {
-		t.Fatal("x := len(wc); x != 2, ",x)
+		t.Fatal("x := len(wc); x != 2, ", x)
 	}
 	if x := wc["a"]; x != 2 {
-		t.Fatal("x := wc['a']; x != 2, ",x)
+		t.Fatal("x := wc['a']; x != 2, ", x)
 	}
 	if x := wc["b"]; x != 1 {
-		t.Fatal("x := wc['b']; x != 1, ",x)
+		t.Fatal("x := wc['b']; x != 1, ", x)
 	}
 }

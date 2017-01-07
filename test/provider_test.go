@@ -5,15 +5,15 @@ import (
 
 	"comentarismo-moody/model"
 	"comentarismo-moody/providers/facebook"
-	"comentarismo-moody/providers/youtube"
 	"comentarismo-moody/providers/faux"
-	"github.com/stretchr/testify/assert"
 	"comentarismo-moody/providers/instagram"
 	"comentarismo-moody/providers/vinevideo"
+	"comentarismo-moody/providers/youtube"
+	"github.com/stretchr/testify/assert"
 )
 
 var (
-	KEY string
+	KEY    string
 	SECRET string
 )
 
@@ -65,7 +65,6 @@ func Test_GetProvider(t *testing.T) {
 	p, err := model.GetProvider(fa.Name())
 	a.NoError(err)
 	a.Equal(p, fa)
-
 
 	fbp, err := model.GetProvider(fb.Name())
 	a.NoError(err)

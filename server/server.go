@@ -2,18 +2,18 @@ package server
 
 import (
 	"fmt"
+	r "github.com/dancannon/gorethink"
+	"github.com/facebookgo/grace/gracehttp"
+	"github.com/gorilla/pat"
+	redis "gopkg.in/redis.v3"
 	"log"
 	"net/http"
 	"os"
-	"github.com/gorilla/pat"
-	"github.com/facebookgo/grace/gracehttp"
-	redis "gopkg.in/redis.v3"
-	r "github.com/dancannon/gorethink"
 
 	"comentarismo-moody/providers/facebook"
-	"comentarismo-moody/providers/youtube"
 	"comentarismo-moody/providers/instagram"
 	"comentarismo-moody/providers/vinevideo"
+	"comentarismo-moody/providers/youtube"
 
 	"comentarismo-moody/model"
 	"strconv"
@@ -21,8 +21,8 @@ import (
 
 var (
 	Session *r.Session
-	router *pat.Router
-	Client *redis.Client
+	router  *pat.Router
+	Client  *redis.Client
 )
 
 var REDIS_HOST = os.Getenv("REDIS_HOST")
@@ -36,7 +36,7 @@ var Port = os.Getenv("PORT")
 
 var RETHINKDB_HOST = os.Getenv("RETHINKDB_HOST")
 var RETHINKDB_PORT = os.Getenv("RETHINKDB_PORT")
-var DB = "";
+var DB = ""
 
 //Table eg: 3001
 var Table = os.Getenv("table")
@@ -55,7 +55,7 @@ func init() {
 		RETHINKDB_PORT = "28015"
 	}
 
-	DB = RETHINKDB_HOST+":"+RETHINKDB_PORT
+	DB = RETHINKDB_HOST + ":" + RETHINKDB_PORT
 
 	if Table == "" {
 		Table = "test"
@@ -72,10 +72,10 @@ func init() {
 	log.Println("Loading Rethinkdb standalone " + DB)
 	var err error
 	Session, err = r.Connect(r.ConnectOpts{
-		Address: DB,
+		Address:  DB,
 		Database: Table,
 		MaxOpen:  maxo,
-		MaxIdle: maxi,
+		MaxIdle:  maxi,
 	})
 	if err != nil {
 		log.Fatalln("Error: Loading Rethinkdb standalone -> ", err)
@@ -97,12 +97,12 @@ func init() {
 	if REDIS_PASSWORD == "" {
 	}
 
-	log.Println("Loading Redis standalone ", REDIS_HOST + ":" + REDIS_PORT)
+	log.Println("Loading Redis standalone ", REDIS_HOST+":"+REDIS_PORT)
 
 	Client = redis.NewClient(&redis.Options{
 		Addr:     REDIS_HOST + ":" + REDIS_PORT,
 		Password: REDIS_PASSWORD, // no password set
-		DB:       0, // use default DB
+		DB:       0,              // use default DB
 	})
 
 	pong, err := Client.Ping().Result()
@@ -127,12 +127,13 @@ func InitProviders() {
 	log.Println("Going to register providers")
 	// Provider is the interface for all the various 3rd party Provider types (YouTube, Facebook, etc...)
 	model.UseProviders(
-		facebook.New(FACEBOOK_KEY, FACEBOOK_SECRET, Host + "/auth/facebook/callback"),
-		youtube.New(YOUTUBE_KEY, YOUTUBE_SECRET, Host + "/auth/youtube/callback"),
-		instagram.New(INSTAGRAM_KEY, INSTAGRAM_SECRET, Host + "/auth/instagram/callback"),
-		vinevideo.New(VINEVIDEO_KEY, VINEVIDEO_SECRET, Host + "/auth/vinevideo/callback"),
+		facebook.New(FACEBOOK_KEY, FACEBOOK_SECRET, Host+"/auth/facebook/callback"),
+		youtube.New(YOUTUBE_KEY, YOUTUBE_SECRET, Host+"/auth/youtube/callback"),
+		instagram.New(INSTAGRAM_KEY, INSTAGRAM_SECRET, Host+"/auth/instagram/callback"),
+		vinevideo.New(VINEVIDEO_KEY, VINEVIDEO_SECRET, Host+"/auth/vinevideo/callback"),
 	)
 }
+
 //StartServer start and listen @server
 func StartServer(Port string) {
 	log.Println("Starting server")
@@ -178,7 +179,7 @@ func TrainEngine() {
 
 		notTrained := LoadTrainingData(lang)
 		if !notTrained {
-			log.Println("Unable to train the engine for lang"+lang+" :| No dougnuts for you today o__0")
+			log.Println("Unable to train the engine for lang" + lang + " :| No dougnuts for you today o__0")
 			continue
 		}
 	}

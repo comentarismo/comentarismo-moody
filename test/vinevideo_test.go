@@ -3,9 +3,9 @@ package test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"comentarismo-moody/providers/facebook"
 	"comentarismo-moody/model"
+	"comentarismo-moody/providers/facebook"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_Vine_New(t *testing.T) {
@@ -14,7 +14,7 @@ func Test_Vine_New(t *testing.T) {
 
 	provider := vineProvider()
 	a.Equal(provider.ClientKey, KEY)
-	a.Equal(provider.Secret,SECRET)
+	a.Equal(provider.Secret, SECRET)
 }
 
 func Test_Vine_Implements_Provider(t *testing.T) {
@@ -23,7 +23,6 @@ func Test_Vine_Implements_Provider(t *testing.T) {
 
 	a.Implements((*model.Provider)(nil), vineProvider())
 }
-
 
 func vineProvider() *facebook.Provider {
 	if KEY == "" {
