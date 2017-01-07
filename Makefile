@@ -7,12 +7,46 @@ default:
 gofmt:
 	scripts/gofmt_perform.sh;
 
+start:
+	godep go build -o comentarismo-moody main.go
+	nohup ./comentarismo-moody &
+
+stop:
+	pkill comentarismo-moody
+
+status:
+	ps -ef |grep comentarismo-moody
+
+log:
+	tail -f ./nohup.out
+
+start-ci:
+	scripts/godep-ci.sh
+	scripts/start.sh
+
+stop-ci:
+	scripts/stop.sh
+
 test:
 	scripts/gotest.sh;
 
-vendor:
+permission:
+	chmod +x scripts/godep-ci.sh;
+	chmod +x scripts/godep-dev.sh;
+	chmod +x scripts/gofmt_perform.sh;
+	chmod +x scripts/gofmt_validate.sh;
+	chmod +x scripts/gotest.sh;
+	chmod +x scripts/start.sh;
+	chmod +x scripts/stop.sh;
+
+vendor-save:
 	@echo "--> Installing build dependencies"
 	@godep save
+
+vendor-restore:
+	@echo "--> Installing build dependencies"
+	@godep save
+
 
 .PHONY: all test
 

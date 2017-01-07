@@ -7,8 +7,8 @@
 #rediscachedisabled=true;
 #GITHUB_KEY=c96ecc15dddd3d58753e
 #GITHUB_SECRET=c35656e12f6120e21dd403a2e7c9fde80defe8d1
-#APP_NAME='comentarismo'
-#WORKDIR='src/comentarismo';
+#APP_NAME='comentarismo-moody'
+#WORKDIR='src/comentarismo-moody';
 #GO_PROCESS='main.go';
 
 #!/usr/bin/env bash
