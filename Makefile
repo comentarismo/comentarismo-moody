@@ -32,7 +32,6 @@ test:
 
 permission:
 	chmod +x scripts/godep-ci.sh;
-	chmod +x scripts/godep-dev.sh;
 	chmod +x scripts/gofmt_perform.sh;
 	chmod +x scripts/gofmt_validate.sh;
 	chmod +x scripts/gotest.sh;
