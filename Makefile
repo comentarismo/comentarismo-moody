@@ -7,7 +7,7 @@ default:
 gofmt:
 	scripts/gofmt_perform.sh;
 
-start:
+start: stop
 	godep go build -o comentarismo-moody main.go
 	nohup ./comentarismo-moody &
 

@@ -10,12 +10,19 @@ import (
 
 	"comentarismo-moody/model"
 	"log"
+	"os"
 	"strconv"
 	"time"
 )
 
+var YOUTUBE_REPORT_MAX_STR = os.Getenv("YOUTUBE_REPORT_MAX")
+var YOUTUBE_REPORT_MAX = 3000
+
 func init() {
 
+	if YOUTUBE_REPORT_MAX_STR == "" {
+		YOUTUBE_REPORT_MAX = 3000
+	}
 }
 
 // New creates a new Youtube provider, and sets up important connection details.
@@ -93,7 +100,8 @@ func (ytv *Provider) GetComments() model.CommentList {
 
 	youtubeService, err := youtube.New(client)
 	if err != nil {
-		panic(err)
+		log.Println("Error: GetComments when -> youtube.New, ", err)
+		return model.CommentList{Comments: comments}
 	}
 
 	pageToken := ""
@@ -101,7 +109,8 @@ func (ytv *Provider) GetComments() model.CommentList {
 		results, err := youtubeService.CommentThreads.List("id,snippet,replies").TextFormat("plainText").MaxResults(100).VideoId(videoID).PageToken(pageToken).Do()
 
 		if err != nil {
-			panic(err)
+			log.Println("Error: GetComments when -> youtubeService.CommentThreads, ", videoID, pageToken, err)
+			return model.CommentList{Comments: comments}
 		}
 
 		if len(results.Items) > 0 {
@@ -133,7 +142,7 @@ func (ytv *Provider) GetComments() model.CommentList {
 		}
 
 		pageToken = results.NextPageToken
-		if pageToken == "" {
+		if pageToken == "" || len(comments) >= YOUTUBE_REPORT_MAX {
 			pageToken = "EOL"
 		}
 	}
@@ -144,7 +153,7 @@ func (ytv *Provider) GetComments() model.CommentList {
 // GetMetadata returns a subset of video information from the YouTube API
 func (ytv *Provider) GetMetadata() bool {
 	videoID := ytv.ID
-	log.Println(videoID)
+	log.Println("GetMetadata, ", videoID)
 
 	client := &http.Client{
 		Transport: &transport.APIKey{Key: ytv.ClientKey},
@@ -152,17 +161,19 @@ func (ytv *Provider) GetMetadata() bool {
 
 	youtubeService, err := youtube.New(client)
 	if err != nil {
-		panic(err)
+		log.Println("Error, GetMetadata, youtube.New(client)", err)
+		return false
 	}
 
 	call := youtubeService.Videos.List("id,snippet,statistics").Id(videoID)
 	resp, err := call.Do()
 	if err != nil {
-		panic(err)
+		log.Println("Error, youtubeService.Videos.List, ", videoID, err)
+		return false
 	}
 
 	if resp == nil {
-		log.Println("karai")
+		log.Println("Error: youtubeService.Videos.List, resp is nil -> ", resp)
 	}
 
 	if len(resp.Items) > 0 {

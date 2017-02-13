@@ -47,11 +47,11 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		cached, err := Client.Get("report_" + postURL).Result()
 		if err == redis.Nil {
-			log.Println("MoodyHandler, report_" + postURL + " does not exists")
+			log.Println("MoodyHandler, report_" + postURL + " does not exists in cache")
 		} else if err != nil {
-			panic(err)
+			log.Println("Error: REDIS Error, MoodyHandler, report_"+postURL+" does not exists in cache -> ", err)
 		} else {
-			log.Println("MoodyHandler, Serve from cache")
+			log.Println("MoodyHandler, Serve from cache -> ", postURL)
 			w.Header().Set("Content-Type", "application/json")
 			w.Write([]byte(cached))
 			return
@@ -62,8 +62,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		/** BEGIN Code to unmarshal the url into a valid ID that we can use in our internal database **/
 		domain, urlParts := parseURL(postURL)
 		if domain == "" || len(urlParts) == 0 {
-			log.Println("MoodyHandler, parseURL -> report_" + postURL + " does not exists ")
-			log.Println("MoodyHandler, 404 not found")
+			log.Println("Error: MoodyHandler, parseURL -> report_" + postURL + " does not exists ")
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
@@ -89,9 +88,16 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 		commentsReport := model.Report{}
 
-		log.Println("MoodyHandler, r.Table(sentiment_report).Get(" + theReport.ID + ")")
+		UUID, err := UUID(postURL)
+		if err != nil {
+			log.Println("MoodyHandler, Could not SetID. report_"+postURL+" UUID failed ", err)
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		log.Println("MoodyHandler, r.Table(sentiment_report).Get(" + UUID + ")")
 		/** BEGIN recover the simple sentiment report **/
-		res, err := r.Table("sentiment_report").Get(theReport.ID).Run(Session)
+		res, err := r.Table("sentiment_report").Get(UUID).Run(Session)
 
 		//if found rethinkdb sentiment_report, query all comments and save cache redis
 		if err != nil || res == nil {
@@ -120,13 +126,13 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		/** BEGIN recover the comments sentiment report **/
 		if valid {
 			log.Println("MoodyHandler, load sentiment_report ok, going to load all comments now, this may break :| ")
-			log.Println("MoodyHandler, r.Table(sentiment).Get(" + theReport.ID + ").Pluck(sentimentlist, topcomments)")
-			res2, err := r.Table("sentiment").Get(theReport.ID).Pluck("sentimentlist", "topcomments").Run(Session)
+			log.Println("MoodyHandler, r.Table(sentiment).Get(" + UUID + ").Pluck(sentimentlist, topcomments)")
+			res2, err := r.Table("sentiment").Get(UUID).Pluck("sentimentlist", "topcomments").Run(Session)
 			if err != nil || res2 == nil {
-				log.Println("MoodyHandler, Could not get report_"+postURL+" does not exists rethinkdb ", err)
+				log.Println("MoodyHandler, err != nil || res2 == nil, sentimentlist, Could not get report_"+postURL+" does not exists rethinkdb ", err)
 				valid = false
 			} else if res2.IsNil() {
-				log.Println("MoodyHandler, Could not SetID. report_"+postURL+" does not exists rethinkdb ", err)
+				log.Println("Error: res2.IsNil(), MoodyHandler, sentimentlist, Could not SetID. report_"+postURL+" does not exists rethinkdb ", err)
 				valid = false
 			} else {
 				defer res2.Close()
@@ -152,7 +158,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 				jsonBytes, err = json.Marshal(&simpleReport)
 
 				if err != nil {
-					log.Println("Error: MoodyHandler, OMG we could not get this SentimentList to work :| No dougnuts for you today o__0 ", err)
+					log.Println("Error: MoodyHandler, Marshal, OMG we could not get this SentimentList to work :| No dougnuts for you today o__0 ", err)
 				} else {
 
 					log.Println("MoodyHandler, loading from rethinkdb went ok :D ")
@@ -165,10 +171,10 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 					return
 				}
 			} else {
-				log.Println("Error: MoodyHandler, OMG we could not get this SentimentList to work :| No dougnuts for you today o__0 ")
+				log.Println("Error: MoodyHandler, len(commentsReport.SentimentList) > 0 && len(commentsReport.TopComments) > 0, OMG we could not get this SentimentList to work :| No dougnuts for you today o__0 ")
 			}
 		} else {
-			log.Println("Error: MoodyHandler, OMG we could not get this validation to work :| No dougnuts for you today o__0 ")
+			log.Println("Error: MoodyHandler, !valid, OMG we could not get this validation to work :| No dougnuts for you today o__0 ")
 		}
 
 	}
@@ -182,8 +188,6 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		jsonBytes, _ := json.Marshal(WebError{Error: "RunReport failed :| -> "})
 		w.Write(jsonBytes)
 		return
-		//return here ???
-
 	}
 	//save to rethinkdb
 
@@ -193,54 +197,78 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 	//create comments report
 	commentsReport := CreateCommentsReport(theReport)
 
-	update := true
+	update_sentiment_report := true
+	update_sentiment := true
 
-	res, err := r.Table("sentiment_report").Get(theReport.ID).Pluck("id").Run(Session)
+	UUID, err := UUID(postURL)
 	if err != nil {
-		update = false
+		log.Println("MoodyHandler, Could not SetID. report_"+postURL+" UUID failed ", err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	res, err := r.Table("sentiment_report").Get(UUID).Pluck("id").Run(Session)
+	if err != nil {
+		update_sentiment_report = false
 	} else if res.IsNil() {
-		update = false
+		update_sentiment_report = false
 	} else {
+		log.Println("MoodyHandler, will update sentiment_report TABLE")
 		defer res.Close()
 		item := model.Report{}
 		res.One(&item)
 		if item.ID == "" {
-			update = false
+			update_sentiment_report = false
 		}
-		log.Println("MoodyHandler, lets update sentiment report")
+	}
+
+	res, err = r.Table("sentiment").Get(UUID).Pluck("id").Run(Session)
+	if err != nil {
+		update_sentiment = false
+	} else if res.IsNil() {
+		update_sentiment = false
+	} else {
+		log.Println("MoodyHandler, will update sentiment TABLE")
+		defer res.Close()
+		item := model.Report{}
+		res.One(&item)
 		if item.ID == "" {
-			update = false
+			update_sentiment = false
 		}
 	}
 
 	//TODO: need to merge comments and classify censored comments
 	// classify if video is now censored at facebook with a flag and never remove comments from our database in that case
 
-	if update {
-
-		_, err = r.Table("sentiment_report").Get(theReport.ID).Update(simpleReport).RunWrite(Session)
+	if update_sentiment_report {
+		simpleReport.ID = UUID
+		log.Println("MoodyHandler, update report into sentiment_report TABLE")
+		_, err = r.Table("sentiment_report").Get(UUID).Update(simpleReport).RunWrite(Session)
 		if err != nil {
-			log.Println("ERROR: MoodyHandler, UPDATE sentiment_report TABLE JUST FAILED :|")
+			log.Println("ERROR: MoodyHandler, UPDATE sentiment_report TABLE JUST FAILED :|", err)
 		}
-
-		_, err = r.Table("sentiment").Get(theReport.ID).Update(commentsReport).RunWrite(Session)
-		if err != nil {
-			log.Println("ERROR: MoodyHandler, UPDATE sentiment TABLE JUST FAILED :|")
-		}
-
 	} else {
-
+		simpleReport.ID = UUID
 		log.Println("MoodyHandler, save first time report into sentiment_report")
-
 		_, err = r.Table("sentiment_report").Insert(simpleReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
 		if err != nil {
-			log.Println("ERROR: MoodyHandler, INSERT sentiment_report TABLE JUST FAILED :|")
+			log.Println("ERROR: MoodyHandler, INSERT sentiment_report TABLE JUST FAILED :|", err)
 		}
+	}
 
+	if update_sentiment {
+		commentsReport.ID = UUID
+		log.Println("MoodyHandler, update report into sentiment TABLE")
+		_, err = r.Table("sentiment").Get(UUID).Update(commentsReport).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: MoodyHandler, UPDATE sentiment TABLE JUST FAILED :|", err)
+		}
+	} else {
+		commentsReport.ID = UUID
 		log.Println("MoodyHandler, save first time report into sentiment")
 		_, err = r.Table("sentiment").Insert(commentsReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
 		if err != nil {
-			log.Println("ERROR: MoodyHandler, INSERT sentiment TABLE JUST FAILED :|")
+			log.Println("ERROR: MoodyHandler, INSERT sentiment TABLE JUST FAILED :|", err)
 		}
 	}
 
