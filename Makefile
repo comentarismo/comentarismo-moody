@@ -12,7 +12,7 @@ start: stop
 	nohup ./comentarismo-moody &
 
 stop:
-	pkill comentarismo-moody
+	pkill comentarismo-moody | true
 
 status:
 	ps -ef |grep comentarismo-moody
