@@ -2,12 +2,11 @@ package model
 
 import "time"
 
-type Report struct {
+type YoutubeReport struct {
 	ID                     string                `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
 	URL                    string                `schema:"url" gorethink:"url,omitempty" json:"url,omitempty"`
 	Type                   string                `schema:"type" gorethink:"type,omitempty" json:"type,omitempty"`
 	Title                  string                `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	Date                   time.Time             `schema:"date" gorethink:"date,omitempty" json:"date,omitempty"`
 	PublishedAt            string                `schema:"publishedat" gorethink:"publishedat,omitempty" json:"publishedat,omitempty"`
 	TotalComments          uint64                `schema:"totalcomments" gorethink:"totalcomments,omitempty" json:"totalcomments,omitempty"`
 	CollectedComments      uint64                `schema:"collectedcomments" gorethink:"collectedcomments,omitempty" json:"collectedcomments,omitempty"`
@@ -16,18 +15,8 @@ type Report struct {
 	Keywords               map[string]int        `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
 	Sentiment              []SentimentTag        `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
 	SentimentList          map[string][]*Comment `schema:"sentimentlist" gorethink:"sentimentlist,omitempty" json:"sentimentlist,omitempty"`
-	Metadata               Provider              `schema:"metadata" gorethink:"metadata,omitempty" json:"metadata,omitempty"`
-	TopComments            []*Comment            `schema:"topcomments" gorethink:"topcomments,omitempty" json:"topcomments,omitempty"`
-	UpdatedAt              time.Time             `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
+	Metadata               Metadata              `schema:"metadata" gorethink:"metadata,omitempty" json:"metadata,omitempty"`
 	//SampleComments         []*Comment `schema:"samplecomments" gorethink:"samplecomments,omitempty" json:"samplecomments,omitempty"`
-}
-
-// SentimentTag is a list entry of the tag and the percent of comments that were classified with that tag.
-type SentimentTag struct {
-	Name    string  `schema:"name" gorethink:"url,omitempty" json:"name,omitempty"`
-	Percent float64 `schema:"percent" gorethink:"percent,omitempty" json:"percent,omitempty"`
-}
-
-type CommentList struct {
-	Comments []*Comment
+	TopComments []*Comment `schema:"topcomments" gorethink:"topcomments,omitempty" json:"topcomments,omitempty"`
+	UpdatedAt   time.Time  `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
 }

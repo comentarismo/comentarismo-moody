@@ -15,6 +15,7 @@ type Provider interface {
 	//UnmarshalSession(string) (Session, error)
 	//FetchUser(Session) (User, error)
 	GetComments() CommentList
+	GetCommentsChan(chan *Comment, chan int)
 	GetMetadata() bool
 	GetPageID() Provider
 	Debug(bool)

@@ -150,6 +150,81 @@ func (ytv *Provider) GetComments() model.CommentList {
 	return model.CommentList{Comments: comments}
 }
 
+// YouTubeGetCommentsV2 pulls the comments for a given YouTube video
+func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	videoID := ytv.ID
+	log.Println("videoID,", videoID)
+
+	client := &http.Client{
+		Transport: &transport.APIKey{Key: ytv.ClientKey},
+	}
+
+	youtubeService, err := youtube.New(client)
+	if err != nil {
+		log.Println("Error: GetComments when -> youtube.New, ", err)
+		return
+	}
+
+	pageToken := ""
+	//defer resultsChannel.Close()
+	var lencomments int
+	for pageToken != "EOL" {
+		results, err := youtubeService.CommentThreads.List("id,snippet,replies").TextFormat("plainText").MaxResults(100).VideoId(videoID).PageToken(pageToken).Do()
+
+		if err != nil {
+			log.Println("Error: GetComments when -> youtubeService.CommentThreads, ", videoID, pageToken, err)
+			return
+		}
+		pageToken = results.NextPageToken
+
+		if len(results.Items) > 0 {
+			for _, item := range results.Items {
+
+				tempComments := []*youtube.Comment{}
+				tempComments = append(tempComments, item.Snippet.TopLevelComment)
+
+				if item.Replies != nil {
+					for _, reply := range item.Replies.Comments {
+						tempComments = append(tempComments, reply)
+					}
+				}
+
+				for _, c := range tempComments {
+					thisComment := &model.Comment{
+						ID:                         c.Id,
+						Published:                  c.Snippet.PublishedAt,
+						Title:                      "",
+						Content:                    c.Snippet.TextDisplay,
+						AuthorName:                 c.Snippet.AuthorDisplayName,
+						Likes:                      c.Snippet.LikeCount,
+						AuthorChannelUrl:           c.Snippet.AuthorChannelUrl,
+						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
+						AuthorProfileImageUrl:      c.Snippet.AuthorProfileImageUrl,
+						ModerationStatus:           c.Snippet.ModerationStatus,
+						Language:                   ytv.Language,
+						Operator:                   "YouTubeVideo",
+					}
+
+					resultsChannel <- thisComment
+					countChannel <- 1
+					lencomments = lencomments + 1
+
+				}
+			}
+		}
+
+		if pageToken == "" || lencomments >= YOUTUBE_REPORT_MAX {
+			pageToken = "EOL"
+		}
+	}
+
+	countChannel <- 0
+
+	log.Println("Finished processing GetCommentsChan")
+
+	return
+}
+
 // GetMetadata returns a subset of video information from the YouTube API
 func (ytv *Provider) GetMetadata() bool {
 	videoID := ytv.ID

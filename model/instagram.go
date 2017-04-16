@@ -63,7 +63,7 @@ func (ig *InstagramPic) GetMetadata() bool {
 	return false
 }
 
-func (ig InstagramPic) GetComments() CommentList {
+func (ig InstagramPic) GetComments(chan Comment, chan int) CommentList {
 	if instagramApi == nil {
 		instagramApi = instagram.New(InstagramKey, "")
 	}
@@ -87,4 +87,30 @@ func (ig InstagramPic) GetComments() CommentList {
 	}
 
 	return CommentList{Comments: comments}
+}
+
+func (ig InstagramPic) GetCommentsChan(resultsChannel chan *Comment, countChannel chan int) {
+	if instagramApi == nil {
+		instagramApi = instagram.New(InstagramKey, "")
+	}
+
+	var resp *instagram.CommentsResponse
+	var comments = []*Comment{}
+
+	resp, _ = instagramApi.GetMediaComments(ig.ID, url.Values{})
+
+	if resp != new(instagram.CommentsResponse) {
+		for _, entry := range resp.Comments {
+			thisComment := &Comment{
+				ID:         entry.Id,
+				Published:  string(entry.CreatedTime),
+				Content:    entry.Text,
+				AuthorName: entry.From.Username,
+			}
+
+			comments = append(comments, thisComment)
+		}
+	}
+
+	return
 }

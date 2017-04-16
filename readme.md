@@ -1,6 +1,6 @@
 # Comentarismo Moody
 
-## This is the Comentarismo Sentiment Analysis tool that get the "feeling" form any text given the language is supported by the engine.
+## This is the Comentarismo Sentiment Analysis tool that get the "feeling" form from any text given the language is supported by the engine.
 
 # Tokenizers
 * Tokenizers are responsible for finding the Stop Words and breaking the text into pieces that can then be classified
@@ -32,6 +32,11 @@ $ yum --enablerepo=remi,remi-test install redis
 Usage: /etc/init.d/redis {start|stop|status|restart|condrestart|try-restart}
 ```
 
+# Dependencies
+Run `make go get`
+
+# RethinkDB Indexes
+Run `make rethinkdb`
 
 # Run server
 ```

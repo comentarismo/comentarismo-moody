@@ -128,6 +128,44 @@ func (this *Provider) GetComments() model.CommentList {
 	return model.CommentList{Comments: comments}
 }
 
+func (this *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	this.GetPageID()
+
+	var comments = []*model.Comment{}
+	after := ""
+
+	for {
+		var respTyped postCommentListResp
+		resp, _ := fbRequest("/"+this.PageID+"_"+this.ID+"/comments?limit=100&order=reverse_chronological&after="+after, this.ClientKey, this.Secret)
+
+		defer resp.Body.Close()
+
+		decoder := json.NewDecoder(resp.Body)
+		err := decoder.Decode(&respTyped)
+
+		if err == nil {
+			for _, entry := range respTyped.Data {
+				thisComment := &model.Comment{
+					ID:         entry.ID,
+					Published:  entry.CreatedOn,
+					Content:    entry.Message,
+					AuthorName: entry.From.Name,
+				}
+
+				comments = append(comments, thisComment)
+			}
+
+			if respTyped.Pagination.Cursors.After != "" {
+				after = respTyped.Pagination.Cursors.After
+			} else {
+				break
+			}
+		}
+	}
+
+	return
+}
+
 func (this *Provider) GetPageID() model.Provider {
 	if this.PageID != "" {
 		return this

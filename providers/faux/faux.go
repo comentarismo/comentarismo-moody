@@ -26,6 +26,11 @@ func (p Provider) GetComments() model.CommentList {
 	return model.CommentList{}
 }
 
+// Debug is used only for testing.
+func (p Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	return
+}
+
 func (p Provider) SetID([]string) error {
 	return nil
 }

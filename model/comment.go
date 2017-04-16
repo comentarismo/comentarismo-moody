@@ -4,9 +4,51 @@ import (
 	"math"
 	"math/rand"
 	"sort"
+	"time"
 )
 
+// Comment is the distilled comment dataset
+type Comment struct {
+	ID              string            `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Published       string            `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
+	Title           string            `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	Content         string            `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
+	AuthorName      string            `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
+	Sentiment       string            `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	Tag             string            `schema:"tag" gorethink:"tag,omitempty" json:"tag,omitempty"`
+	SentimentScores map[string]string `schema:"sentimentscores" gorethink:"sentimentscores,omitempty" json:"sentimentscores,omitempty"`
+	Keywords        []string          `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
+	Likes           int64             `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
+	Language        string            `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
+	Operator        string            `schema:"operator" gorethink:"operator,omitempty" json:"operator,omitempty"`
+	UpdatedAt       time.Time         `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
+	UUID            string            `schema:"uuid" gorethink:"uuid" json:"uuid"`
+
+	// AuthorChannelUrl: Link to the author's YouTube channel, if any.
+	AuthorChannelUrl string `schema:"authorChannelUrl" gorethink:"authorChannelUrl,omitempty" json:"authorChannelUrl,omitempty"`
+
+	// AuthorDisplayName: The name of the user who posted the comment.
+	AuthorDisplayName string `schema:"authorDisplayName" gorethink:"authorDisplayName,omitempty" json:"authorDisplayName,omitempty"`
+
+	// AuthorGoogleplusProfileUrl: Link to the author's Google+ profile, if any.
+	AuthorGoogleplusProfileUrl string `schema:"authorGoogleplusProfileUrl" gorethink:"authorGoogleplusProfileUrl,omitempty" json:"authorGoogleplusProfileUrl,omitempty"`
+
+	// AuthorProfileImageUrl: The URL for the avatar of the user who posted the comment.
+	AuthorProfileImageUrl string `schema:"authorProfileImageUrl" gorethink:"authorProfileImageUrl,omitempty" json:"authorProfileImageUrl,omitempty"`
+
+	// ModerationStatus: The comment's moderation status. Will not be set if
+	// the comments were requested through the id filter.
+	//
+	// Possible values:
+	//   "heldForReview"
+	//   "likelySpam"
+	//   "published"
+	//   "rejected"
+	ModerationStatus string `schema:"moderationStatus" gorethink:"moderationStatus,omitempty" json:"moderationStatus,omitempty"`
+}
+
 // Comment methods
+//
 func (comment *Comment) GetSentiment() string {
 	var scores map[string]float64
 	var logScores map[string]map[string]int64
@@ -76,7 +118,11 @@ func (commentList *CommentList) GetSentimentList() map[string][]*Comment {
 
 	for _, comment := range commentList.Comments {
 		tag := comment.GetSentiment()
-		newComments := append(tags[tag], comment)
+		//cleanup object leaving only the ID to be persisted
+		c := &Comment{
+			ID: comment.ID,
+		}
+		newComments := append(tags[tag], c)
 		tags[tag] = newComments
 	}
 	return tags

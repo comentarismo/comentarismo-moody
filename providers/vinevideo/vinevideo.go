@@ -173,6 +173,56 @@ func (this *Provider) GetComments() model.CommentList {
 	return model.CommentList{Comments: comments}
 }
 
+func (this *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	var comments = []*model.Comment{}
+
+	if InitVine(this.ClientKey, this.Secret) {
+		anchor := ""
+		page := 1
+
+		for {
+			var respJson VineCommentResp
+			resp, err := vineSession.VineRequest("/posts/" + this.ID + "/comments?size=100&page=" + strconv.Itoa(page) + "&anchor=" + anchor)
+
+			if err != nil {
+				break
+			}
+
+			defer resp.Body.Close()
+
+			decoder := json.NewDecoder(resp.Body)
+			err = decoder.Decode(&respJson)
+
+			if err == nil {
+				for _, entry := range respJson.Data.Records {
+					thisComment := &model.Comment{
+						ID:         strconv.FormatUint(entry.CommentID, 10),
+						Published:  entry.Created,
+						Content:    entry.Comment,
+						AuthorName: entry.Username,
+					}
+
+					comments = append(comments, thisComment)
+				}
+
+				if respJson.Data.Count <= len(comments) {
+					break
+				} else {
+					if respJson.Data.AnchorStr != "" {
+						anchor = respJson.Data.AnchorStr
+					} else {
+						break
+					}
+
+					page = page + 1
+				}
+			}
+		}
+	}
+
+	return
+}
+
 func (this *Provider) GetPageID() model.Provider {
 	return this
 }
