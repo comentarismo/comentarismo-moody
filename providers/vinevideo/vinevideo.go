@@ -66,6 +66,11 @@ func (p *Provider) Name() string {
 	return "vinevideo"
 }
 
+// Name is the name used to retrieve this report type later.
+func (p *Provider) GetType() string {
+	return "VineVideo"
+}
+
 //	thePost = &model.VineVideo{ShortCode: urlParts[len(urlParts)-1]}
 func (p *Provider) SetID(urlParts []string) error {
 	p.ID = urlParts[len(urlParts)-1]
@@ -78,7 +83,8 @@ func (p *Provider) SetLang(lang string) error {
 }
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
-	theReport.Type = "VineVideo"
+	theReport.Type = p.GetType()
+	theReport.Operator = p.Name()
 	theReport.ID = p.ID
 	theReport.PublishedAt = p.PublishedAt
 	theReport.TotalComments = p.TotalComments
@@ -146,10 +152,12 @@ func (this *Provider) GetComments() model.CommentList {
 			if err == nil {
 				for _, entry := range respJson.Data.Records {
 					thisComment := &model.Comment{
-						ID:         strconv.FormatUint(entry.CommentID, 10),
-						Published:  entry.Created,
-						Content:    entry.Comment,
-						AuthorName: entry.Username,
+						ID:        strconv.FormatUint(entry.CommentID, 10),
+						Published: entry.Created,
+						Comment:   entry.Comment,
+						Nick:      entry.Username,
+						Operator:  this.Name(),
+						Type:      this.GetType(),
 					}
 
 					comments = append(comments, thisComment)
@@ -171,6 +179,58 @@ func (this *Provider) GetComments() model.CommentList {
 	}
 
 	return model.CommentList{Comments: comments}
+}
+
+func (this *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	var comments = []*model.Comment{}
+
+	if InitVine(this.ClientKey, this.Secret) {
+		anchor := ""
+		page := 1
+
+		for {
+			var respJson VineCommentResp
+			resp, err := vineSession.VineRequest("/posts/" + this.ID + "/comments?size=100&page=" + strconv.Itoa(page) + "&anchor=" + anchor)
+
+			if err != nil {
+				break
+			}
+
+			defer resp.Body.Close()
+
+			decoder := json.NewDecoder(resp.Body)
+			err = decoder.Decode(&respJson)
+
+			if err == nil {
+				for _, entry := range respJson.Data.Records {
+					thisComment := &model.Comment{
+						ID:        strconv.FormatUint(entry.CommentID, 10),
+						Published: entry.Created,
+						Comment:   entry.Comment,
+						Nick:      entry.Username,
+						Operator:  this.Name(),
+						Type:      this.GetType(),
+					}
+
+					comments = append(comments, thisComment)
+				}
+
+				if respJson.Data.Count <= len(comments) {
+					break
+				} else {
+					if respJson.Data.AnchorStr != "" {
+						anchor = respJson.Data.AnchorStr
+					} else {
+						break
+					}
+
+					page = page + 1
+				}
+			}
+		}
+	}
+
+	return
 }
 
 func (this *Provider) GetPageID() model.Provider {

@@ -58,6 +58,11 @@ func (p *Provider) Name() string {
 	return "youtube"
 }
 
+// Name is the name used to retrieve this report type later.
+func (p *Provider) GetType() string {
+	return "YouTubeVideo"
+}
+
 func (p *Provider) SetID(urlParts []string) error {
 	i := len(urlParts) - 1
 	p.ID = urlParts[i]
@@ -70,7 +75,7 @@ func (p *Provider) SetLang(lang string) error {
 }
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
-	theReport.Type = "YouTubeVideo"
+	theReport.Operator = p.GetType()
 	theReport.ID = p.ID
 	theReport.Title = p.Title
 	theReport.PublishedAt = p.PublishedAt
@@ -127,13 +132,19 @@ func (ytv *Provider) GetComments() model.CommentList {
 
 				for _, c := range tempComments {
 					thisComment := &model.Comment{
-						ID:         c.Id,
-						Published:  c.Snippet.PublishedAt,
-						Title:      "",
-						Content:    c.Snippet.TextDisplay,
-						AuthorName: c.Snippet.AuthorDisplayName,
-						Likes:      c.Snippet.LikeCount,
-						Language:   ytv.Language,
+						ID:                         c.Id,
+						Published:                  c.Snippet.PublishedAt,
+						Comment:                    c.Snippet.TextDisplay,
+						Nick:                       c.Snippet.AuthorDisplayName,
+						NickIcon:                   c.Snippet.AuthorProfileImageUrl,
+						Likes:                      c.Snippet.LikeCount,
+						ProfileURL:                 c.Snippet.AuthorChannelUrl,
+						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
+						ModerationStatus:           c.Snippet.ModerationStatus,
+						ChannelId:                  c.Snippet.ChannelId,
+						Language:                   ytv.Language,
+						Operator:                   ytv.Name(),
+						Type:                       ytv.GetType(),
 					}
 
 					comments = append(comments, thisComment)
@@ -148,6 +159,82 @@ func (ytv *Provider) GetComments() model.CommentList {
 	}
 
 	return model.CommentList{Comments: comments}
+}
+
+// YouTubeGetCommentsV2 pulls the comments for a given YouTube video
+func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	videoID := ytv.ID
+	log.Println("videoID,", videoID)
+
+	client := &http.Client{
+		Transport: &transport.APIKey{Key: ytv.ClientKey},
+	}
+
+	youtubeService, err := youtube.New(client)
+	if err != nil {
+		log.Println("Error: GetComments when -> youtube.New, ", err)
+		return
+	}
+
+	pageToken := ""
+	//defer resultsChannel.Close()
+	var lencomments int
+	for pageToken != "EOL" {
+		results, err := youtubeService.CommentThreads.List("id,snippet,replies").TextFormat("plainText").MaxResults(100).VideoId(videoID).PageToken(pageToken).Do()
+
+		if err != nil {
+			log.Println("Error: GetComments when -> youtubeService.CommentThreads, ", videoID, pageToken, err)
+			return
+		}
+		pageToken = results.NextPageToken
+
+		if len(results.Items) > 0 {
+			for _, item := range results.Items {
+
+				tempComments := []*youtube.Comment{}
+				tempComments = append(tempComments, item.Snippet.TopLevelComment)
+
+				if item.Replies != nil {
+					for _, reply := range item.Replies.Comments {
+						tempComments = append(tempComments, reply)
+					}
+				}
+
+				for _, c := range tempComments {
+					thisComment := &model.Comment{
+						ID:         c.Id,
+						Published:  c.Snippet.PublishedAt,
+						Comment:    c.Snippet.TextDisplay,
+						Nick:       c.Snippet.AuthorDisplayName,
+						NickIcon:   c.Snippet.AuthorProfileImageUrl,
+						ProfileURL: c.Snippet.AuthorChannelUrl,
+						Likes:      c.Snippet.LikeCount,
+						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
+						ModerationStatus:           c.Snippet.ModerationStatus,
+						ChannelId:                  c.Snippet.ChannelId,
+						Language:                   ytv.Language,
+						Operator:                   ytv.Name(),
+						Type:                       ytv.GetType(),
+					}
+
+					resultsChannel <- thisComment
+					countChannel <- 1
+					lencomments = lencomments + 1
+
+				}
+			}
+		}
+
+		if pageToken == "" || lencomments >= YOUTUBE_REPORT_MAX {
+			pageToken = "EOL"
+		}
+	}
+
+	countChannel <- 0
+
+	log.Println("Finished processing GetCommentsChan")
+
+	return
 }
 
 // GetMetadata returns a subset of video information from the YouTube API

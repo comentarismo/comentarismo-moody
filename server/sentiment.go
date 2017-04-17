@@ -4,6 +4,7 @@ import (
 	"comentarismo-moody/model"
 	"encoding/json"
 	"errors"
+	r "github.com/dancannon/gorethink"
 	"log"
 	"math"
 	"os"
@@ -221,17 +222,68 @@ func RunReport(postURL, lang string) (model.Report, error) {
 	}
 
 	// Fetch the comments
-	comments := provider.GetComments()
+	resultsChannel := make(chan *model.Comment)
+	countChannel := make(chan int)
+	var totalCount int
+	var finished bool
+	ct := 1
+	go provider.GetCommentsChan(resultsChannel, countChannel)
+	go func() {
+		for range time.Tick(time.Minute * time.Duration(ct)) {
+			log.Printf("Total comments processed last %d minute is %d, per sec: %d", ct, totalCount, totalCount/(ct*60))
+			totalCount = 0
+			if finished {
+				break
+			}
+		}
+	}()
+	go func() {
+		for c := range countChannel {
+			if c == 0 {
+				finished = true
+				break
+			}
+			totalCount += c
+		}
+	}()
+
+	totalProcessed := 0
+	var commentsList model.CommentList
+	_uuid, err := UUID(postURL)
+
+	if err != nil {
+		log.Println("Error: RunReport, UUID, ", err)
+	}
+
+	for comment := range resultsChannel {
+		totalProcessed += 1
+
+		comment.GetSentiment()
+
+		//save to DB
+		comment.UUID = _uuid
+		//log.Println("RunReport, save comment into database")
+		_, err = r.Table("commentaries_sentiment_report").Insert(comment, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: RunReport, INSERT sentiment TABLE JUST FAILED :|", err)
+		}
+
+		commentsList.Comments = append(commentsList.Comments, comment)
+
+		if finished {
+			break
+		}
+	}
 
 	//// If we don't get an comments back, wait for the metadata call to return and send an error.
-	if comments.IsEmpty() {
+	if commentsList.IsEmpty() {
 		log.Println("No comments found for this post.")
 		return model.Report{}, errors.New("No comments found for this post.")
 	}
-	provider.SetReport(&theReport, comments)
+	provider.SetReport(&theReport, commentsList)
 
 	// Set comments returned
-	theReport.CollectedComments = comments.GetTotal()
+	theReport.CollectedComments = commentsList.GetTotal()
 	theReport.CommentCoveragePercent = math.Ceil((float64(theReport.CollectedComments) / float64(theReport.TotalComments)) * float64(100))
 
 	//set date
@@ -241,24 +293,30 @@ func RunReport(postURL, lang string) (model.Report, error) {
 
 	// Set Keywords
 	go func() {
-		theReport.Keywords = comments.GetKeywords()
+		theReport.Keywords = commentsList.GetKeywords()
 		done <- true
 	}()
 
 	// Sentiment Tagging
 	go func() {
-		theReport.Sentiment = comments.GetSentimentSummary()
+		theReport.Sentiment = commentsList.GetSentimentSummary()
+		done <- true
+	}()
+
+	// Sentiment Scores
+	go func() {
+		theReport.SentimentScores = commentsList.GetSentimentScores()
 		done <- true
 	}()
 
 	// Wait for everything to finish up
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 3; i++ {
 		<-done
 	}
 
 	// Pull a few sample comments
 	//theReport.SampleComments = comments.GetRandom(3)
-	theReport.SentimentList = comments.GetSentimentList()
+	theReport.SentimentList = commentsList.GetSentimentList()
 
 	// Calculate Average Daily Comments
 	timestamp, _ := strconv.ParseInt(theReport.PublishedAt, 10, 64)

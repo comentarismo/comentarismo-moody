@@ -13,7 +13,7 @@ func GetKeywords(comments []*Comment) map[string]int {
 	idx := make(map[string]int)
 
 	for _, comment := range comments {
-		words := getWords(comment.Content)
+		words := getWords(comment.Comment)
 
 		for _, word := range words {
 			if !isStopWord(word) {

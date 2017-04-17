@@ -105,10 +105,10 @@ func (this VineVideo) GetComments() CommentList {
 			if err == nil {
 				for _, entry := range respJson.Data.Records {
 					thisComment := &Comment{
-						ID:         strconv.FormatUint(entry.CommentID, 10),
-						Published:  entry.Created,
-						Content:    entry.Comment,
-						AuthorName: entry.Username,
+						ID:        strconv.FormatUint(entry.CommentID, 10),
+						Published: entry.Created,
+						Comment:   entry.Comment,
+						Nick:      entry.Username,
 					}
 
 					comments = append(comments, thisComment)
@@ -130,6 +130,56 @@ func (this VineVideo) GetComments() CommentList {
 	}
 
 	return CommentList{Comments: comments}
+}
+
+func (this VineVideo) GetCommentsChan(resultsChannel chan *Comment, countChannel chan int) {
+	var comments = []*Comment{}
+
+	if InitVine() {
+		anchor := ""
+		page := 1
+
+		for {
+			var respJson VineCommentResp
+			resp, err := vineSession.vineRequest("/posts/" + this.ID + "/comments?size=100&page=" + strconv.Itoa(page) + "&anchor=" + anchor)
+
+			if err != nil {
+				break
+			}
+
+			defer resp.Body.Close()
+
+			decoder := json.NewDecoder(resp.Body)
+			err = decoder.Decode(&respJson)
+
+			if err == nil {
+				for _, entry := range respJson.Data.Records {
+					thisComment := &Comment{
+						ID:        strconv.FormatUint(entry.CommentID, 10),
+						Published: entry.Created,
+						Comment:   entry.Comment,
+						Nick:      entry.Username,
+					}
+
+					comments = append(comments, thisComment)
+				}
+
+				if respJson.Data.Count <= len(comments) {
+					break
+				} else {
+					if respJson.Data.AnchorStr != "" {
+						anchor = respJson.Data.AnchorStr
+					} else {
+						break
+					}
+
+					page = page + 1
+				}
+			}
+		}
+	}
+
+	return
 }
 
 func authVine(username string, password string) (*VineSession, error) {

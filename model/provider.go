@@ -8,6 +8,7 @@ import (
 // e.g. Comentarismo, Facebook, Twitter, Youtube, etc...
 type Provider interface {
 	Name() string
+	GetType() string
 	SetID([]string) error
 	SetLang(lang string) error
 	SetReport(*Report, CommentList)
@@ -15,6 +16,7 @@ type Provider interface {
 	//UnmarshalSession(string) (Session, error)
 	//FetchUser(Session) (User, error)
 	GetComments() CommentList
+	GetCommentsChan(chan *Comment, chan int)
 	GetMetadata() bool
 	GetPageID() Provider
 	Debug(bool)

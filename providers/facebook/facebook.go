@@ -31,6 +31,7 @@ type Provider struct {
 	PageName      string
 	PageID        string
 	Type          string // type
+	Operator      string // type
 	Caption       string // message / description
 	TotalLikes    uint64 // likes.summary.total_count
 	TotalComments uint64 // comments.summary.total_count
@@ -41,6 +42,11 @@ type Provider struct {
 // Name is the name used to retrieve this provider later.
 func (p *Provider) Name() string {
 	return "facebook"
+}
+
+// Name is the name used to retrieve this report type later.
+func (p *Provider) GetType() string {
+	return ""
 }
 
 func (p *Provider) SetID(urlParts []string) error {
@@ -55,7 +61,7 @@ func (p *Provider) SetLang(lang string) error {
 }
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
-	theReport.Type = "FacebookPost"
+	theReport.Type = p.GetType()
 	theReport.ID = p.ID
 	theReport.PublishedAt = p.PublishedAt
 	theReport.TotalComments = p.TotalComments
@@ -107,10 +113,12 @@ func (this *Provider) GetComments() model.CommentList {
 		if err == nil {
 			for _, entry := range respTyped.Data {
 				thisComment := &model.Comment{
-					ID:         entry.ID,
-					Published:  entry.CreatedOn,
-					Content:    entry.Message,
-					AuthorName: entry.From.Name,
+					ID:        entry.ID,
+					Published: entry.CreatedOn,
+					Comment:   entry.Message,
+					Nick:      entry.From.Name,
+					Operator:  this.Name(),
+					Type:      this.GetType(),
 				}
 
 				comments = append(comments, thisComment)
@@ -125,6 +133,46 @@ func (this *Provider) GetComments() model.CommentList {
 	}
 
 	return model.CommentList{Comments: comments}
+}
+
+func (this *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countChannel chan int) {
+	this.GetPageID()
+
+	var comments = []*model.Comment{}
+	after := ""
+
+	for {
+		var respTyped postCommentListResp
+		resp, _ := fbRequest("/"+this.PageID+"_"+this.ID+"/comments?limit=100&order=reverse_chronological&after="+after, this.ClientKey, this.Secret)
+
+		defer resp.Body.Close()
+
+		decoder := json.NewDecoder(resp.Body)
+		err := decoder.Decode(&respTyped)
+
+		if err == nil {
+			for _, entry := range respTyped.Data {
+				thisComment := &model.Comment{
+					ID:        entry.ID,
+					Published: entry.CreatedOn,
+					Comment:   entry.Message,
+					Nick:      entry.From.Name,
+					Operator:  this.Name(),
+					Type:      this.GetType(),
+				}
+
+				comments = append(comments, thisComment)
+			}
+
+			if respTyped.Pagination.Cursors.After != "" {
+				after = respTyped.Pagination.Cursors.After
+			} else {
+				break
+			}
+		}
+	}
+
+	return
 }
 
 func (this *Provider) GetPageID() model.Provider {

@@ -1,7 +1,7 @@
 {
 	"ImportPath": "comentarismo-moody",
 	"GoVersion": "go1.7",
-	"GodepVersion": "v74",
+	"GodepVersion": "v79",
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",

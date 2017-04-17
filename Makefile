@@ -30,6 +30,12 @@ stop-ci:
 test:
 	scripts/gotest.sh;
 
+rethinkdb:
+	scripts/gorethinkdb.sh;
+
+goget:
+	scripts/goget.sh;
+
 permission:
 	chmod +x scripts/godep-ci.sh;
 	chmod +x scripts/gofmt_perform.sh;
@@ -37,6 +43,7 @@ permission:
 	chmod +x scripts/gotest.sh;
 	chmod +x scripts/start.sh;
 	chmod +x scripts/stop.sh;
+	chmod +x scripts/goget.sh
 
 vendor-save:
 	@echo "--> Installing build dependencies"
