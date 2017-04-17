@@ -15,6 +15,10 @@ func (p Provider) Name() string {
 	return "faux"
 }
 
+func (p Provider) GetType() string {
+	return "Faux"
+}
+
 func (p *Provider) SetLang(lang string) error {
 	return nil
 }

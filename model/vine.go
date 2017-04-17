@@ -105,10 +105,10 @@ func (this VineVideo) GetComments() CommentList {
 			if err == nil {
 				for _, entry := range respJson.Data.Records {
 					thisComment := &Comment{
-						ID:         strconv.FormatUint(entry.CommentID, 10),
-						Published:  entry.Created,
-						Content:    entry.Comment,
-						AuthorName: entry.Username,
+						ID:        strconv.FormatUint(entry.CommentID, 10),
+						Published: entry.Created,
+						Comment:   entry.Comment,
+						Nick:      entry.Username,
 					}
 
 					comments = append(comments, thisComment)
@@ -155,10 +155,10 @@ func (this VineVideo) GetCommentsChan(resultsChannel chan *Comment, countChannel
 			if err == nil {
 				for _, entry := range respJson.Data.Records {
 					thisComment := &Comment{
-						ID:         strconv.FormatUint(entry.CommentID, 10),
-						Published:  entry.Created,
-						Content:    entry.Comment,
-						AuthorName: entry.Username,
+						ID:        strconv.FormatUint(entry.CommentID, 10),
+						Published: entry.Created,
+						Comment:   entry.Comment,
+						Nick:      entry.Username,
 					}
 
 					comments = append(comments, thisComment)

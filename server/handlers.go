@@ -353,12 +353,12 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 
 	//classify text
 	comment := model.Comment{}
-	comment.Content = string(text[0])
+	comment.Comment = string(text[0])
 	comment.Language = lang
 	comment.Sentiment = comment.GetSentiment()
 
 	if comment.Sentiment == "" {
-		log.Println("Error: SentimentHandler could not get the sentiment for this text :| ", comment.Content)
+		log.Println("Error: SentimentHandler could not get the sentiment for this text :| ", comment.Comment)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

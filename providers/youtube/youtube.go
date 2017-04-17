@@ -58,6 +58,11 @@ func (p *Provider) Name() string {
 	return "youtube"
 }
 
+// Name is the name used to retrieve this report type later.
+func (p *Provider) GetType() string {
+	return "YouTubeVideo"
+}
+
 func (p *Provider) SetID(urlParts []string) error {
 	i := len(urlParts) - 1
 	p.ID = urlParts[i]
@@ -70,7 +75,7 @@ func (p *Provider) SetLang(lang string) error {
 }
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
-	theReport.Type = "YouTubeVideo"
+	theReport.Operator = p.GetType()
 	theReport.ID = p.ID
 	theReport.Title = p.Title
 	theReport.PublishedAt = p.PublishedAt
@@ -127,13 +132,19 @@ func (ytv *Provider) GetComments() model.CommentList {
 
 				for _, c := range tempComments {
 					thisComment := &model.Comment{
-						ID:         c.Id,
-						Published:  c.Snippet.PublishedAt,
-						Title:      "",
-						Content:    c.Snippet.TextDisplay,
-						AuthorName: c.Snippet.AuthorDisplayName,
-						Likes:      c.Snippet.LikeCount,
-						Language:   ytv.Language,
+						ID:                         c.Id,
+						Published:                  c.Snippet.PublishedAt,
+						Comment:                    c.Snippet.TextDisplay,
+						Nick:                       c.Snippet.AuthorDisplayName,
+						NickIcon:                   c.Snippet.AuthorProfileImageUrl,
+						Likes:                      c.Snippet.LikeCount,
+						ProfileURL:                 c.Snippet.AuthorChannelUrl,
+						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
+						ModerationStatus:           c.Snippet.ModerationStatus,
+						ChannelId:                  c.Snippet.ChannelId,
+						Language:                   ytv.Language,
+						Operator:                   ytv.Name(),
+						Type:                       ytv.GetType(),
 					}
 
 					comments = append(comments, thisComment)
@@ -191,18 +202,19 @@ func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countCh
 
 				for _, c := range tempComments {
 					thisComment := &model.Comment{
-						ID:                         c.Id,
-						Published:                  c.Snippet.PublishedAt,
-						Title:                      "",
-						Content:                    c.Snippet.TextDisplay,
-						AuthorName:                 c.Snippet.AuthorDisplayName,
-						Likes:                      c.Snippet.LikeCount,
-						AuthorChannelUrl:           c.Snippet.AuthorChannelUrl,
+						ID:         c.Id,
+						Published:  c.Snippet.PublishedAt,
+						Comment:    c.Snippet.TextDisplay,
+						Nick:       c.Snippet.AuthorDisplayName,
+						NickIcon:   c.Snippet.AuthorProfileImageUrl,
+						ProfileURL: c.Snippet.AuthorChannelUrl,
+						Likes:      c.Snippet.LikeCount,
 						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
-						AuthorProfileImageUrl:      c.Snippet.AuthorProfileImageUrl,
 						ModerationStatus:           c.Snippet.ModerationStatus,
+						ChannelId:                  c.Snippet.ChannelId,
 						Language:                   ytv.Language,
-						Operator:                   "YouTubeVideo",
+						Operator:                   ytv.Name(),
+						Type:                       ytv.GetType(),
 					}
 
 					resultsChannel <- thisComment

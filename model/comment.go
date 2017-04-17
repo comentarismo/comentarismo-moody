@@ -5,15 +5,18 @@ import (
 	"math/rand"
 	"sort"
 	"time"
+	"log"
 )
 
-// Comment is the distilled comment dataset
+// commentaries_sentiment_report table
 type Comment struct {
 	ID              string            `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
 	Published       string            `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
 	Title           string            `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	Content         string            `schema:"content" gorethink:"content,omitempty" json:"content,omitempty"`
-	AuthorName      string            `schema:"authorname" gorethink:"authorname,omitempty" json:"authorname,omitempty"`
+	Comment         string            `schema:"comment" gorethink:"comment,omitempty" json:"comment,omitempty"`
+	Nick            string            `schema:"nick" gorethink:"nick,omitempty" json:"nick,omitempty"`
+	NickId          string            `schema:"nick_id" gorethink:"nick_id,omitempty" json:"nick_id,omitempty"`
+	NickIcon        string            `schema:"nickicon" gorethink:"nickicon,omitempty" json:"nickicon,omitempty"`
 	Sentiment       string            `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
 	Tag             string            `schema:"tag" gorethink:"tag,omitempty" json:"tag,omitempty"`
 	SentimentScores map[string]string `schema:"sentimentscores" gorethink:"sentimentscores,omitempty" json:"sentimentscores,omitempty"`
@@ -21,20 +24,18 @@ type Comment struct {
 	Likes           int64             `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
 	Language        string            `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
 	Operator        string            `schema:"operator" gorethink:"operator,omitempty" json:"operator,omitempty"`
+	Type            string            `schema:"type" gorethink:"type,omitempty" json:"type,omitempty"`
 	UpdatedAt       time.Time         `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
 	UUID            string            `schema:"uuid" gorethink:"uuid" json:"uuid"`
 
 	// AuthorChannelUrl: Link to the author's YouTube channel, if any.
-	AuthorChannelUrl string `schema:"authorChannelUrl" gorethink:"authorChannelUrl,omitempty" json:"authorChannelUrl,omitempty"`
-
-	// AuthorDisplayName: The name of the user who posted the comment.
-	AuthorDisplayName string `schema:"authorDisplayName" gorethink:"authorDisplayName,omitempty" json:"authorDisplayName,omitempty"`
+	//AuthorChannelUrl string `schema:"authorChannelUrl" gorethink:"authorChannelUrl,omitempty" json:"authorChannelUrl,omitempty"`
+	ProfileURL string `schema:"profileURL" gorethink:"profileURL,omitempty" json:"profileURL,omitempty"`
 
 	// AuthorGoogleplusProfileUrl: Link to the author's Google+ profile, if any.
 	AuthorGoogleplusProfileUrl string `schema:"authorGoogleplusProfileUrl" gorethink:"authorGoogleplusProfileUrl,omitempty" json:"authorGoogleplusProfileUrl,omitempty"`
 
 	// AuthorProfileImageUrl: The URL for the avatar of the user who posted the comment.
-	AuthorProfileImageUrl string `schema:"authorProfileImageUrl" gorethink:"authorProfileImageUrl,omitempty" json:"authorProfileImageUrl,omitempty"`
 
 	// ModerationStatus: The comment's moderation status. Will not be set if
 	// the comments were requested through the id filter.
@@ -45,6 +46,11 @@ type Comment struct {
 	//   "published"
 	//   "rejected"
 	ModerationStatus string `schema:"moderationStatus" gorethink:"moderationStatus,omitempty" json:"moderationStatus,omitempty"`
+
+	// ChannelId: The id of the corresponding YouTube channel. In case of a
+	// channel comment this is the channel the comment refers to. In case of
+	// a video comment it's the video's channel.
+	ChannelId string `schema:"channelId" gorethink:"channelId,omitempty" json:"channelId,omitempty"`
 }
 
 // Comment methods
@@ -56,7 +62,7 @@ func (comment *Comment) GetSentiment() string {
 	if comment.Sentiment == "" {
 		//comment.SentimentScores,
 		//comment.LogScores
-		comment.Sentiment, comment.Tag, scores, logScores = GetSentiment(comment.Language, comment.Content)
+		comment.Sentiment, comment.Tag, scores, logScores = GetSentiment(comment.Language, comment.Comment)
 		scoresFinal := make(map[string]string, len(scores))
 		var keywords []string
 		for k := range scores {
@@ -111,6 +117,16 @@ func (commentList *CommentList) GetTotal() uint64 {
 
 func (commentList *CommentList) GetKeywords() map[string]int {
 	return GetKeywords(commentList.Comments)
+}
+
+func (commentList *CommentList) GetSentimentScores() (ret []map[string]string) {
+	for _, comment := range commentList.Comments {
+		if len(comment.SentimentScores) > 0 {
+			ret = append(ret, comment.SentimentScores)
+		}
+	}
+	log.Println("GetSentimentScores -> ", len(ret))
+	return
 }
 
 func (commentList *CommentList) GetSentimentList() map[string][]*Comment {

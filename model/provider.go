@@ -8,6 +8,7 @@ import (
 // e.g. Comentarismo, Facebook, Twitter, Youtube, etc...
 type Provider interface {
 	Name() string
+	GetType() string
 	SetID([]string) error
 	SetLang(lang string) error
 	SetReport(*Report, CommentList)

@@ -76,10 +76,10 @@ func (ig InstagramPic) GetComments(chan Comment, chan int) CommentList {
 	if resp != new(instagram.CommentsResponse) {
 		for _, entry := range resp.Comments {
 			thisComment := &Comment{
-				ID:         entry.Id,
-				Published:  string(entry.CreatedTime),
-				Content:    entry.Text,
-				AuthorName: entry.From.Username,
+				ID:        entry.Id,
+				Published: string(entry.CreatedTime),
+				Comment:   entry.Text,
+				Nick:      entry.From.Username,
 			}
 
 			comments = append(comments, thisComment)
@@ -102,10 +102,10 @@ func (ig InstagramPic) GetCommentsChan(resultsChannel chan *Comment, countChanne
 	if resp != new(instagram.CommentsResponse) {
 		for _, entry := range resp.Comments {
 			thisComment := &Comment{
-				ID:         entry.Id,
-				Published:  string(entry.CreatedTime),
-				Content:    entry.Text,
-				AuthorName: entry.From.Username,
+				ID:        entry.Id,
+				Published: string(entry.CreatedTime),
+				Comment:   entry.Text,
+				Nick:      entry.From.Username,
 			}
 
 			comments = append(comments, thisComment)

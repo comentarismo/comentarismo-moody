@@ -303,8 +303,14 @@ func RunReport(postURL, lang string) (model.Report, error) {
 		done <- true
 	}()
 
+	// Sentiment Scores
+	go func() {
+		theReport.SentimentScores = commentsList.GetSentimentScores()
+		done <- true
+	}()
+
 	// Wait for everything to finish up
-	for i := 0; i < 2; i++ {
+	for i := 0; i < 3; i++ {
 		<-done
 	}
 
