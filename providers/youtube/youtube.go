@@ -75,7 +75,8 @@ func (p *Provider) SetLang(lang string) error {
 }
 
 func (p *Provider) SetReport(theReport *model.Report, comments model.CommentList) {
-	theReport.Operator = p.GetType()
+	theReport.Operator = p.Name()
+	theReport.Type = p.GetType()
 	theReport.ID = p.ID
 	theReport.Title = p.Title
 	theReport.PublishedAt = p.PublishedAt
@@ -172,6 +173,7 @@ func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countCh
 
 	youtubeService, err := youtube.New(client)
 	if err != nil {
+		countChannel <- 0
 		log.Println("Error: GetComments when -> youtube.New, ", err)
 		return
 	}

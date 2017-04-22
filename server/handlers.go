@@ -40,6 +40,13 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 	log.Println("MoodyHandler, ", postURL, refresh)
 	var jsonBytes []byte
 
+	UUID, err := UUID(postURL)
+	if err != nil {
+		log.Println("MoodyHandler, Could not SetID. report_"+postURL+" UUID failed ", err)
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
 	if refresh == "" {
 		//get from redis if available
 		//serve from redis
@@ -87,13 +94,6 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		simpleReport := model.YoutubeReport{}
 
 		commentsReport := model.Report{}
-
-		UUID, err := UUID(postURL)
-		if err != nil {
-			log.Println("MoodyHandler, Could not SetID. report_"+postURL+" UUID failed ", err)
-			w.WriteHeader(http.StatusNotFound)
-			return
-		}
 
 		log.Println("MoodyHandler, r.Table(sentiment_report).Get(" + UUID + ")")
 		/** BEGIN recover the simple sentiment report **/
@@ -181,106 +181,126 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 	log.Println("MoodyHandler, Will generate a new report -->", postURL)
 
-	theReport, err := RunReport(postURL, lang)
+	quickReport, err := RunQuickReport(postURL, lang)
 	if err != nil {
-		log.Println("Error: MoodyHandler, RunReport() ", err)
+		log.Println("Error: MoodyHandler, RunQuickReport() ", err)
 		w.WriteHeader(http.StatusInternalServerError)
-		jsonBytes, _ := json.Marshal(WebError{Error: "RunReport failed :| -> "})
+		jsonBytes, _ := json.Marshal(WebError{Error: "RunQuickReport failed :| -> "})
 		w.Write(jsonBytes)
 		return
 	}
-	//save to rethinkdb
 
-	//create simple report
-	simpleReport := CreateSimpleReport(theReport)
+	quickReport.ID = UUID
 
-	//create comments report
-	commentsReport := CreateCommentsReport(theReport)
+	go func() {
 
-	update_sentiment_report := true
-	update_sentiment := true
+		theReport, err := RunReport(postURL, lang)
+		if err != nil {
+			log.Println("Error: MoodyHandler, RunReport() ", err)
+			//w.WriteHeader(http.StatusInternalServerError)
+			//jsonBytes, _ := json.Marshal(WebError{Error: "RunReport failed :| -> "})
+			//w.Write(jsonBytes)
+			return
+		}
+		//save to rethinkdb
 
-	UUID, err := UUID(postURL)
-	if err != nil {
-		log.Println("MoodyHandler, Could not SetID. report_"+postURL+" UUID failed ", err)
-		w.WriteHeader(http.StatusNotFound)
-		return
-	}
+		//create simple report
+		simpleReport := CreateSimpleReport(theReport)
 
-	res, err := r.Table("sentiment_report").Get(UUID).Pluck("id").Run(Session)
-	if err != nil {
-		update_sentiment_report = false
-	} else if res.IsNil() {
-		update_sentiment_report = false
-	} else {
-		log.Println("MoodyHandler, will update sentiment_report TABLE")
-		defer res.Close()
-		item := model.Report{}
-		res.One(&item)
-		if item.ID == "" {
+		//create comments report
+		commentsReport := CreateCommentsReport(theReport)
+
+		update_sentiment_report := true
+		update_sentiment := true
+
+		if err != nil {
+			log.Println("MoodyHandler, Could not SetID. report_"+postURL+" UUID failed ", err)
+			//w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		res, err := r.Table("sentiment_report").Get(UUID).Pluck("id").Run(Session)
+		if err != nil {
 			update_sentiment_report = false
+		} else if res.IsNil() {
+			update_sentiment_report = false
+		} else {
+			log.Println("MoodyHandler, will update sentiment_report TABLE")
+			defer res.Close()
+			item := model.Report{}
+			res.One(&item)
+			if item.ID == "" {
+				update_sentiment_report = false
+			}
 		}
-	}
 
-	res, err = r.Table("sentiment").Get(UUID).Pluck("id").Run(Session)
-	if err != nil {
-		update_sentiment = false
-	} else if res.IsNil() {
-		update_sentiment = false
-	} else {
-		log.Println("MoodyHandler, will update sentiment TABLE")
-		defer res.Close()
-		item := model.Report{}
-		res.One(&item)
-		if item.ID == "" {
+		res, err = r.Table("sentiment").Get(UUID).Pluck("id").Run(Session)
+		if err != nil {
 			update_sentiment = false
+		} else if res.IsNil() {
+			update_sentiment = false
+		} else {
+			log.Println("MoodyHandler, will update sentiment TABLE")
+			defer res.Close()
+			item := model.Report{}
+			res.One(&item)
+			if item.ID == "" {
+				update_sentiment = false
+			}
 		}
-	}
 
-	//TODO: need to merge comments and classify censored comments
-	// classify if video is now censored at facebook with a flag and never remove comments from our database in that case
+		//TODO: need to merge comments and classify censored comments
+		// classify if video is now censored at facebook with a flag and never remove comments from our database in that case
 
-	if update_sentiment_report {
 		simpleReport.ID = UUID
-		log.Println("MoodyHandler, update report into sentiment_report TABLE")
-		_, err = r.Table("sentiment_report").Get(UUID).Update(simpleReport).RunWrite(Session)
-		if err != nil {
-			log.Println("ERROR: MoodyHandler, UPDATE sentiment_report TABLE JUST FAILED :|", err)
-		}
-	} else {
-		simpleReport.ID = UUID
-		log.Println("MoodyHandler, save first time report into sentiment_report")
-		_, err = r.Table("sentiment_report").Insert(simpleReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
-		if err != nil {
-			log.Println("ERROR: MoodyHandler, INSERT sentiment_report TABLE JUST FAILED :|", err)
-		}
-	}
-
-	if update_sentiment {
 		commentsReport.ID = UUID
-		log.Println("MoodyHandler, update report into sentiment TABLE")
-		_, err = r.Table("sentiment").Get(UUID).Update(commentsReport).RunWrite(Session)
-		if err != nil {
-			log.Println("ERROR: MoodyHandler, UPDATE sentiment TABLE JUST FAILED :|", err)
-		}
-	} else {
-		commentsReport.ID = UUID
-		log.Println("MoodyHandler, save first time report into sentiment")
-		_, err = r.Table("sentiment").Insert(commentsReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
-		if err != nil {
-			log.Println("ERROR: MoodyHandler, INSERT sentiment TABLE JUST FAILED :|", err)
-		}
-	}
 
-	jsonBytes, err = json.Marshal(&theReport)
+		if update_sentiment_report {
+			log.Println("MoodyHandler, update report into sentiment_report TABLE")
+			_, err = r.Table("sentiment_report").Get(UUID).Update(simpleReport).RunWrite(Session)
+			if err != nil {
+				log.Println("ERROR: MoodyHandler, UPDATE sentiment_report TABLE JUST FAILED :|", err)
+			}
+		} else {
+			log.Println("MoodyHandler, save first time report into sentiment_report")
+			_, err = r.Table("sentiment_report").Insert(simpleReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+			if err != nil {
+				log.Println("ERROR: MoodyHandler, INSERT sentiment_report TABLE JUST FAILED :|", err)
+			}
+		}
+
+		if update_sentiment {
+			log.Println("MoodyHandler, update report into sentiment TABLE")
+			_, err = r.Table("sentiment").Get(UUID).Update(commentsReport).RunWrite(Session)
+			if err != nil {
+				log.Println("ERROR: MoodyHandler, UPDATE sentiment TABLE JUST FAILED :|", err)
+			}
+		} else {
+			log.Println("MoodyHandler, save first time report into sentiment")
+			_, err = r.Table("sentiment").Insert(commentsReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+			if err != nil {
+				log.Println("ERROR: MoodyHandler, INSERT sentiment TABLE JUST FAILED :|", err)
+			}
+		}
+
+		theReport.ID = UUID
+
+		//save to redis
+		jsonBytes, err = json.Marshal(&theReport)
+		if err != nil {
+			log.Println("Error: MoodyHandler, ", err)
+			return
+		}
+		Client.Set("report_"+postURL, jsonBytes, time.Hour*24)
+	}()
+
+	jsonBytes, err = json.Marshal(&quickReport)
 	if err != nil {
-		log.Println("Error: MoodyHandler, ", err)
+		log.Println("Error: MoodyHandler, quickReport, ", err)
 		w.Write([]byte(`[]`))
 		return
 	}
 
-	//save to redis
-	Client.Set("report_"+postURL, jsonBytes, time.Hour*1)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(jsonBytes)
 

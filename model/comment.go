@@ -1,11 +1,11 @@
 package model
 
 import (
+	"log"
 	"math"
 	"math/rand"
 	"sort"
 	"time"
-	"log"
 )
 
 // commentaries_sentiment_report table

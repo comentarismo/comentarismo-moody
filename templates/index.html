@@ -96,17 +96,42 @@
             </div>
         </div>
 
-        <div class="col-md-4">
-            <h5 id="sampling_header">Most Liked Comments</h5>
-            <div id="sampling"></div>
-        </div>
-
-        <div class="col-md-4">
-            <h5 id="all_sampling_header">All Comments</h5>
-            <div id="all_sampling"></div>
-        </div>
-
     </div>
+    <script>
+        (function (d) {
+            var v = '{' +
+                'icons:{'+
+                'commenticon: "<i class=\'material-icons dp48\'>comment</\i>",'+
+                'thumbsup: "/static/img/thumbs-up.jpg",'+
+                'thumbsdown: "/static/img/thumbs-down.jpg",'+
+                'replybtn: "/static/img/comentarismo_reply.jpg",'+
+                'replybtn_style: "width: 10px;height: 10px;"'+
+                '},'+
+                'page:\''+decodeURIComponent((new RegExp('[?|&]' + "vid" + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20'))+'\',' +
+                'cached:"api.comentarismo.com/elk",'+
+                'host:"api.comentarismo.com",'+
+                'reco:"myid",'+
+                'wshost: "api.comentarismo.com",'+
+                'css:"//localhost:3000/static/css/custom.css",'+
+                'debug:"true",'+
+                'table:"commentaries_sentiment_report",'+
+                'operator:"youtube",'+
+                'forum:"test",'+
+                'index:"",'+
+                'key:"HL3Q87OdXRXiun8LSyAy5vmCDJJCfyVrX97aIk_Ll2JcC0IG2yUpRoBOB7O6qRkDUAd6yQbD4gY="'+
+                '}';
+            var init5 = '<head><script src="//localhost:3000/static/js/build/comentarismo-client.js"></\script>' +
+                '</head>' +
+                '<body><div class=\"container comentarismo-container\" id=\"comentarismo-container\"></div></body>' +
+                '<script>(function(d){var comentarismo=new Comentarismo('+v+');comentarismo.connect();})(document);</\script>';
+            var iframe = d.body.appendChild(d.createElement('iframe')),
+                doc = iframe.contentWindow.document;
+            iframe.style.cssText = "position:absolute;width:100%;height:100%;left:0px;";
+            doc.open();
+            doc.write(init5);
+            doc.close();
+        })(document);
+    </script>
 </div>
 
 <script src="/static/js/jquery.min.js"></script>

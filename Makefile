@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-default:
-	scripts/gofmt_validate.sh;
-	scripts/gotest.sh;
+default: gofmt
+	make start;
 
 gofmt:
 	scripts/gofmt_perform.sh;
@@ -49,5 +48,5 @@ vendor-save:
 	@echo "--> Installing build dependencies"
 	@godep save
 
-.PHONY: all test
+.PHONY: all test permission vendor-save
 

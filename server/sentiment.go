@@ -174,6 +174,66 @@ func IsLangTrained(lang string) (isTrained bool) {
 	return
 }
 
+func RunQuickReport(postURL, lang string) (model.Report, error) {
+	domain, urlParts := parseURL(postURL)
+	if domain == "" || len(urlParts) == 0 {
+		return model.Report{}, errors.New("RunQuickReport, Unable to parse post url.")
+	}
+
+	// Create Report
+	theReport := model.Report{URL: postURL}
+	//var thePost Post
+
+	log.Println("RunQuickReport, Going to run report for ", domain)
+
+	provider, err := model.GetProvider(domain)
+	if err != nil {
+		log.Println("RunQuickReport, Could not GetProvider.", err)
+		return model.Report{}, errors.New("RunQuickReport, Could not GetProvider.")
+	}
+
+	err = provider.SetID(urlParts)
+	if err != nil {
+		//log.Println(err)
+		log.Println("RunQuickReportm, Could not SetID.")
+		return model.Report{}, errors.New("RunQuickReport, Could not SetID.")
+	}
+
+	err = provider.SetLang(lang)
+	if err != nil {
+		//log.Println(err)
+		log.Println("RunQuickReport, Could not LANG on provider.")
+		return model.Report{}, errors.New("RunQuickReport, Could not LANG on provider.")
+	}
+
+	//Fetch the metadata
+	flag := provider.GetMetadata()
+	if !flag {
+		log.Println("RunQuickReport, Could not fetch metadata.")
+		return model.Report{}, errors.New("RunQuickReport, Could not fetch metadata.")
+	}
+
+	provider.SetReport(&theReport, model.CommentList{})
+
+	// Set comments returned
+	theReport.CollectedComments = 0
+	theReport.CommentCoveragePercent = 0
+
+	//set date
+	theReport.Date = time.Now()
+
+	// Calculate Average Daily Comments
+	timestamp, _ := strconv.ParseInt(theReport.PublishedAt, 10, 64)
+	t := time.Unix(timestamp, 0)
+	delta := time.Now().Sub(t)
+	theReport.CommentAvgPerDay = float64(theReport.TotalComments) / (float64(delta.Hours()) / float64(24))
+
+	log.Println("RunQuickReport, OK Going to return report for ", theReport)
+
+	// Output Report
+	return theReport, nil
+}
+
 func RunReport(postURL, lang string) (model.Report, error) {
 	// Parse URL
 	notTrained := LoadTrainingData(lang)

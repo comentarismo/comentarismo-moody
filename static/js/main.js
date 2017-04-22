@@ -115,7 +115,7 @@ function setCss(header, target, json) {
 function drawReport(json) {
     $("#vid").val(json.url);
     $("#report").show();
-    if (json.type == 'YouTubeVideo') {
+    if (json.type === 'YouTubeVideo') {
 
         setText("#video_title", "title", json, truncate, 50);
         setText("#channel_title", "channeltitle", json);
@@ -123,7 +123,7 @@ function drawReport(json) {
         setText("#total_comments", "totalcomments", json);
         setCss("#header", "thumbnail", json);
 
-    } else if (json.Type == 'InstagramPic') {
+    } else if (json.type === 'InstagramPic') {
         $("#video_title").text(truncate(decodeURIComponent(json.metadata.caption), 50));
         $("#channel_title").text(decodeURIComponent(json.metadata.username));
         $("#network_title").text("Instagram");
@@ -132,7 +132,7 @@ function drawReport(json) {
         $("#header").css({
             "background-image": "url('" + decodeURIComponent(json.metadata.thumbnail) + "')"
         });
-    } else if (json.Type == 'FacebookPost') {
+    } else if (json.type === 'FacebookPost') {
         $("#video_title").text(truncate(decodeURIComponent(json.metadata.caption), 50));
         $("#channel_title").text(decodeURIComponent(json.metadata.username));
         $("#network_title").text("Facebook");
@@ -141,7 +141,7 @@ function drawReport(json) {
         $("#header").css({
             "background-image": "url('" + decodeURIComponent(json.metadata.thumbnail) + "')"
         });
-    } else if (json.Type == 'VineVideo') {
+    } else if (json.type === 'VineVideo') {
         $("#video_title").text(truncate(decodeURIComponent(json.metadata.caption), 50));
         $("#channel_title").text(decodeURIComponent(json.metadata.username));
         $("#network_title").text("Vine");
@@ -291,7 +291,7 @@ function drawReport(json) {
 
     //if (json.topcomments) {
     //    json.topcomments.forEach(function (v, i, a) {
-    //        $("#sampling").append('<div class="comment">' + emojis[v.sentiment] + '<h4><a href="' + userLink(v.authorname, json.Type) + '">@' + v.authorname + '</a> (' + v.likes + ' likes)</h4><p>' + emojione.shortnameToImage(v.content) + '</p></div>')
+    //        $("#sampling").append('<div class="comment">' + emojis[v.sentiment] + '<h4><a href="' + userLink(v.authorname, json.type) + '">@' + v.authorname + '</a> (' + v.likes + ' likes)</h4><p>' + emojione.shortnameToImage(v.content) + '</p></div>')
     //    });
     //}
 
@@ -299,7 +299,7 @@ function drawReport(json) {
     //
     //    for (var x in json.sentimentlist) {
     //        json.sentimentlist[x].forEach(function (v, i, a) {
-    //            $("#all_sampling").append('<div class="comment">' + emojis[v.sentiment] + '<h4><a href="' + userLink(v.authorname, json.Type) + '">@' + v.authorname + '</a> (' + v.likes + ' likes)</h4><p>' +  emojione.shortnameToImage(v.content) + '</p></div>')
+    //            $("#all_sampling").append('<div class="comment">' + emojis[v.sentiment] + '<h4><a href="' + userLink(v.authorname, json.type) + '">@' + v.authorname + '</a> (' + v.likes + ' likes)</h4><p>' +  emojione.shortnameToImage(v.content) + '</p></div>')
     //
     //        });
     //    }
