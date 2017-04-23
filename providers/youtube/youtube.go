@@ -138,7 +138,7 @@ func (ytv *Provider) GetComments() model.CommentList {
 						Comment:                    c.Snippet.TextDisplay,
 						Nick:                       c.Snippet.AuthorDisplayName,
 						NickIcon:                   c.Snippet.AuthorProfileImageUrl,
-						Likes:                      c.Snippet.LikeCount,
+						OriginLikes:                int(c.Snippet.LikeCount),
 						ProfileURL:                 c.Snippet.AuthorChannelUrl,
 						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
 						ModerationStatus:           c.Snippet.ModerationStatus,
@@ -204,13 +204,13 @@ func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countCh
 
 				for _, c := range tempComments {
 					thisComment := &model.Comment{
-						ID:         c.Id,
-						Published:  c.Snippet.PublishedAt,
-						Comment:    c.Snippet.TextDisplay,
-						Nick:       c.Snippet.AuthorDisplayName,
-						NickIcon:   c.Snippet.AuthorProfileImageUrl,
-						ProfileURL: c.Snippet.AuthorChannelUrl,
-						Likes:      c.Snippet.LikeCount,
+						ID:                         c.Id,
+						Published:                  c.Snippet.PublishedAt,
+						Comment:                    c.Snippet.TextDisplay,
+						Nick:                       c.Snippet.AuthorDisplayName,
+						NickIcon:                   c.Snippet.AuthorProfileImageUrl,
+						ProfileURL:                 c.Snippet.AuthorChannelUrl,
+						OriginLikes:                int(c.Snippet.LikeCount),
 						AuthorGoogleplusProfileUrl: c.Snippet.AuthorGoogleplusProfileUrl,
 						ModerationStatus:           c.Snippet.ModerationStatus,
 						ChannelId:                  c.Snippet.ChannelId,
@@ -218,6 +218,8 @@ func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countCh
 						Operator:                   ytv.Name(),
 						Type:                       ytv.GetType(),
 					}
+
+					thisComment.FixID()
 
 					resultsChannel <- thisComment
 					countChannel <- 1

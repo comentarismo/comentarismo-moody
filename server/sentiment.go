@@ -392,6 +392,100 @@ func RunReport(postURL, lang string) (model.Report, error) {
 	return theReport, nil
 }
 
+//SaveReport save the report on the database
+func SaveReport(theReport model.Report, postURL, UUID string) (err error) {
+	//create simple report
+	simpleReport := CreateSimpleReport(theReport)
+
+	//create comments report
+	commentsReport := CreateCommentsReport(theReport)
+
+	update_sentiment_report := true
+	update_sentiment := true
+
+	if err != nil {
+		log.Println("SaveReport, Could not SetID. report_"+postURL+" UUID failed ", err)
+		//w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	res, err := r.Table("sentiment_report").Get(UUID).Pluck("id").Run(Session)
+	if err != nil {
+		update_sentiment_report = false
+	} else if res.IsNil() {
+		update_sentiment_report = false
+	} else {
+		log.Println("SaveReport, will update sentiment_report TABLE")
+		defer res.Close()
+		item := model.Report{}
+		res.One(&item)
+		if item.ID == "" {
+			update_sentiment_report = false
+		}
+	}
+
+	res, err = r.Table("sentiment").Get(UUID).Pluck("id").Run(Session)
+	if err != nil {
+		update_sentiment = false
+	} else if res.IsNil() {
+		update_sentiment = false
+	} else {
+		log.Println("SaveReport, will update sentiment TABLE")
+		defer res.Close()
+		item := model.Report{}
+		res.One(&item)
+		if item.ID == "" {
+			update_sentiment = false
+		}
+	}
+
+	//TODO: need to merge comments and classify censored comments
+	// classify if video is now censored at facebook with a flag and never remove comments from our database in that case
+
+	simpleReport.ID = UUID
+	commentsReport.ID = UUID
+
+	if update_sentiment_report {
+		log.Println("SaveReport, update report into sentiment_report TABLE")
+		_, err = r.Table("sentiment_report").Get(UUID).Update(simpleReport).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: SaveReport, UPDATE sentiment_report TABLE JUST FAILED :|", err)
+		}
+	} else {
+		log.Println("SaveReport, save first time report into sentiment_report")
+		_, err = r.Table("sentiment_report").Insert(simpleReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: SaveReport, INSERT sentiment_report TABLE JUST FAILED :|", err)
+		}
+	}
+
+	if update_sentiment {
+		log.Println("SaveReport, update report into sentiment TABLE")
+		_, err = r.Table("sentiment").Get(UUID).Update(commentsReport).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: SaveReport, UPDATE sentiment TABLE JUST FAILED :|", err)
+		}
+	} else {
+		log.Println("SaveReport, save first time report into sentiment")
+		_, err = r.Table("sentiment").Insert(commentsReport, r.InsertOpts{Conflict: "update"}).RunWrite(Session)
+		if err != nil {
+			log.Println("ERROR: SaveReport, INSERT sentiment TABLE JUST FAILED :|", err)
+		}
+	}
+
+	theReport.ID = UUID
+
+	//save to redis
+	jsonBytes, err := json.Marshal(&theReport)
+	if err != nil {
+		log.Println("Error: SaveReport, ", err)
+		return
+	}
+	Client.Set("report_"+postURL, jsonBytes, time.Hour*24)
+
+	return
+}
+
 func jsonError(msg string) []byte {
 	errorJSON, _ := json.Marshal(WebError{Error: msg})
 	return errorJSON

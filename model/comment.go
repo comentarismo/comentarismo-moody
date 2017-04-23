@@ -5,28 +5,35 @@ import (
 	"math"
 	"math/rand"
 	"sort"
+	"strconv"
+	"strings"
 	"time"
 )
 
 // commentaries_sentiment_report table
 type Comment struct {
-	ID              string            `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
-	Published       string            `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
-	Title           string            `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
-	Comment         string            `schema:"comment" gorethink:"comment,omitempty" json:"comment,omitempty"`
-	Nick            string            `schema:"nick" gorethink:"nick,omitempty" json:"nick,omitempty"`
-	NickId          string            `schema:"nick_id" gorethink:"nick_id,omitempty" json:"nick_id,omitempty"`
-	NickIcon        string            `schema:"nickicon" gorethink:"nickicon,omitempty" json:"nickicon,omitempty"`
-	Sentiment       string            `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
+	ID        string    `schema:"id" gorethink:"id,omitempty" json:"id,omitempty"`
+	Published string    `schema:"published" gorethink:"published,omitempty" json:"published,omitempty"`
+	Title     string    `schema:"title" gorethink:"title,omitempty" json:"title,omitempty"`
+	Comment   string    `schema:"comment" gorethink:"comment,omitempty" json:"comment,omitempty"`
+	Nick      string    `schema:"nick" gorethink:"nick,omitempty" json:"nick,omitempty"`
+	NickId    string    `schema:"nick_id" gorethink:"nick_id,omitempty" json:"nick_id,omitempty"`
+	NickIcon  string    `schema:"nickicon" gorethink:"nickicon,omitempty" json:"nickicon,omitempty"`
+	Keywords  []string  `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
+	Language  string    `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
+	Operator  string    `schema:"operator" gorethink:"operator,omitempty" json:"operator,omitempty"`
+	Type      string    `schema:"type" gorethink:"type,omitempty" json:"type,omitempty"`
+	UpdatedAt time.Time `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
+	UUID      string    `schema:"uuid" gorethink:"uuid" json:"uuid"`
+
+	Likes          []string `schema:"likes" gorethink:"likes" json:"likes"`
+	DisLikes       []string `schema:"dislikes" gorethink:"dislikes" json:"dislikes"`
+	OriginDislikes int      `schema:"origindislikes" gorethink:"origindislikes,omitempty" json:"origindislikes,omitempty"`
+	OriginLikes    int      `schema:"originlikes" gorethink:"originlikes,omitempty" json:"originlikes,omitempty"`
+
+	Sentiment       int               `schema:"sentiment" gorethink:"sentiment,omitempty" json:"sentiment,omitempty"`
 	Tag             string            `schema:"tag" gorethink:"tag,omitempty" json:"tag,omitempty"`
 	SentimentScores map[string]string `schema:"sentimentscores" gorethink:"sentimentscores,omitempty" json:"sentimentscores,omitempty"`
-	Keywords        []string          `schema:"keywords" gorethink:"keywords,omitempty" json:"keywords,omitempty"`
-	Likes           int64             `schema:"likes" gorethink:"likes,omitempty" json:"likes,omitempty"`
-	Language        string            `schema:"language" gorethink:"language,omitempty" json:"language,omitempty"`
-	Operator        string            `schema:"operator" gorethink:"operator,omitempty" json:"operator,omitempty"`
-	Type            string            `schema:"type" gorethink:"type,omitempty" json:"type,omitempty"`
-	UpdatedAt       time.Time         `schema:"updatedAt" gorethink:"updatedAt" json:"updateAt"`
-	UUID            string            `schema:"uuid" gorethink:"uuid" json:"uuid"`
 
 	// AuthorChannelUrl: Link to the author's YouTube channel, if any.
 	//AuthorChannelUrl string `schema:"authorChannelUrl" gorethink:"authorChannelUrl,omitempty" json:"authorChannelUrl,omitempty"`
@@ -53,16 +60,21 @@ type Comment struct {
 	ChannelId string `schema:"channelId" gorethink:"channelId,omitempty" json:"channelId,omitempty"`
 }
 
+func (comment *Comment) FixID() {
+	comment.ID = strings.Replace(comment.ID, ".", "-", -1)
+}
+
 // Comment methods
 //
-func (comment *Comment) GetSentiment() string {
+func (comment *Comment) GetSentiment() int {
 	var scores map[string]float64
 	var logScores map[string]map[string]int64
 
-	if comment.Sentiment == "" {
+	if comment.Sentiment == 0 {
 		//comment.SentimentScores,
 		//comment.LogScores
-		comment.Sentiment, comment.Tag, scores, logScores = GetSentiment(comment.Language, comment.Comment)
+		var sent string
+		sent, comment.Tag, scores, logScores = GetSentiment(comment.Language, comment.Comment)
 		scoresFinal := make(map[string]string, len(scores))
 		var keywords []string
 		for k := range scores {
@@ -83,6 +95,13 @@ func (comment *Comment) GetSentiment() string {
 				}
 			}
 
+		}
+
+		sentimentInt, err := strconv.Atoi(comment.Tag)
+		if err != nil {
+			log.Println("GetSentiment, error: ", sent, err)
+		} else {
+			comment.Sentiment = sentimentInt
 		}
 
 		comment.SentimentScores = scoresFinal
@@ -138,14 +157,14 @@ func (commentList *CommentList) GetSentimentList() map[string][]*Comment {
 		c := &Comment{
 			ID: comment.ID,
 		}
-		newComments := append(tags[tag], c)
-		tags[tag] = newComments
+		newComments := append(tags[strconv.Itoa(tag)], c)
+		tags[strconv.Itoa(tag)] = newComments
 	}
 	return tags
 }
 
 func (commentList *CommentList) GetSentimentSummary() []SentimentTag {
-	tags := map[string]int{}
+	tags := map[int]int{}
 
 	for _, comment := range commentList.Comments {
 		tag := comment.GetSentiment()
@@ -156,10 +175,9 @@ func (commentList *CommentList) GetSentimentSummary() []SentimentTag {
 
 	for tag, count := range tags {
 		st := SentimentTag{
-			Name:    tag,
+			Name:    strconv.Itoa(tag),
 			Percent: math.Ceil((float64(count) / float64(len(commentList.Comments))) * float64(100)),
 		}
-
 		summary = append(summary, st)
 	}
 
@@ -183,7 +201,7 @@ type ByLikes []*Comment
 
 func (a ByLikes) Len() int           { return len(a) }
 func (a ByLikes) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
-func (a ByLikes) Less(i, j int) bool { return a[i].Likes > a[j].Likes }
+func (a ByLikes) Less(i, j int) bool { return a[i].OriginLikes > a[j].OriginDislikes }
 
 func (commentList *CommentList) GetMostLiked(count int) []*Comment {
 	if commentList == nil {
