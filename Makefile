@@ -9,9 +9,10 @@ gofmt:
 start: stop
 	godep go build -o comentarismo-moody main.go
 	nohup ./comentarismo-moody &
+	make log
 
 stop:
-	pkill comentarismo-moody | true
+	pidof comentarismo-moody |awk '{print $1}'| xargs kill | true;
 
 status:
 	ps -ef |grep comentarismo-moody

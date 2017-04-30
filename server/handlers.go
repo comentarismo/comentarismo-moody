@@ -47,7 +47,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 		return
 	}
 
-	if refresh == "" {
+	if refresh == "" || refresh != "true" {
 		//get from redis if available
 		//serve from redis
 		valid := true
@@ -321,10 +321,9 @@ func AllowOrigin(w http.ResponseWriter, r *http.Request) {
 
 func LanguageHandler(w http.ResponseWriter, req *http.Request) {
 	req.ParseForm() //Parse url parameters passed, then parse the response packet for the POST body (request body)
-	//log.Println(req.Form) // print information on server side.
 	text := req.Form["text"]
 	if len(text) == 0 {
-		log.Println("Error: SentimentHandler text 404 not found")
+		log.Println("Error: LanguageHandler text 404 not found", req.Form)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
@@ -334,7 +333,7 @@ func LanguageHandler(w http.ResponseWriter, req *http.Request) {
 	detectedLang, err := lang.Guess(text[0])
 	if err != nil {
 		returnLang.Error = err.Error()
-		log.Println("Error: SentimentHandler could detect lang for this text :| ", err)
+		log.Println("Error: LanguageHandler could detect lang for this text :| ", err)
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	} else {
@@ -347,7 +346,7 @@ func LanguageHandler(w http.ResponseWriter, req *http.Request) {
 	//marshal comment
 	jsonBytes, err := json.Marshal(&returnLang)
 	if err != nil {
-		log.Println("Error: SentimentHandler Marshal -> ", err)
+		log.Println("Error: LanguageHandler Marshal -> ", err)
 		w.WriteHeader(http.StatusNotFound)
 		return
 	}
