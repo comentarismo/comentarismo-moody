@@ -36,6 +36,8 @@ var Port = os.Getenv("PORT")
 
 var RETHINKDB_HOST = os.Getenv("RETHINKDB_HOST")
 var RETHINKDB_PORT = os.Getenv("RETHINKDB_PORT")
+var RETHINKDB_PASSWORD = os.Getenv("RETHINKDB_PASSWORD")
+
 var DB = ""
 
 //Table eg: 3001
@@ -76,6 +78,7 @@ func init() {
 		Database: Table,
 		MaxOpen:  maxo,
 		MaxIdle:  maxi,
+		Password: RETHINKDB_PASSWORD,
 	})
 	if err != nil {
 		log.Fatalln("Error: Loading Rethinkdb standalone -> ", err)

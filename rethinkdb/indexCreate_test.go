@@ -14,6 +14,8 @@ import (
 var session *r.Session
 var RETHINKDB_HOST = os.Getenv("RETHINKDB_HOST")
 var RETHINKDB_PORT = os.Getenv("RETHINKDB_PORT")
+var RETHINKDB_PASSWORD = os.Getenv("RETHINKDB_PASSWORD")
+
 var Table = os.Getenv("table")
 var DB = ""
 
@@ -137,6 +139,7 @@ func testSetup(m *testing.M) {
 	session, err = r.Connect(r.ConnectOpts{
 		Address:  DB,
 		Database: Table,
+		Password: RETHINKDB_PASSWORD,
 	})
 	if err != nil {
 		log.Fatalln(err.Error())
