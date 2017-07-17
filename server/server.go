@@ -5,7 +5,7 @@ import (
 	r "github.com/dancannon/gorethink"
 	"github.com/facebookgo/grace/gracehttp"
 	"github.com/gorilla/pat"
-	redis "gopkg.in/redis.v3"
+	"github.com/go-redis/redis"
 	"log"
 	"net/http"
 	"os"

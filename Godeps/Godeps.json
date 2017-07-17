@@ -1,22 +1,22 @@
 {
 	"ImportPath": "comentarismo-moody",
-	"GoVersion": "go1.7",
+	"GoVersion": "go1.8",
 	"GodepVersion": "v79",
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
-			"Comment": "v0.10.0-38-g3ec0642",
-			"Rev": "3ec0642a7fb6488f65b06f9040adc67e3990296a"
+			"Comment": "1.0.2-2-g51dc0fc",
+			"Rev": "51dc0fc64317a2861273909081f9c315786533eb"
 		},
 		{
-			"ImportPath": "github.com/cenk/backoff",
-			"Comment": "v1.0.0-15-gb02f2bb",
-			"Rev": "b02f2bbce11d7ea6b97f282ef1771b0fe2f65ef3"
+			"ImportPath": "github.com/cenkalti/backoff",
+			"Comment": "v1.0.0-23-g61153c7",
+			"Rev": "61153c768f31ee5f130071d08fc82b85208528de"
 		},
 		{
 			"ImportPath": "github.com/dancannon/gorethink",
-			"Comment": "v2.2.2-2-g751feef",
-			"Rev": "751feefd791306510daf1ce703e872277c2f097e"
+			"Comment": "v3.0.1",
+			"Rev": "610fcc04c971a9fa42f1b6625c7c52b5bb472c51"
 		},
 		{
 			"ImportPath": "github.com/facebookgo/clock",
@@ -24,15 +24,15 @@
 		},
 		{
 			"ImportPath": "github.com/facebookgo/grace/gracehttp",
-			"Rev": "053ab5d25436faedf3fe76fbf3da797c8c27c659"
+			"Rev": "4afe952a37a495ae4ac0c1d4ce5f66e91058d149"
 		},
 		{
 			"ImportPath": "github.com/facebookgo/grace/gracenet",
-			"Rev": "053ab5d25436faedf3fe76fbf3da797c8c27c659"
+			"Rev": "4afe952a37a495ae4ac0c1d4ce5f66e91058d149"
 		},
 		{
 			"ImportPath": "github.com/facebookgo/httpdown",
-			"Rev": "1fa03998d20119dfe4ef73f56a638d83048052e2"
+			"Rev": "a3b1354551a26449fbe05f5d855937f6e7acbd71"
 		},
 		{
 			"ImportPath": "github.com/facebookgo/stats",
@@ -40,31 +40,65 @@
 		},
 		{
 			"ImportPath": "github.com/garyburd/redigo/internal",
-			"Rev": "6ece6e0a09f28cc399b21550cbf37ab39ba63cce"
+			"Comment": "v1.0.0-21-g0d253a6",
+			"Rev": "0d253a66e6e1349f4581d6d2b300ee434ee2da9f"
 		},
 		{
 			"ImportPath": "github.com/garyburd/redigo/redis",
-			"Rev": "6ece6e0a09f28cc399b21550cbf37ab39ba63cce"
+			"Comment": "v1.0.0-21-g0d253a6",
+			"Rev": "0d253a66e6e1349f4581d6d2b300ee434ee2da9f"
+		},
+		{
+			"ImportPath": "github.com/go-redis/redis",
+			"Comment": "v6.5.3",
+			"Rev": "da63fe7def48e378caf9539abf64b9b1e37bc01e"
+		},
+		{
+			"ImportPath": "github.com/go-redis/redis/internal",
+			"Comment": "v6.5.3",
+			"Rev": "da63fe7def48e378caf9539abf64b9b1e37bc01e"
+		},
+		{
+			"ImportPath": "github.com/go-redis/redis/internal/consistenthash",
+			"Comment": "v6.5.3",
+			"Rev": "da63fe7def48e378caf9539abf64b9b1e37bc01e"
+		},
+		{
+			"ImportPath": "github.com/go-redis/redis/internal/hashtag",
+			"Comment": "v6.5.3",
+			"Rev": "da63fe7def48e378caf9539abf64b9b1e37bc01e"
+		},
+		{
+			"ImportPath": "github.com/go-redis/redis/internal/pool",
+			"Comment": "v6.5.3",
+			"Rev": "da63fe7def48e378caf9539abf64b9b1e37bc01e"
+		},
+		{
+			"ImportPath": "github.com/go-redis/redis/internal/proto",
+			"Comment": "v6.5.3",
+			"Rev": "da63fe7def48e378caf9539abf64b9b1e37bc01e"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",
-			"Rev": "7cc19b78d562895b13596ddce7aafb59dd789318"
+			"Rev": "0a4f71a498b7c4812f64969510bcb4eca251e33a"
 		},
 		{
 			"ImportPath": "github.com/google/google-api-go-client/googleapi/transport",
-			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
+			"Rev": "16ab375f94503bfa0d19db78e96bffbe1a34354f"
 		},
 		{
 			"ImportPath": "github.com/gorilla/context",
-			"Rev": "215affda49addc4c8ef7e2534915df2c8c35c6cd"
+			"Comment": "v1.1-7-g08b5f42",
+			"Rev": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42"
 		},
 		{
 			"ImportPath": "github.com/gorilla/mux",
-			"Rev": "47e8f450ef38c857cdd922ec08862ca9d65a1c6d"
+			"Comment": "v1.3.0-5-g599cba5",
+			"Rev": "599cba5e7b6137d46ddf58fb1765f5d928e69604"
 		},
 		{
 			"ImportPath": "github.com/gorilla/pat",
-			"Rev": "ae2e162c4b2ae96aa66b596b2c18f17834299ed0"
+			"Rev": "cf955c3d1f2c27ee96f93e9738085c762ff5f49d"
 		},
 		{
 			"ImportPath": "github.com/hailocab/go-hostpool",
@@ -76,68 +110,54 @@
 		},
 		{
 			"ImportPath": "golang.org/x/crypto/pbkdf2",
-			"Rev": "019870fc9d457ee8abd13a2e93e3f2a3b55b7119"
+			"Rev": "7f7c0c2d75ebb4e32a21396ce36e87b6dadc91c9"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context",
-			"Rev": "cbbbe2bc0f2efdd2afb318d93f1eadb19350e4a3"
+			"Rev": "f01ecb60fe3835d80d9a0b7b2bf24b228c89260e"
 		},
 		{
 			"ImportPath": "golang.org/x/net/context/ctxhttp",
-			"Rev": "cbbbe2bc0f2efdd2afb318d93f1eadb19350e4a3"
+			"Rev": "f01ecb60fe3835d80d9a0b7b2bf24b228c89260e"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",
-			"Rev": "a646d33e2ee3172a661fc09bca23bb4889a41bc8"
+			"Rev": "f3918c30c5c2cb527c0b071a27c35120a6c0719a"
 		},
 		{
 			"ImportPath": "google.golang.org/api/gensupport",
-			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
+			"Rev": "48e49d1645e228d1c50c3d54fb476b2224477303"
 		},
 		{
 			"ImportPath": "google.golang.org/api/googleapi",
-			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
+			"Rev": "48e49d1645e228d1c50c3d54fb476b2224477303"
 		},
 		{
 			"ImportPath": "google.golang.org/api/googleapi/internal/uritemplates",
-			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
+			"Rev": "48e49d1645e228d1c50c3d54fb476b2224477303"
 		},
 		{
 			"ImportPath": "google.golang.org/api/youtube/v3",
-			"Rev": "8a448fd57af58b0eaeb8fde0345ec7ae88e55076"
-		},
-		{
-			"ImportPath": "gopkg.in/bsm/ratelimit.v1",
-			"Rev": "f14ad9c78b155f69b480cfa41cb655259baac260"
-		},
-		{
-			"ImportPath": "gopkg.in/dancannon/gorethink.v2/encoding",
-			"Comment": "v2.2.2",
-			"Rev": "016a1d3b4d15951ab2e39bd3596718ba94d298ba"
-		},
-		{
-			"ImportPath": "gopkg.in/dancannon/gorethink.v2/ql2",
-			"Comment": "v2.2.2",
-			"Rev": "016a1d3b4d15951ab2e39bd3596718ba94d298ba"
-		},
-		{
-			"ImportPath": "gopkg.in/dancannon/gorethink.v2/types",
-			"Comment": "v2.2.2",
-			"Rev": "016a1d3b4d15951ab2e39bd3596718ba94d298ba"
+			"Rev": "48e49d1645e228d1c50c3d54fb476b2224477303"
 		},
 		{
 			"ImportPath": "gopkg.in/fatih/pool.v2",
-			"Rev": "cba550ebf9bce999a02e963296d4bc7a486cb715"
+			"Rev": "6e328e67893eb46323ad06f0e92cb9536babbabc"
 		},
 		{
-			"ImportPath": "gopkg.in/redis.v3",
-			"Comment": "v3.2.23",
-			"Rev": "ba44d4d158d4f08b4271966798f81e1d1d9b3ba3"
+			"ImportPath": "gopkg.in/gorethink/gorethink.v3/encoding",
+			"Comment": "v3.0.2",
+			"Rev": "7ab832f7b65573104a555d84a27992ae9ea1f659"
 		},
 		{
-			"ImportPath": "gopkg.in/redis.v3/internal/consistenthash",
-			"Comment": "v3.2.23",
-			"Rev": "ba44d4d158d4f08b4271966798f81e1d1d9b3ba3"
+			"ImportPath": "gopkg.in/gorethink/gorethink.v3/ql2",
+			"Comment": "v3.0.2",
+			"Rev": "7ab832f7b65573104a555d84a27992ae9ea1f659"
+		},
+		{
+			"ImportPath": "gopkg.in/gorethink/gorethink.v3/types",
+			"Comment": "v3.0.2",
+			"Rev": "7ab832f7b65573104a555d84a27992ae9ea1f659"
 		}
 	]
 }

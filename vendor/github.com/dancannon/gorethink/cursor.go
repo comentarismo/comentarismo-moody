@@ -7,8 +7,8 @@ import (
 	"reflect"
 	"sync"
 
-	"gopkg.in/dancannon/gorethink.v2/encoding"
-	p "gopkg.in/dancannon/gorethink.v2/ql2"
+	"gopkg.in/gorethink/gorethink.v3/encoding"
+	p "gopkg.in/gorethink/gorethink.v3/ql2"
 )
 
 var (
@@ -212,6 +212,10 @@ func (c *Cursor) nextLocked(dest interface{}, progressCursor bool) (bool, error)
 	for {
 		if err := c.seekCursor(true); err != nil {
 			return false, err
+		}
+
+		if c.closed {
+			return false, nil
 		}
 
 		if len(c.buffer) == 0 && c.finished {
@@ -615,6 +619,9 @@ func (c *Cursor) seekCursor(bufferResponse bool) error {
 			//  We skipped all of our data, load some more
 			if err := c.fetchMore(); err != nil {
 				return err
+			}
+			if c.closed {
+				return nil
 			}
 			continue // go around the loop again to re-apply pending skips
 		}

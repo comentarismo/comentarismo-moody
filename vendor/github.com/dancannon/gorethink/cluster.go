@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/cenk/backoff"
+	"github.com/cenkalti/backoff"
 	"github.com/hailocab/go-hostpool"
 )
 
@@ -158,6 +158,7 @@ func (c *Cluster) Close(optArgs ...CloseOpts) error {
 		}
 	}
 
+	c.hp.Close()
 	c.closed = true
 
 	return nil

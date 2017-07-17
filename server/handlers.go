@@ -4,7 +4,7 @@ import (
 	//util "comentarismo-moody/util"
 	"encoding/json"
 	r "github.com/dancannon/gorethink"
-	"gopkg.in/redis.v3"
+	"github.com/go-redis/redis"
 	"log"
 	"net/http"
 	"time"

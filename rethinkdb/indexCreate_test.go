@@ -113,6 +113,11 @@ func TestCreateIndexesMoody(t *testing.T) {
 					[]interface{}{r.Row.Field("operator"), r.Row.Field("date")},
 				).Exec(session)
 
+				r.DB(Table).Table("commentaries_sentiment_report").IndexCreateFunc(
+					"operator_nick",
+					[]interface{}{r.Row.Field("operator"), r.Row.Field("nick")},
+				).Exec(session)
+
 				//r.DB(Table).Table("sentiment_report").IndexWait().Exec(session)
 				//r.DB(Table).Table("commentator_sentiment_report").IndexWait().Exec(session)
 

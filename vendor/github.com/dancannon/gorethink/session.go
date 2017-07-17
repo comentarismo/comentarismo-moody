@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	p "gopkg.in/dancannon/gorethink.v2/ql2"
+	p "gopkg.in/gorethink/gorethink.v3/ql2"
 )
 
 // A Session represents a connection to a RethinkDB cluster and should be used
@@ -148,7 +148,12 @@ func Connect(opts ConnectOpts) (*Session, error) {
 
 	err := s.Reconnect()
 	if err != nil {
-		return nil, err
+		// note: s.Reconnect() will initialize cluster information which
+		// will cause the .IsConnected() method to be caught in a loop
+		return &Session{
+			hosts: hosts,
+			opts:  &opts,
+		}, err
 	}
 
 	return s, nil
@@ -185,6 +190,7 @@ func (s *Session) Reconnect(optArgs ...CloseOpts) error {
 	s.mu.Lock()
 	s.cluster, err = NewCluster(s.hosts, s.opts)
 	if err != nil {
+		s.mu.Unlock()
 		return err
 	}
 
