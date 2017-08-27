@@ -48,7 +48,7 @@ var Table = os.Getenv("table")
 var maxopen = os.Getenv("maxopen")
 var maxidle = os.Getenv("maxidle")
 
-var RESTART_TIMEOUT_ENABLED = os.Getenv("restart_timeout_enabled")
+var RESTART_TIMEOUT_ENABLED = os.Getenv("RESTART_TIMEOUT_ENABLED")
 
 
 func init() {
