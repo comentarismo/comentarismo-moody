@@ -20,6 +20,7 @@ var sentimentInstanceFr sentiment.Sentiment
 var sentimentInstanceIt sentiment.Sentiment
 var sentimentInstanceHr sentiment.Sentiment
 var sentimentInstanceRu sentiment.Sentiment
+var sentimentInstanceNL sentiment.Sentiment
 
 // InitShield instantiates the text classifier engine
 func InitSentiment(lang string) (store sentiment.Store) {
@@ -106,6 +107,16 @@ func InitSentiment(lang string) (store sentiment.Store) {
 			tokenizer,
 			store,
 		)
+	} else if lang == "nl" && sentimentInstanceNL == nil {
+		//create alert msg
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
+		//create redis instance
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		//start sentiment instance for lang
+		sentimentInstanceNL = sentiment.New(
+			tokenizer,
+			store,
+		)
 	}
 
 	return
@@ -126,6 +137,8 @@ func GetTokenizerForLang(lang string) (tokenizer sentiment.Tokenizer) {
 		tokenizer = sentiment.NewHrTokenizer()
 	} else if lang == "ru" && sentimentInstanceRu == nil {
 		tokenizer = sentiment.NewRuTokenizer()
+	} else if lang == "nl" && sentimentInstanceNL == nil {
+		tokenizer = sentiment.NewNLTokenizer()
 	}
 	return
 }
@@ -145,6 +158,8 @@ func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentimen
 		currentSentimentInstance = sentimentInstanceHr
 	} else if lang == "ru" {
 		currentSentimentInstance = sentimentInstanceRu
+	} else if lang == "nl" {
+		currentSentimentInstance = sentimentInstanceNL
 	}
 	return
 }

@@ -263,8 +263,8 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 	}
 
 	//log.Println("lang , ", lang)
-	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it" && lang != "hr" && lang != "ru" {
-		errMsg := "Error: SentimentHandler Language " + lang + " not yet supported, use lang={en|pt|es|it|fr|hr|ru} eg lang=en"
+	if lang != "pt" && lang != "en" && lang != "fr" && lang != "es" && lang != "it" && lang != "hr" && lang != "ru" && lang != "nl" {
+		errMsg := "Error: SentimentHandler Language " + lang + " not yet supported, use lang={en|pt|es|it|fr|hr|ru|nl} eg lang=en"
 		log.Println(errMsg)
 		jsonBytes, _ := json.Marshal(WebError{Error: errMsg})
 		w.WriteHeader(http.StatusNotFound)
@@ -297,6 +297,10 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+
+	//  field comment removed to save some bytes on the network
+	comment.Comment = string(text[0])
+
 
 	//marshal comment
 	jsonBytes, err := json.Marshal(&comment)

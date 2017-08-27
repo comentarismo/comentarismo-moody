@@ -17,6 +17,8 @@ import (
 
 	"comentarismo-moody/model"
 	"strconv"
+	"time"
+	"math/rand"
 )
 
 var (
@@ -45,6 +47,9 @@ var Table = os.Getenv("table")
 
 var maxopen = os.Getenv("maxopen")
 var maxidle = os.Getenv("maxidle")
+
+var RESTART_TIMEOUT_ENABLED = os.Getenv("restart_timeout_enabled")
+
 
 func init() {
 	//var err error
@@ -157,6 +162,16 @@ func StartServer(Port string) {
 func InitRouting() *pat.Router {
 	r := pat.New()
 
+	if RESTART_TIMEOUT_ENABLED == "true" {
+		var RESTART_TIMEOUT = getRandomValueFromInterval(0.5, rand.New(rand.NewSource(time.Now().UnixNano())).Float64(), 500*time.Second)
+		//enable auto restart
+		log.Println("******************************* RESTART_TIMEOUT_ENABLED, timeout is -> ", RESTART_TIMEOUT)
+		time.AfterFunc(RESTART_TIMEOUT, func() {
+			log.Println("******************************* WARN: Node will restart after timeout, (time.Minute) ", RESTART_TIMEOUT)
+			os.Exit(0)
+		})
+	}
+
 	r.HandleFunc("/moody", MoodyHandler)
 
 	r.HandleFunc("/sentiment", SentimentHandler)
@@ -174,16 +189,13 @@ func InitRouting() *pat.Router {
 	return r
 }
 
-func TrainEngine() {
-	//langs := []string{"en","pt","es","fr","it","hr","ru"}
-	langs := []string{"en"}
+func getRandomValueFromInterval(randomizationFactor, random float64, currentInterval time.Duration) time.Duration {
+	var delta = randomizationFactor * float64(currentInterval)
+	var minInterval = float64(currentInterval) - delta
+	var maxInterval = float64(currentInterval) + delta
 
-	for _, lang := range langs {
-
-		notTrained := LoadTrainingData(lang)
-		if !notTrained {
-			log.Println("Unable to train the engine for lang" + lang + " :| No dougnuts for you today o__0")
-			continue
-		}
-	}
+	// Get a random value from the range [minInterval, maxInterval].
+	// The formula used below has a +1 because if the minInterval is 1 and the maxInterval is 3 then
+	// we want a 33% chance for selecting either 1, 2 or 3.
+	return time.Duration(minInterval + (random * (maxInterval - minInterval + 1)))
 }
