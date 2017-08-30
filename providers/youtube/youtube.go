@@ -133,18 +133,18 @@ func (ytv *Provider) GetComments() model.CommentList {
 
 				for _, c := range tempComments {
 					thisComment := &model.Comment{
-						ID:                         c.Id,
-						Published:                  c.Snippet.PublishedAt,
-						Comment:                    c.Snippet.TextDisplay,
-						Nick:                       c.Snippet.AuthorDisplayName,
-						NickIcon:                   c.Snippet.AuthorProfileImageUrl,
-						OriginLikes:                int(c.Snippet.LikeCount),
-						ProfileURL:                 c.Snippet.AuthorChannelUrl,
-						ModerationStatus:           c.Snippet.ModerationStatus,
-						ChannelId:                  c.Snippet.ChannelId,
-						Language:                   ytv.Language,
-						Operator:                   ytv.Name(),
-						Type:                       ytv.GetType(),
+						ID:               c.Id,
+						Published:        c.Snippet.PublishedAt,
+						Comment:          c.Snippet.TextDisplay,
+						Nick:             c.Snippet.AuthorDisplayName,
+						NickIcon:         c.Snippet.AuthorProfileImageUrl,
+						OriginLikes:      int(c.Snippet.LikeCount),
+						ProfileURL:       c.Snippet.AuthorChannelUrl,
+						ModerationStatus: c.Snippet.ModerationStatus,
+						ChannelId:        c.Snippet.ChannelId,
+						Language:         ytv.Language,
+						Operator:         ytv.Name(),
+						Type:             ytv.GetType(),
 					}
 
 					comments = append(comments, thisComment)
@@ -203,18 +203,18 @@ func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countCh
 
 				for _, c := range tempComments {
 					thisComment := &model.Comment{
-						ID:                         c.Id,
-						Published:                  c.Snippet.PublishedAt,
-						Comment:                    c.Snippet.TextDisplay,
-						Nick:                       c.Snippet.AuthorDisplayName,
-						NickIcon:                   c.Snippet.AuthorProfileImageUrl,
-						ProfileURL:                 c.Snippet.AuthorChannelUrl,
-						OriginLikes:                int(c.Snippet.LikeCount),
-						ModerationStatus:           c.Snippet.ModerationStatus,
-						ChannelId:                  c.Snippet.ChannelId,
-						Language:                   ytv.Language,
-						Operator:                   ytv.Name(),
-						Type:                       ytv.GetType(),
+						ID:               c.Id,
+						Published:        c.Snippet.PublishedAt,
+						Comment:          c.Snippet.TextDisplay,
+						Nick:             c.Snippet.AuthorDisplayName,
+						NickIcon:         c.Snippet.AuthorProfileImageUrl,
+						ProfileURL:       c.Snippet.AuthorChannelUrl,
+						OriginLikes:      int(c.Snippet.LikeCount),
+						ModerationStatus: c.Snippet.ModerationStatus,
+						ChannelId:        c.Snippet.ChannelId,
+						Language:         ytv.Language,
+						Operator:         ytv.Name(),
+						Type:             ytv.GetType(),
 					}
 
 					thisComment.FixID()

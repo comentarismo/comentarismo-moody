@@ -4,8 +4,8 @@ import (
 	"fmt"
 	r "github.com/dancannon/gorethink"
 	"github.com/facebookgo/grace/gracehttp"
-	"github.com/gorilla/pat"
 	"github.com/go-redis/redis"
+	"github.com/gorilla/pat"
 	"log"
 	"net/http"
 	"os"
@@ -16,9 +16,9 @@ import (
 	"comentarismo-moody/providers/youtube"
 
 	"comentarismo-moody/model"
+	"math/rand"
 	"strconv"
 	"time"
-	"math/rand"
 )
 
 var (
@@ -49,7 +49,8 @@ var maxopen = os.Getenv("maxopen")
 var maxidle = os.Getenv("maxidle")
 
 var RESTART_TIMEOUT_ENABLED = os.Getenv("RESTART_TIMEOUT_ENABLED")
-
+var RESTART_TIMEOUT_FACTOR_STR = os.Getenv("RESTART_TIMEOUT_FACTOR")
+var RESTART_TIMEOUT_FACTOR = 1000
 
 func init() {
 	//var err error
@@ -105,6 +106,12 @@ func init() {
 	if REDIS_PASSWORD == "" {
 	}
 
+	if RESTART_TIMEOUT_FACTOR_STR == "" {
+		RESTART_TIMEOUT_FACTOR_STR = "1000"
+	}
+
+	RESTART_TIMEOUT_FACTOR, _ = strconv.Atoi(RESTART_TIMEOUT_FACTOR_STR)
+
 	log.Println("Loading Redis standalone ", REDIS_HOST+":"+REDIS_PORT)
 
 	Client = redis.NewClient(&redis.Options{
@@ -149,6 +156,20 @@ func StartServer(Port string) {
 	InitProviders()
 	fmt.Println("Server starting --> " + Port)
 
+	if RESTART_TIMEOUT_ENABLED == "true" {
+		var RESTART_TIMEOUT = getRandomValueFromInterval(0.5, rand.New(rand.NewSource(time.Now().UnixNano())).Float64(), time.Duration(RESTART_TIMEOUT_FACTOR)*time.Second)
+		//enable auto restart
+		log.Println("******************************* RESTART_TIMEOUT_ENABLED, timeout is -> ", RESTART_TIMEOUT)
+		time.AfterFunc(RESTART_TIMEOUT, func() {
+			log.Println("******************************* WARN: Node will restart after timeout, (time.Minute) ", RESTART_TIMEOUT)
+			os.Exit(0)
+		})
+	}
+
+	//uncomment to use normal listenServe
+	//	err := s.ListenAndServe()
+
+	//enable graceful shutdown
 	err := gracehttp.Serve(
 		s,
 	)
@@ -161,16 +182,6 @@ func StartServer(Port string) {
 
 func InitRouting() *pat.Router {
 	r := pat.New()
-
-	if RESTART_TIMEOUT_ENABLED == "true" {
-		var RESTART_TIMEOUT = getRandomValueFromInterval(0.5, rand.New(rand.NewSource(time.Now().UnixNano())).Float64(), 500*time.Second)
-		//enable auto restart
-		log.Println("******************************* RESTART_TIMEOUT_ENABLED, timeout is -> ", RESTART_TIMEOUT)
-		time.AfterFunc(RESTART_TIMEOUT, func() {
-			log.Println("******************************* WARN: Node will restart after timeout, (time.Minute) ", RESTART_TIMEOUT)
-			os.Exit(0)
-		})
-	}
 
 	r.HandleFunc("/moody", MoodyHandler)
 

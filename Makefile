@@ -8,7 +8,7 @@ gofmt:
 
 start: stop
 	godep go build -o comentarismo-moody main.go
-	nohup ./comentarismo-moody &
+	RESTART_TIMEOUT_FACTOR=5000 RESTART_TIMEOUT_ENABLED=false nohup ./comentarismo-moody &
 	make log
 
 start-prod: stop

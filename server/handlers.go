@@ -301,7 +301,6 @@ func SentimentHandler(w http.ResponseWriter, req *http.Request) {
 	//  field comment removed to save some bytes on the network
 	comment.Comment = string(text[0])
 
-
 	//marshal comment
 	jsonBytes, err := json.Marshal(&comment)
 	if err != nil {
