@@ -8,14 +8,14 @@ import (
 	"testing"
 )
 
-// SENTIMENT_DEBUG=true go test  handler_sentiment_en_test.go -v
-func TestEsSentimentPost(t *testing.T) {
+// SENTIMENT_DEBUG=true go test  handler_sentiment_cn_test.go -v
+func TestCNSentimentPost(t *testing.T) {
 
 	server.InitProviders()
 	testflight.WithServer(server.InitRouting(), func(r *testflight.Requester) {
-		response := r.Post("/sentiment?lang=es", testflight.FORM_ENCODED, "text=Buenos periodistas en el paro y estos 'en chu fados' cobrando por este tipo de artículos......así va el país")
+		response := r.Post("/sentiment?lang=cn", testflight.FORM_ENCODED, "text=南京现在也有很多人加入挖比特币行业，刚刚兴起的，都靠偷国家的电赚钱")
 
-		log.Println(response.Body)
+		log.Println("INFO: TEST RESULT: ",response.Body)
 		assert.Equal(t, 200, response.StatusCode)
 		assert.True(t, len(response.Body) > 0)
 

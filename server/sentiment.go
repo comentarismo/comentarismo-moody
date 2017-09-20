@@ -36,6 +36,7 @@ var (
 	IsTrainedHr = false
 	IsTrainedRu = false
 	IsTrainedNL = false
+	IsTrainedCN = false
 )
 
 func init() {
@@ -67,7 +68,9 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 	if _, err := os.Stat(targetDir); os.IsNotExist(err) {
 		targetDir = pwd + "/../static/training/afinn-111-en.csv"
 	}
-	if lang == "pt" {
+	if lang == "en" {
+		//default english, nothing to do
+	} else if lang == "pt" {
 		targetDir = pwd + "/static/training/afinn-111-pt.csv"
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
 			targetDir = pwd + "/../static/training/afinn-111-pt.csv"
@@ -102,9 +105,14 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
 			targetDir = pwd + "/../static/training/afinn-111-nl.csv"
 		}
+	} else if lang == "cn" {
+		targetDir = pwd + "/static/training/afinn-111-cn.csv"
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			targetDir = pwd + "/../static/training/afinn-111-cn.csv"
+		}
 	} else {
 		//panic("Language is not supported, "+lang)
-		log.Println("Language is not supported, Will use default lang en")
+		log.Println("Language is not supported, Will use default lang en, ",lang)
 		lang = "en"
 	}
 
@@ -160,6 +168,8 @@ func SetLangTrained(lang string) {
 		IsTrainedRu = true
 	} else if lang == "nl" {
 		IsTrainedNL = true
+	} else if lang == "cn" {
+		IsTrainedCN = true
 	}
 }
 
@@ -180,6 +190,8 @@ func IsLangTrained(lang string) (isTrained bool) {
 		isTrained = IsTrainedRu
 	} else if lang == "nl" {
 		isTrained = IsTrainedNL
+	} else if lang == "cn" {
+		isTrained = IsTrainedCN
 	}
 	return
 }

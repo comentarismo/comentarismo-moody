@@ -8,7 +8,7 @@ import (
 	"testing"
 )
 
-//$ SHIELD_DEBUG=true go test  handler_sentiment_en_test.go -v
+// SENTIMENT_DEBUG=true go test  handler_sentiment_en_test.go -v
 func TestRuSentimentPost(t *testing.T) {
 
 	server.InitProviders()

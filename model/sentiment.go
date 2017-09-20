@@ -11,6 +11,8 @@ import (
 var REDIS_HOST = os.Getenv("REDIS_HOST")
 var REDIS_PORT = os.Getenv("REDIS_PORT")
 var REDIS_PASSWORD = os.Getenv("REDIS_PASSWORD")
+var SENTIMENT_DEBUG = os.Getenv("SENTIMENT_DEBUG")
+
 
 var buf bytes.Buffer
 var sentimentInstanceEn sentiment.Sentiment
@@ -21,6 +23,7 @@ var sentimentInstanceIt sentiment.Sentiment
 var sentimentInstanceHr sentiment.Sentiment
 var sentimentInstanceRu sentiment.Sentiment
 var sentimentInstanceNL sentiment.Sentiment
+var sentimentInstanceCN sentiment.Sentiment
 
 // InitShield instantiates the text classifier engine
 func InitSentiment(lang string) (store sentiment.Store) {
@@ -117,6 +120,16 @@ func InitSentiment(lang string) (store sentiment.Store) {
 			tokenizer,
 			store,
 		)
+	} else if lang == "cn" && sentimentInstanceCN == nil {
+		//create alert msg
+		log.Println("Starting redis "+lang+" text classifier engine, ", REDIS_HOST+":"+REDIS_PORT)
+		//create redis instance
+		store = sentiment.NewRedisStore(REDIS_HOST+":"+REDIS_PORT, REDIS_PASSWORD, log.New(&buf, "logger: ", log.Lshortfile), "")
+		//start sentiment instance for lang
+		sentimentInstanceCN = sentiment.New(
+			tokenizer,
+			store,
+		)
 	}
 
 	return
@@ -139,6 +152,8 @@ func GetTokenizerForLang(lang string) (tokenizer sentiment.Tokenizer) {
 		tokenizer = sentiment.NewRuTokenizer()
 	} else if lang == "nl" && sentimentInstanceNL == nil {
 		tokenizer = sentiment.NewNLTokenizer()
+	} else if lang == "cn" && sentimentInstanceCN == nil {
+		tokenizer = sentiment.NewCNTokenizer()
 	}
 	return
 }
@@ -160,6 +175,8 @@ func GetSentimentInstanceForLang(lang string) (currentSentimentInstance sentimen
 		currentSentimentInstance = sentimentInstanceRu
 	} else if lang == "nl" {
 		currentSentimentInstance = sentimentInstanceNL
+	} else if lang == "cn" {
+		currentSentimentInstance = sentimentInstanceCN
 	}
 	return
 }
@@ -201,7 +218,7 @@ func LoadTrainingData(lang, path string) (err error) {
 
 	for _, row := range csvData {
 		// score, _ := strconv.ParseInt(row[1], 10, 0)
-		//log.Println(row[1], row[0])
+		Debug(row[1], row[0])
 		sentimentInstance.Learn(row[1], row[0])
 	}
 
@@ -252,4 +269,10 @@ func GetSentiment(lang, text string) (sentimentTop, tag string, scores map[strin
 	sentimentTop = sentimentList[tag]
 
 	return
+}
+
+func Debug(v ...interface{}) {
+	if SENTIMENT_DEBUG == "true" {
+		log.Println(v)
+	}
 }
