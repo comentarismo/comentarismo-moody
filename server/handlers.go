@@ -179,7 +179,7 @@ func MoodyHandler(w http.ResponseWriter, req *http.Request) {
 
 	}
 
-	log.Println("MoodyHandler, Will generate a new report -->", postURL)
+	log.Println("MoodyHandler, REFRESH -> Will generate a new report -->", postURL)
 
 	quickReport, err := RunQuickReport(postURL, lang)
 	if err != nil {

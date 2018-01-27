@@ -21,7 +21,7 @@ func TestCNTokenize(t *testing.T) {
 		"偷国家":  1,
 		"电赚钱":  1,
 		"南京现":  1,
-		"加入挖":   1,
+		"加入挖":  1,
 	}
 
 	//log.Println(m)

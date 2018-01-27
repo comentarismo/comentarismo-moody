@@ -112,7 +112,7 @@ func LoadTrainingData(lang string) (IsTrained bool) {
 		}
 	} else {
 		//panic("Language is not supported, "+lang)
-		log.Println("Language is not supported, Will use default lang en, ",lang)
+		log.Println("Language is not supported, Will use default lang en, ", lang)
 		lang = "en"
 	}
 
@@ -353,6 +353,7 @@ func RunReport(postURL, lang string) (model.Report, error) {
 		commentsList.Comments = append(commentsList.Comments, comment)
 
 		if finished {
+			log.Println("INFO: resultsChannel loop is closing ... ")
 			break
 		}
 	}
@@ -395,6 +396,8 @@ func RunReport(postURL, lang string) (model.Report, error) {
 	for i := 0; i < 3; i++ {
 		<-done
 	}
+
+	finished = true
 
 	// Pull a few sample comments
 	//theReport.SampleComments = comments.GetRandom(3)

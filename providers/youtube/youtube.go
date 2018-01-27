@@ -227,7 +227,7 @@ func (ytv *Provider) GetCommentsChan(resultsChannel chan *model.Comment, countCh
 			}
 		}
 
-		if pageToken == "" || lencomments >= YOUTUBE_REPORT_MAX {
+		if pageToken == "" || lencomments >= YOUTUBE_REPORT_MAX || len(results.Items) == 0 {
 			pageToken = "EOL"
 		}
 	}

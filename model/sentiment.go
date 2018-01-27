@@ -13,7 +13,6 @@ var REDIS_PORT = os.Getenv("REDIS_PORT")
 var REDIS_PASSWORD = os.Getenv("REDIS_PASSWORD")
 var SENTIMENT_DEBUG = os.Getenv("SENTIMENT_DEBUG")
 
-
 var buf bytes.Buffer
 var sentimentInstanceEn sentiment.Sentiment
 var sentimentInstancePt sentiment.Sentiment
