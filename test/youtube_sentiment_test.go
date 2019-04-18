@@ -18,7 +18,7 @@ func Test_Youtube_Sentiment(t *testing.T) {
 	Convey("Should RunReport for youtube", t, func() {
 		So(err, ShouldBeNil)
 
-		YOUTUBE_KEY := "AIzaSyBameiyxxJw0W27lydpPuPRocfvGza9gXM"
+		YOUTUBE_KEY := ""
 
 		y := youtube.New(YOUTUBE_KEY, "", "")
 		model.UseProviders(y)

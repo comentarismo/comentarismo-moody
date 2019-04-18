@@ -42,14 +42,14 @@ var (
 func init() {
 
 	if YOUTUBE_KEY == "" {
-		YOUTUBE_KEY = "AIzaSyBameiyxxJw0W27lydpPuPRocfvGza9gXM"
+		YOUTUBE_KEY = ""
 	}
 
 	if FACEBOOK_KEY == "" {
-		FACEBOOK_KEY = "118792195142376"
+		FACEBOOK_KEY = ""
 	}
 	if FACEBOOK_SECRET == "" {
-		FACEBOOK_SECRET = "49e8c46b9bec4f484fa045cedac63ea2"
+		FACEBOOK_SECRET = ""
 	}
 
 }
@@ -427,12 +427,6 @@ func SaveReport(theReport model.Report, postURL, UUID string) (err error) {
 
 	update_sentiment_report := true
 	update_sentiment := true
-
-	if err != nil {
-		log.Println("SaveReport, Could not SetID. report_"+postURL+" UUID failed ", err)
-		//w.WriteHeader(http.StatusNotFound)
-		return
-	}
 
 	res, err := r.Table("sentiment_report").Get(UUID).Pluck("id").Run(Session)
 	if err != nil {

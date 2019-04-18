@@ -13,7 +13,7 @@ start: stop
 
 start-prod: stop
 	 godep go build -o comentarismo-moody main.go
-	RETHINKDB_HOST=146.148.121.45 RETHINKDB_PASSWORD=9jYqGM4udXkvwgs4CcrUGYlYYlNurKzsJPEwWaLM41o= nohup ./comentarismo-moody &
+	RETHINKDB_HOST=localhost RETHINKDB_PASSWORD=test123 nohup ./comentarismo-moody &
 	make log
 
 stop:
@@ -39,7 +39,7 @@ rethinkdb:
 	scripts/gorethinkdb.sh;
 
 rethinkdb-prod:
-	RETHINKDB_HOST=146.148.121.45 RETHINKDB_PASSWORD=9jYqGM4udXkvwgs4CcrUGYlYYlNurKzsJPEwWaLM41o= scripts/gorethinkdb.sh;
+	RETHINKDB_HOST=localhost RETHINKDB_PASSWORD=  scripts/gorethinkdb.sh;
 
 goget:
 	scripts/goget.sh;

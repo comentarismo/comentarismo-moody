@@ -182,7 +182,7 @@ func (s *TokenStore) Classify(text string) (class string, scores map[string]floa
 		return
 	}
 
-	// Select class with highes prob
+	// Select class with highest prob
 	var score float64
 	for k, v := range scores {
 		if v > score {
